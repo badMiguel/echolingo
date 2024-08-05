@@ -1,7 +1,12 @@
 {
   "expo": {
+<<<<<<< HEAD
     "name": "react_native_test",
     "slug": "react_native_test",
+=======
+    "name": "project_hit238",
+    "slug": "project_hit238",
+>>>>>>> 78cf467 (cleaning react native)
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
