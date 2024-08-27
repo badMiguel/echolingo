@@ -1,15 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
-import { styled } from 'nativewind';
+import { styled } from 'nativewind'
+import { Link } from 'expo-router';
 
 const StyledView = styled(View);
+const StyledText = styled(Text);
 
-const Index = () => {
+
+export default function index() {
     return (
-        <StyledView className='flex justify-center items-center' >
-                <Text> Index</Text>
+        <StyledView className='flex h-screen items-center justify-center flex-row space-x-10'>
+            <Link href="/(tabs)?role=student" >
+                <StyledText>Student</StyledText>
+            </Link>
+            <Link href="/(tabs)?role=teacher">
+                <StyledText>Teacher</StyledText>
+            </Link>
         </StyledView>
-    );
+    )
 }
-
-export default Index
