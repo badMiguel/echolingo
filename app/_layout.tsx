@@ -17,9 +17,10 @@ const UserIcon: React.FC<IconProps> = ({ color }): React.JSX.Element => {
 export default function RootLayout() {
     return (
         <Tabs
-            screenOptions={{
-                headerShown: false
-            }}>
+            // screenOptions={{
+            //     headerShown: false
+            // }}>
+            >
             <Tabs.Screen
                 name="index"
                 options={{

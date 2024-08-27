@@ -1,15 +1,15 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { styled } from 'nativewind';
 
-export default function Index() {
+const StyledView = styled(View);
+
+const Index = () => {
     return (
-        <View
-            style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
-            <Text>Edit app/index.tsx to edit this screen.</Text>
-        </View>
+        <StyledView className='flex justify-center items-center' >
+                <Text> Index</Text>
+        </StyledView>
     );
 }
+
+export default Index
