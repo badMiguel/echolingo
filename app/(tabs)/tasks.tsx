@@ -9,6 +9,36 @@ type CourseCardProps = {
     courseImgSrc: any,
 };
 
+export default function Tasks() {
+    const sections = [
+        {
+            title: "Finished Course",
+            data: courseData.filter(item => item.completed === true),
+        },
+        {
+            title: "Unfinished Course",
+            data: courseData.filter(item => item.completed === false),
+        },
+    ]
+
+    return (
+        <SectionList
+            sections={sections}
+            keyExtractor={(item) => item.courseName}
+            renderItem={({ item }) =>
+                <CourseCard
+                    courseNum={item.courseNum}
+                    courseName={item.courseName}
+                    courseImgSrc={images[item.courseName]}
+                />
+            }
+            renderSectionHeader={({ section: { title } }) => (
+                <Text style={styles.tasks__header}>{title}</Text>
+            )}
+            style={styles.tasks}
+        />
+    )
+}
 
 function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
     return (
