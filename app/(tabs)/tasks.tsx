@@ -1,5 +1,7 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, ScrollView, SectionList, StyleSheet, Text, View } from 'react-native'
+import courseData from '../../data/json/course_data.json';
 import React from 'react'
+import images from '@/constants/images';
 
 type CourseCardProps = {
     courseNum: number,
@@ -7,45 +9,17 @@ type CourseCardProps = {
     courseImgSrc: any,
 };
 
-export default function Tasks() {
-    return (
-        <View style={styles.tasksContainer}>
-            <UnfinishedCourse />
-            <FinishedCourse />
-        </View>
-    )
-}
-
-function FinishedCourse() {
-    return (
-        <View style={styles.courseContainer}>
-            <Text>Finished Courses</Text>
-        </View>
-    )
-}
-
-function UnfinishedCourse() {
-    return (
-        <View style={styles.courseContainer}>
-            <Text>Unfinished Courses</Text>
-            <CourseCard 
-                courseNum={1} 
-                courseName="Animals" 
-                courseImgSrc={require('../../assets/images/map-of-australia-painting-in-the-aboriginal-style-vector-1035812.jpg')} />
-        </View>
-    )
-}
 
 function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
     return (
-        <View style={styles.courseCardContainer}>
-            <View style={styles.courseCardLabelContainer}>
+        <View style={styles.course__cardContainer}>
+            <View style={styles.course__cardContainerLabel}>
                 <Text>Course {courseNum}</Text>
                 <Text>{courseName}</Text>
             </View>
-            <View style={styles.courseCardImageContainer}>
+            <View style={styles.course__cardImageContainer}>
                 <Image
-                    style={styles.courseCardImage}
+                    style={styles.course__cardImage}
                     source={courseImgSrc} />
             </View>
         </View>
@@ -53,38 +27,43 @@ function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
 }
 
 const styles = StyleSheet.create({
-    tasksContainer: {
+    tasks: {
         flexDirection: 'column',
-        margin: 10,
+        marginRight: 20,
+        marginLeft: 20
+    },
+
+    tasks__header: {
+        marginTop: 20,
+        marginBottom: 30,
+    },
+
+    course: {
+        flexDirection: 'column',
         gap: 20,
     },
 
-    courseContainer: {
-        flexDirection: 'column',
-        gap: 20,
-    },
-
-    courseCardContainer: {
+    course__cardContainer: {
         flexDirection: 'row',
         maxHeight: 150,
         borderRadius: 10,
         overflow: 'hidden',
     },
 
-    courseCardLabelContainer: {
+    course__cardContainerLabel: {
         flex: 1.5,
         padding: 10,
         backgroundColor: 'pink',
     },
 
-    courseCardImageContainer: {
+    course__cardImageContainer: {
         flex: 2,
         overflow: 'hidden',
     },
 
-    courseCardImage: {
+    course__cardImage: {
         height: '100%',
         width: '100%',
         resizeMode: 'cover',
-    }
+    },
 })
