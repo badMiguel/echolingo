@@ -1,9 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { styled } from 'nativewind';
 import { useLocalSearchParams } from 'expo-router';
-
-const StyledView = styled(View);
 
 function Home() {
     const params = useLocalSearchParams();
@@ -22,10 +19,10 @@ function Home() {
     }
 
     return (
-        <StyledView className='flex justify-center items-center' >
+        <View>
             <Text>Good {greetings()}</Text>
             < Text > Hello, {userName}</Text>
-        </StyledView>
+        </View>
     );
 }
 
