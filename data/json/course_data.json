@@ -3,13 +3,13 @@
         "courseNum": 1,
         "courseName": "Animals",
         "img_link": "kangaroo-painting-in-the-abstract-aboriginal-style-vector-1035818.jpg",
-        "completed": true
+        "completed": false
     },
     {
         "courseNum": 2,
         "courseName": "Country and Geography",
         "img_link": "map-of-australia-painting-in-the-aboriginal-style-vector-1035812.jpg",
-        "completed": true
+        "completed": false
     },
     {
         "courseNum": 3,

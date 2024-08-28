@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React, { createContext, useEffect, useState } from 'react'
 import { Link, router } from 'expo-router';
 
@@ -18,10 +18,12 @@ export default function Index() {
 
     return (
         <View>
-            <Text
-                onPress={() => login('student', 'Student')}>Student</Text>
-            <Text
-                onPress={() => login('teacher', 'Teacher')}>Teacher</Text>
+            <Button
+                onPress={() => login('student', 'Student')}
+                title='Student View' />
+            <Button
+                onPress={() => login('teacher', 'Teacher')}
+                title='Teacher View'/>
         </View>
     )
 }

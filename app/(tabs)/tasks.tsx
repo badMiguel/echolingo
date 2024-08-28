@@ -1,4 +1,4 @@
-import { FlatList, Image, ScrollView, SectionList, StyleSheet, Text, View } from 'react-native'
+import { Button, FlatList, Image, ScrollView, SectionList, StyleSheet, Text, View } from 'react-native'
 import courseData from '../../data/json/course_data.json';
 import React from 'react'
 import images from '@/constants/images';
@@ -10,14 +10,26 @@ type CourseCardProps = {
 };
 
 export default function Tasks() {
+    const unfinished = courseData.filter(item => !item.completed);
+    const finished = courseData.filter(item => item.completed);
+
+    const empty = (is_finished: boolean) => {
+        return {
+            courseNum: 0,
+            courseName: '',
+            img_link: '',
+            completed: is_finished,
+        }
+    }
+
     const sections = [
         {
-            title: "Finished Course",
-            data: courseData.filter(item => item.completed === true),
+            title: "Unfinished Courses",
+            data: unfinished.length > 0 ? unfinished : [empty(false)],
         },
         {
-            title: "Unfinished Course",
-            data: courseData.filter(item => item.completed === false),
+            title: "Finished Courses",
+            data: finished.length > 0 ? finished : [empty(true)],
         },
     ]
 
@@ -26,11 +38,19 @@ export default function Tasks() {
             sections={sections}
             keyExtractor={(item) => item.courseName}
             renderItem={({ item }) =>
-                <CourseCard
-                    courseNum={item.courseNum}
-                    courseName={item.courseName}
-                    courseImgSrc={images[item.courseName]}
-                />
+                item.courseName === '' ? (
+                    !item.completed ? (
+                        <Text style={styles.emptySection}>Congratulations! You have finished courses currently available.</Text>
+                    ) : (
+                        <Text style={styles.emptySection}>You currently have not finished any course yet.</Text>
+                    )
+                ) : (
+                    <CourseCard
+                        courseNum={item.courseNum}
+                        courseName={item.courseName}
+                        courseImgSrc={images[item.courseName]}
+                    />
+                )
             }
             renderSectionHeader={({ section: { title } }) => (
                 <Text style={styles.tasks__header}>{title}</Text>
@@ -42,14 +62,15 @@ export default function Tasks() {
 
 function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
     return (
-        <View style={styles.course__cardContainer}>
-            <View style={styles.course__cardContainerLabel}>
+        <View style={styles.courseCard}>
+            <View style={styles.courseCard__label}>
                 <Text>Course {courseNum}</Text>
                 <Text>{courseName}</Text>
+                <Button onPress={()=> console.log()}>Start Now</Button>
             </View>
-            <View style={styles.course__cardImageContainer}>
+            <View style={styles.courseCard__imageContainer}>
                 <Image
-                    style={styles.course__cardImage}
+                    style={styles.courseCard__image}
                     source={courseImgSrc} />
             </View>
         </View>
@@ -59,8 +80,8 @@ function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
 const styles = StyleSheet.create({
     tasks: {
         flexDirection: 'column',
-        marginRight: 20,
-        marginLeft: 20
+        paddingRight: 20,
+        paddingLeft: 20
     },
 
     tasks__header: {
@@ -68,30 +89,30 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
 
-    course: {
-        flexDirection: 'column',
-        gap: 20,
+    emptySection: {
+        marginBottom: 30,
     },
 
-    course__cardContainer: {
+    courseCard: {
         flexDirection: 'row',
-        maxHeight: 150,
+        maxHeight: 170,
         borderRadius: 10,
         overflow: 'hidden',
+        marginBottom: 20,
     },
 
-    course__cardContainerLabel: {
+    courseCard__label: {
         flex: 1.5,
         padding: 10,
         backgroundColor: 'pink',
     },
 
-    course__cardImageContainer: {
+    courseCard__imageContainer: {
         flex: 2,
         overflow: 'hidden',
     },
 
-    course__cardImage: {
+    courseCard__image: {
         height: '100%',
         width: '100%',
         resizeMode: 'cover',
