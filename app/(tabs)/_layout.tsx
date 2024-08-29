@@ -34,7 +34,7 @@ export default function RootLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'list' : 'list-sharp'} color={color} />
                     ),
-                    href: userType === 'student' ? null : "/recordingList"
+                    href: userType !== 'teacher' ? null : "/recordingList"
                 }}
             />
 
@@ -45,7 +45,7 @@ export default function RootLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'add' : 'add-sharp'} color={color} />
                     ),
-                    href: userType === 'student' ? null : "/addRecording"
+                    href: userType !== 'teacher' ? null : "/addRecording"
                 }}
             />
 
