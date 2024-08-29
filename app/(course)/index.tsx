@@ -1,20 +1,9 @@
-import { useLocalSearchParams } from 'expo-router'
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import dharugData from '../../data/json/dharug_list.json'
-import courseData from '../../data/json/course_data.json'
-
-type DharugDataType = {
-    id: number;
-    English: string | null;
-    "Gloss (english)": string | null;
-    "Dharug(Gloss)": string | null;
-    Dharug: string | null;
-    Topic: string | null;
-    "Image Name (optional)": string | null;
-    recording: string | null;
-    completed: boolean;
-};
+import React, { useEffect, useState } from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import { Audio } from 'expo-av';
+import { Sound } from 'expo-av/build/Audio';
+import Slider from '@react-native-community/slider'
+import currentDharug, { DharugDataType } from './currentDharug';
 
 type QuestionProp = {
     current: DharugDataType;
@@ -24,13 +13,24 @@ type RecordingProp = {
     link: string;
 }
 
-export default function Course() {
-    const param = useLocalSearchParams();
-    let courseName: string = Array.isArray(param.courseName)
-        ? param.courseName[0] : param.courseName;
+type CurrentState = DharugDataType | null;
 
-    const dharugList = filterDharug(courseName);
-    const current: DharugDataType | null = dharugList.length > 0 ? dharugList[0] : null;
+export default function Course() {
+    const [current, setCurrent] = useState<CurrentState>(null);
+    const [dataLoaded, setAudioLoaded] = useState<Boolean>(false);
+    const getCurrent = currentDharug();
+
+    // initial load
+    useEffect(() => {
+        setCurrent(getCurrent);
+        setAudioLoaded(true);
+    }, [getCurrent]);
+
+    useEffect(() => {
+    }, []);
+
+    const handleNext = (current: DharugDataType) => {
+    };
 
     return (
         <View>
@@ -39,17 +39,18 @@ export default function Course() {
                     <Text>Congratulations! You have completed this course.</Text>
                 </View>
             ) : (
-                <Question current={current} />
+                <>
+                    {dataLoaded ? (
+                        <>
+                            <Question current={current} />
+                            <Button title='Next' onPress={() => handleNext(current)} />
+                        </>
+                    ) : (
+                        <Text>Loading Audio</Text>
+                    )}
+                </>
             )}
         </View>
-    )
-}
-
-function filterDharug(courseName: string): DharugDataType[] {
-    const selectedCourse = courseData.filter(course => course.courseName === courseName);
-    return dharugData.filter(item =>
-        selectedCourse.some(course => course.topic.includes(item.Topic)) &&
-        !item.completed
     );
 }
 
@@ -70,8 +71,9 @@ function Question({ current }: QuestionProp) {
                 </>
             }
 
-            {current.recording &&
-                <Recording link={current.recording}/>
+            {current.recording
+                ? <Recording link={current.recording} />
+                : <Text>No recording available yet</Text>
             }
 
             {current.English &&
@@ -92,8 +94,30 @@ function Question({ current }: QuestionProp) {
 }
 
 function Recording({ link }: RecordingProp) {
+    const [sound, setSound] = useState<Sound>();
+
+    const playSound = async () => {
+        const { sound } = await Audio.Sound.createAsync(require('../../assets/audio/Jazz.mp3'));
+        setSound(sound);
+        await sound.playAsync();
+    }
+
+    useEffect(() => {
+        return sound
+            ? () => {
+                sound.unloadAsync();
+            }
+            : undefined;
+    }, [sound])
+
     return (
         <View>
+            <Slider />
+            <View>
+                <Button title='5-' onPress={() => { }} />
+                <Button title='Play Sound' onPress={playSound} />
+                <Button title='5+' onPress={() => { }} />
+            </View>
         </View>
     );
 }
