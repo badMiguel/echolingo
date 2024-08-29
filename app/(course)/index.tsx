@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 import Slider from '@react-native-community/slider'
-import currentDharug, { DharugDataType } from './currentDharug';
+import { DharugDataType, useDharugContext } from './dharugProvider';
 import { router } from 'expo-router';
 import { useCourseContext } from './courseProvider';
 
@@ -15,29 +15,16 @@ type RecordingProp = {
     link: string;
 }
 
-type CurrentState = DharugDataType | null;
+type CurrentState = DharugDataType | undefined;
 
 export default function Course() {
-    const [current, setCurrent] = useState<CurrentState>(null);
-    const [dataLoaded, setAudioLoaded] = useState<Boolean>(false);
-    const getCurrent = currentDharug();
-
-    // initial load
-    useEffect(() => {
-        setCurrent(getCurrent);
-        setAudioLoaded(true);
-    }, [getCurrent]);
-
-    useEffect(() => {
-    }, []);
+    const current = useDharugContext();
 
     const handleNext = (current: DharugDataType) => {
         router.push({
             pathname: '/courseGame'
         });
     };
-
-    console.log(useCourseContext());
 
     return (
         <View>
@@ -47,14 +34,8 @@ export default function Course() {
                 </View>
             ) : (
                 <>
-                    {dataLoaded ? (
-                        <>
-                            <Question current={current} />
-                            <Button title='Next' onPress={() => handleNext(current)} />
-                        </>
-                    ) : (
-                        <Text>Loading Audio</Text>
-                    )}
+                    <Question current={current} />
+                    <Button title='Next' onPress={() => handleNext(current)} />
                 </>
             )}
         </View>
