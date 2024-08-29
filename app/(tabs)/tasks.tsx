@@ -2,6 +2,7 @@ import { Button, FlatList, Image, ScrollView, SectionList, StyleSheet, Text, Vie
 import courseData from '../../data/json/course_data.json';
 import React from 'react'
 import images from '@/constants/images';
+import { router } from 'expo-router';
 
 type CourseCardProps = {
     courseNum: number,
@@ -61,12 +62,24 @@ export default function Tasks() {
 }
 
 function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
+
+    const goToCourse = (courseName: string) => {
+        router.push({
+            pathname: '/(course)',
+            params: {
+                courseName: courseName,
+            }
+        })
+    };
+
     return (
         <View style={styles.courseCard}>
             <View style={styles.courseCard__label}>
                 <Text>Course {courseNum}</Text>
                 <Text>{courseName}</Text>
-                <Button onPress={()=> console.log()}>Start Now</Button>
+                <Button
+                    onPress={() => goToCourse(courseName)}
+                    title='Start Now' />
             </View>
             <View style={styles.courseCard__imageContainer}>
                 <Image

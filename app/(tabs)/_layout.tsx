@@ -1,14 +1,6 @@
 import { Tabs, useLocalSearchParams } from "expo-router";
 import { TabBarIcon, UserIcon, ClipboardListIcon } from "@/components/navigation/TabBarIcon";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../(tabs)';
-import Tasks from '../(tabs)/tasks';
-import RecordingList from "./recordingList";
-import Profile from "./profile";
-import AddRecording from "./addRecording";
-import { UserContext } from "./UserContext";
-
-const Tab = createBottomTabNavigator();
+import { UserContext } from "../UserContext";
 
 export default function RootLayout() {
     const params = useLocalSearchParams();
@@ -17,10 +9,9 @@ export default function RootLayout() {
 
     return (
         <UserContext.Provider value={{ userType, userName }}>
-            <Tab.Navigator>
-                <Tab.Screen
-                    name="home"
-                    component={Home}
+            <Tabs>
+                <Tabs.Screen
+                    name="index"
                     options={{
                         title: "Home",
                         tabBarIcon: ({ color, size, focused }) => (
@@ -28,49 +19,40 @@ export default function RootLayout() {
                         ),
                     }}
                 />
-                {userType === 'student' ?
-                    (
-                        <Tab.Screen
-                            name="tasks"
-                            component={Tasks}
-                            options={{
-                                title: "Tasks",
-                                tabBarIcon: ({ color }) => (
-                                    <ClipboardListIcon color={color} />
-                                )
-                            }}
-                        />
-                    )
-                    :
-                    (
-                        <>
-                            <Tab.Screen
-                                name="recordingList"
-                                component={RecordingList}
-                                options={{
-                                    title: "Recording List",
-                                    tabBarIcon: ({ color, focused }) => (
-                                        <TabBarIcon name={focused ? 'list' : 'list-sharp'} color={color} />
-                                    )
-                                }}
-                            />
+                <Tabs.Screen
+                    name="tasks"
+                    options={{
+                        title: "Tasks",
+                        tabBarIcon: ({ color }) => (
+                            <ClipboardListIcon color={color} />
+                        ),
+                        href: userType ==='teacher' ?  null : "/tasks"
+                    }}
+                />
+                <Tabs.Screen
+                    name="recordingList"
+                    options={{
+                        title: "Recording List",
+                        tabBarIcon: ({ color, focused }) => (
+                            <TabBarIcon name={focused ? 'list' : 'list-sharp'} color={color} />
+                        ),
+                        href: userType ==='student' ?  null : "/recordingList"
+                    }}
+                />
 
-                            <Tab.Screen
-                                name="addRecording"
-                                component={AddRecording}
-                                options={{
-                                    title: "Add Recording",
-                                    tabBarIcon: ({ color, focused }) => (
-                                        <TabBarIcon name={focused ? 'add' : 'add-sharp'} color={color} />
-                                    )
-                                }}
-                            />
-                        </>
-                    )}
+                <Tabs.Screen
+                    name="addRecording"
+                    options={{
+                        title: "Add Recording",
+                        tabBarIcon: ({ color, focused }) => (
+                            <TabBarIcon name={focused ? 'add' : 'add-sharp'} color={color} />
+                        ),
+                        href: userType ==='student' ?  null : "/addRecording"
+                    }}
+                />
 
-                <Tab.Screen
+                <Tabs.Screen
                     name="profile"
-                    component={Profile}
                     options={{
                         title: "Profile",
                         tabBarIcon: ({ color }) => (
@@ -78,7 +60,7 @@ export default function RootLayout() {
                         )
                     }}
                 />
-            </Tab.Navigator>
+            </Tabs>
         </UserContext.Provider>
     );
 }
