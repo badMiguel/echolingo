@@ -4,7 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 
 function Home() {
     const params = useLocalSearchParams();
-    const userName = params.userName
+    const userName: string = Array.isArray(params.userName) ? params.userName[0] : params.userName;
     const date = new Date();
     const hours = date.getHours();
 
