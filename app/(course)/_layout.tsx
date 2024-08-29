@@ -16,6 +16,12 @@ const CousrseLayout = () => {
                         title: courseName
                     }}
                 />
+                <Stack.Screen
+                    name='courseGame'
+                    options={{
+                        title: courseName
+                    }}
+                />
             </Stack>
         </CourseProvider>
     )

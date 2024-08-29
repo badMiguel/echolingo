@@ -20,6 +20,6 @@ export const CourseProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     );
 };
 
-export const useDharugContext = () => {
+export const useCourseContext = () => {
     return useContext(CourseContext);
 };

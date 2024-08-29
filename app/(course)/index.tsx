@@ -4,6 +4,8 @@ import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 import Slider from '@react-native-community/slider'
 import currentDharug, { DharugDataType } from './currentDharug';
+import { router } from 'expo-router';
+import { useCourseContext } from './courseProvider';
 
 type QuestionProp = {
     current: DharugDataType;
@@ -30,7 +32,12 @@ export default function Course() {
     }, []);
 
     const handleNext = (current: DharugDataType) => {
+        router.push({
+            pathname: '/courseGame'
+        });
     };
+
+    console.log(useCourseContext());
 
     return (
         <View>

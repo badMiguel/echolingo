@@ -1,7 +1,6 @@
 import dharugData from '../../data/json/dharug_list.json'
 import courseData from '../../data/json/course_data.json'
-import { useLocalSearchParams } from 'expo-router';
-import { useDharugContext } from './courseProvider';
+import { useCourseContext } from './courseProvider';
 
 export type DharugDataType = {
     id: number;
@@ -25,7 +24,8 @@ export default function currentDharug(): DharugDataType | null {
 }
 
 function filterDharug(): DharugDataType[] {
-    const courseName = useDharugContext().course;
+    console.log(useCourseContext().course)
+    const courseName = useCourseContext().course;
 
     const selectedCourse = courseData.filter(course => course.courseName === courseName);
     return dharugData.filter(item =>
