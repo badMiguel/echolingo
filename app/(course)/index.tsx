@@ -11,16 +11,20 @@ type DharugDataType = {
     "Dharug(Gloss)": string | null;
     Dharug: string | null;
     Topic: string | null;
-    "Image Name (optional)": any;
-    recording: any;
+    "Image Name (optional)": string | null;
+    recording: string | null;
     completed: boolean;
 };
 
-type CurrentType = {
-    current: DharugDataType | null;
+type QuestionProp = {
+    current: DharugDataType;
 }
 
-function Course() {
+type RecordingProp = {
+    link: string;
+}
+
+export default function Course() {
     const param = useLocalSearchParams();
     let courseName: string = Array.isArray(param.courseName)
         ? param.courseName[0] : param.courseName;
@@ -30,7 +34,13 @@ function Course() {
 
     return (
         <View>
-            <Question current={current} />
+            {!current ? (
+                <View>
+                    <Text>Congratulations! You have completed this course.</Text>
+                </View>
+            ) : (
+                <Question current={current} />
+            )}
         </View>
     )
 }
@@ -43,46 +53,49 @@ function filterDharug(courseName: string): DharugDataType[] {
     );
 }
 
-function Question({ current }: CurrentType) {
+function Question({ current }: QuestionProp) {
     return (
-        <>
-            {!current ? (
-                <View>
-                    <Text>Congratulations! You have completed this course.</Text>
-                </View>
-            ) : (
-                <View>
-                    {current.Dharug &&
-                        <>
-                            <Text>Dharug:</Text>
-                            <Text>{current.Dharug}</Text>
-                        </>
-                    }
-                    {current['Dharug(Gloss)'] &&
-                        <>
-                            <Text>Dharug (Gloss):</Text>
-                            <Text>{current['Dharug(Gloss)']}</Text>
-                        </>
-                    }
-                    {current.English &&
-                        <>
-                            <Text>English:</Text>
-                            <Text>{current.English}</Text>
-                        </>
-                    }
-                    {current['Gloss (english)'] &&
-                        <>
-                            <Text>English (Gloss):</Text>
-                            <Text>{current['Gloss (english)']}</Text>
-                        </>
-                    }
-                </View>
-            )
+        <View>
+            {current.Dharug &&
+                <>
+                    <Text>Dharug:</Text>
+                    <Text>{current.Dharug}</Text>
+                </>
             }
-        </>
+
+            {current['Dharug(Gloss)'] &&
+                <>
+                    <Text>Dharug (Gloss):</Text>
+                    <Text>{current['Dharug(Gloss)']}</Text>
+                </>
+            }
+
+            {current.recording &&
+                <Recording link={current.recording}/>
+            }
+
+            {current.English &&
+                <>
+                    <Text>English:</Text>
+                    <Text>{current.English}</Text>
+                </>
+            }
+
+            {current['Gloss (english)'] &&
+                <>
+                    <Text>English (Gloss):</Text>
+                    <Text>{current['Gloss (english)']}</Text>
+                </>
+            }
+        </View>
     );
 }
 
-export default Course
+function Recording({ link }: RecordingProp) {
+    return (
+        <View>
+        </View>
+    );
+}
 
 const styles = StyleSheet.create({})

@@ -1,3 +1,5 @@
+// apparently dynamic require() is not supported in react native
+// thsi is the only way :((
 type imageType = {
     [key: string]: string;
 }
