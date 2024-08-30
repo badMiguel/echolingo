@@ -5,6 +5,7 @@ import { Sound } from 'expo-av/build/Audio';
 import Slider from '@react-native-community/slider'
 import { DharugDataType, useDharugListContext, useDharugContextID } from '@/contexts/DharugContext';
 import { useEffect, useState } from 'react';
+import { router } from "expo-router";
 
 type QuestionProp = {
     current: DharugDataType;
@@ -23,6 +24,10 @@ export default function Sentence() {
         current = dharugList.find(item => item.id === ID);
     }
 
+    const handleNext = () => {
+        router.back();
+    }
+
     return (
         <View>
             {!current ? (
@@ -32,7 +37,7 @@ export default function Sentence() {
             ) : (
                 <>
                     <Question current={current} />
-                    <Button title='Next' onPress={() => handleNext(current)} />
+                    <Button title='Back' onPress={() => handleNext()} />
                 </>
             )}
         </View>

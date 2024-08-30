@@ -56,13 +56,12 @@ const RecordingList = () => {
 }
 
 const SentenceCard: React.FC<{ dharug: DharugDataType, finished: boolean }> = ({ dharug, finished }) => {
-    const setCurrentID = useSetDharugContextID();
-
     const goToSentence = () => {
-        setCurrentID(dharug.id);
-
         router.push({
-            pathname: '/(recordingList)'
+            pathname: '/(addRecording)',
+            params: {
+                sentenceID: dharug.id,
+            },
         });
     }
 

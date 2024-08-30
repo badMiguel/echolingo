@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 
 function Home() {
     const params = useLocalSearchParams();
@@ -21,7 +21,8 @@ function Home() {
     return (
         <View>
             <Text>Good {greetings()}</Text>
-            < Text > Hello, {userName}</Text>
+            <Text> Hello, {userName}</Text>
+            <Button title='home DELETE THIS' onPress={() => router.navigate('/')} />
         </View>
     );
 }
