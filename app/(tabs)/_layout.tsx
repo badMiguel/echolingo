@@ -20,6 +20,7 @@ export default function RootLayout() {
             <Tabs.Screen
                 name="(tasks)"
                 options={{
+                    title: "Tasks",
                     headerShown: false,
                     tabBarIcon: ({ color }) => (
                         <ClipboardListIcon color={color} />

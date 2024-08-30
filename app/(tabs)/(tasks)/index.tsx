@@ -2,7 +2,8 @@ import { Button, FlatList, Image, ScrollView, SectionList, StyleSheet, Text, Vie
 import courseData from '@/data/json/course_data.json';
 import React from 'react'
 import images from '@/constants/images';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
+import { useCourseContext, useSetCourseContext } from './courseProvider';
 
 type CourseCardProps = {
     courseNum: number,
@@ -62,13 +63,12 @@ export default function Tasks() {
 }
 
 function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
+    const setCourse = useSetCourseContext();
 
     const goToCourse = (courseName: string) => {
+        setCourse(courseName);
         router.push({
             pathname: '/course',
-            params: {
-                courseName: courseName,
-            }
         })
     };
 
