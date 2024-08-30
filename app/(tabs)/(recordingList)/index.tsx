@@ -1,4 +1,4 @@
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native'
+import { Button, FlatList, SectionList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { DharugDataType, useSetDharugContextID } from '@/contexts/DharugContext'
 import { router } from 'expo-router'
@@ -6,13 +6,51 @@ import data from '@/data/json/dharug_list.json'
 
 const RecordingList = () => {
 
+    const recorded: DharugDataType[] = data.filter(item => item.recording);
+    const notRecorded: DharugDataType[] = data.filter(item => !item.recording);
+
+    const empty = () => {
+        return {
+            id: 0,
+            English: null,
+            "Gloss (english)": null,
+            "Dharug(Gloss)": null,
+            Dharug: null,
+            Topic: null,
+            "Image Name (optional)": null,
+            recording: null,
+            completed: false,
+        }
+    }
+
+    const sections = [
+        {
+            title: "Not yet recorded",
+            data: notRecorded.length > 0 ? notRecorded : [empty()]
+        }, {
+            title: "With recordings",
+            data: recorded.length > 0 ? recorded : [empty()]
+        }];
+
     return (
-        <FlatList
-            data={data}
+        <SectionList
+            sections={sections}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) =>
-                <SentenceCard dharug={item} finished={false} />
+                item.id === 0 ? (
+                    !item.completed ? (
+                        <Text style={{}}>Congratulations! You have finished courses currently available.</Text>
+                    ) : (
+                        <Text style={{}}>You currently have not finished any course yet.</Text>
+                    )
+                ) : (
+                    <SentenceCard dharug={item} finished={false} />
+                )
             }
-            keyExtractor={item => item.id.toString()}
+            renderSectionHeader={({ section: { title } }) => (
+                <Text style={{}}>{title}</Text>
+            )}
+            style={{}}
         />
     )
 }
@@ -24,7 +62,7 @@ const SentenceCard: React.FC<{ dharug: DharugDataType, finished: boolean }> = ({
         setCurrentID(dharug.id);
 
         router.push({
-            pathname: '/sentence'
+            pathname: '/(recordingList)'
         });
     }
 
