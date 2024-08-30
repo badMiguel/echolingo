@@ -18,13 +18,13 @@ export default function RootLayout() {
                 }}
             />
             <Tabs.Screen
-                name="tasks"
+                name="(tasks)"
                 options={{
-                    title: "Tasks",
+                    headerShown: false,
                     tabBarIcon: ({ color }) => (
                         <ClipboardListIcon color={color} />
                     ),
-                    href: userType === 'teacher' ? null : "/tasks"
+                    href: userType === 'teacher' ? null : "/(tasks)"
                 }}
             />
             <Tabs.Screen

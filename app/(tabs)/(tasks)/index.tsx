@@ -1,5 +1,5 @@
 import { Button, FlatList, Image, ScrollView, SectionList, StyleSheet, Text, View } from 'react-native'
-import courseData from '../../data/json/course_data.json';
+import courseData from '@/data/json/course_data.json';
 import React from 'react'
 import images from '@/constants/images';
 import { router } from 'expo-router';
@@ -65,7 +65,7 @@ function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
 
     const goToCourse = (courseName: string) => {
         router.push({
-            pathname: '/(course)',
+            pathname: '/course',
             params: {
                 courseName: courseName,
             }

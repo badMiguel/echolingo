@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 import Slider from '@react-native-community/slider'
 import { DharugDataType, useDharugContext } from './dharugProvider';
 import { router } from 'expo-router';
-import { useCourseContext } from './courseProvider';
+import { useEffect, useState } from 'react';
 
 type QuestionProp = {
     current: DharugDataType;
@@ -85,7 +84,7 @@ function Recording({ link }: RecordingProp) {
     const [sound, setSound] = useState<Sound>();
 
     const playSound = async () => {
-        const { sound } = await Audio.Sound.createAsync(require('../../assets/audio/Jazz.mp3'));
+        const { sound } = await Audio.Sound.createAsync(require('@/assets/audio/Jazz.mp3'));
         setSound(sound);
         await sound.playAsync();
     }

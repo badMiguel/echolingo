@@ -9,10 +9,6 @@ function RootLayout() {
                 name='(tabs)'
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
-                name='(course)'
-                options={{ headerShown: false }}
-            />
         </Stack>
     )
 }

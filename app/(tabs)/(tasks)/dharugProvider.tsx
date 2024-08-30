@@ -1,8 +1,8 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 import { useCourseContext } from "./courseProvider";
-import dharugData from '../../data/json/dharug_list.json'
-import courseData from '../../data/json/course_data.json'
+import dharugData from '@/data/json/dharug_list.json'
+import courseData from '@/data/json/course_data.json'
 
 export type DharugDataType = {
     id: number;
