@@ -5,49 +5,16 @@ import { router, useLocalSearchParams } from 'expo-router'
 import { DharugDataType } from '@/contexts/DharugContext';
 import data from '@/data/json/dharug_list.json'
 
-export default function AddRecording() {
+export default function Add() {
     const { sentenceID } = useLocalSearchParams();
     const currentID = Array.isArray(sentenceID) ? parseInt(sentenceID[0]) : parseInt(sentenceID);
     const current: DharugDataType | undefined = data.find(item => item.id === currentID);
 
-    // <View>
-    //     {current.Dharug &&
-    //         <>
-    //             <Text>Dharug:</Text>
-    //             <Text>{current.Dharug}</Text>
-    //         </>
-    //     }
-    //
-    //     {current['Dharug(Gloss)'] &&
-    //         <>
-    //             <Text>Dharug (Gloss):</Text>
-    //             <Text>{current['Dharug(Gloss)']}</Text>
-    //         </>
-    //     }
-    //
-    //     {current.recording
-    //         ? <Recording link={current.recording} />
-    //         : <Text>No recording available yet</Text>
-    //     }
-    //
-    //     {current.English &&
-    //         <>
-    //             <Text>English:</Text>
-    //             <Text>{current.English}</Text>
-    //         </>
-    //     }
-    //
-    //     {current['Gloss (english)'] &&
-    //         <>
-    //             <Text>English (Gloss):</Text>
-    //             <Text>{current['Gloss (english)']}</Text>
-    //         </>
-    //     }
-    // </View>
-
     return (
         <View>
             <AddDetails current={current} />
+            <AddRecording />
+            <Button title={currentID ? 'Update' : 'Add'} onPress={() => { }} />
             {currentID
                 ? <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />
                 : null
@@ -68,6 +35,11 @@ const AddDetails: React.FC<{ current: DharugDataType | undefined }> = ({ current
             current['Dharug(Gloss)'] && setDharugGloss(current['Dharug(Gloss)']);
             current.English && setEnglish(current.English);
             current['Gloss (english)'] && setEnglishGloss(current['Gloss (english)']);
+        } else {
+            setDharug('');
+            setDharugGloss('');
+            setEnglish('');
+            setEnglishGloss('');
         }
     }, [current])
 
@@ -96,6 +68,31 @@ const AddDetails: React.FC<{ current: DharugDataType | undefined }> = ({ current
                 value={englishGloss}
                 onChangeText={(text) => setEnglishGloss(text)}
             />
+        </View>
+    );
+}
+
+function AddRecording() {
+    const record = () => {
+        router.push({
+            pathname: '/record',
+            params: {
+            }
+        });
+    }
+
+    const upload = () => {
+        router.push({
+            pathname: '/upload',
+            params: {
+            }
+        });
+    }
+
+    return (
+        <View>
+            <Button title='Record Now' onPress={() => record()} />
+            <Button title='Upload From Device' onPress={() => upload()} />
         </View>
     );
 }

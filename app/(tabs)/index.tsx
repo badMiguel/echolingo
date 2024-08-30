@@ -21,7 +21,7 @@ function Home() {
     return (
         <View>
             <Text>Good {greetings()}</Text>
-            <Text> Hello, {userName}</Text>
+            <Text>Hello, {userName}</Text>
             <Button title='home DELETE THIS' onPress={() => router.navigate('/')} />
         </View>
     );

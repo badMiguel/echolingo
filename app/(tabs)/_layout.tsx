@@ -44,6 +44,7 @@ export default function RootLayout() {
                 name="(addRecording)"
                 options={{
                     title: "Add Recording",
+                    headerShown: false,
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'add' : 'add-sharp'} color={color} />
                     ),
