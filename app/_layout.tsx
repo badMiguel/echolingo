@@ -7,7 +7,16 @@ function RootLayout() {
         <Stack>
             <Stack.Screen
                 name='(tabs)'
-                options={{ headerShown: false }}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name='index'
+                options={{
+                    headerShown: true,
+                    title: 'Choose User Type',
+                }}
             />
         </Stack>
     )

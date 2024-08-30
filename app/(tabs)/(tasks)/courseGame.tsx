@@ -1,12 +1,11 @@
 import { StyleSheet, View, Text } from "react-native";
-import { DharugDataType, useDharugContext } from "./dharugProvider";
+import { DharugDataType } from "./dharugProvider";
 
 type CurrentType = {
     current: DharugDataType;
 };
 
 export default function CourseGame() {
-    const current = useDharugContext();
     return (
         <>
             {current ? (

@@ -21,7 +21,7 @@ export function useCourseContext() {
 
 export function useSetCourseContext() {
     const context = useContext(SetCourseContext);
-    if (context === undefined) {
+    if (!context) {
         throw new Error('useSetCourseContext must be used within a CourseProvider');
     }
 

@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 import Slider from '@react-native-community/slider'
-import { DharugDataType, useDharugContext } from './dharugProvider';
+import { DharugDataType, useDharugListContext, useDharugContextID } from './dharugProvider';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 
@@ -15,14 +15,14 @@ type RecordingProp = {
     link: string;
 }
 
-function Sentence() {
-    const current = useDharugContext();
+export default function Sentence() {
+    const dharugList: DharugDataType[] | undefined = useDharugListContext();
+    const ID = useDharugContextID();
+    let current: DharugDataType | undefined;
 
-    const handleNext = (current: DharugDataType) => {
-        router.push({
-            pathname: '/courseGame'
-        });
-    };
+    if (dharugList) {
+        current = dharugList.find(item => item.id === ID);
+    }
 
     return (
         <View>

@@ -1,9 +1,9 @@
-import { Button, FlatList, Image, ScrollView, SectionList, StyleSheet, Text, View } from 'react-native'
+import { Button, Image, SectionList, StyleSheet, Text, View } from 'react-native'
 import courseData from '@/data/json/course_data.json';
 import React from 'react'
 import images from '@/constants/images';
-import { router, useNavigation } from 'expo-router';
-import { useCourseContext, useSetCourseContext } from './courseProvider';
+import { router } from 'expo-router';
+import { useSetCourseContext } from './courseProvider';
 
 type CourseCardProps = {
     courseNum: number,

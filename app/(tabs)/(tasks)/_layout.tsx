@@ -1,26 +1,33 @@
-import { StyleSheet, Text, View } from 'react-native'
-import Tasks from '.'
-import { Stack, useNavigation } from 'expo-router'
-import { CourseProvider, useCourseContext } from './courseProvider'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { StyleSheet } from 'react-native'
+import { Stack } from 'expo-router'
+import { CourseProvider } from './courseProvider'
+import { DharugProvider } from './dharugProvider'
 
 const TasksLayout = () => {
     return (
         <CourseProvider>
-            <Stack>
-                <Stack.Screen
-                    name='index'
-                    options={{
-                        title: 'Tasks',
-                    }}
-                />
-                <Stack.Screen
-                    name='course'
-                    options={{
-                        title: 'Course',
-                    }}
-                />
-            </Stack>
+            <DharugProvider>
+                <Stack>
+                    <Stack.Screen
+                        name='index'
+                        options={{
+                            title: 'Tasks',
+                        }}
+                    />
+                    <Stack.Screen
+                        name='course'
+                        options={{
+                            title: 'Course',
+                        }}
+                    />
+                    <Stack.Screen
+                        name='sentence'
+                        options={{
+                            title: 'Course',
+                        }}
+                    />
+                </Stack>
+            </DharugProvider>
         </CourseProvider>
     )
 }
