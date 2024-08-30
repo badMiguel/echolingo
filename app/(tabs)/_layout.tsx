@@ -29,13 +29,14 @@ export default function RootLayout() {
                 }}
             />
             <Tabs.Screen
-                name="recordingList"
+                name="(recordingList)"
                 options={{
                     title: "Recording List",
+                    headerShown: false,
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'list' : 'list-sharp'} color={color} />
                     ),
-                    href: userType !== 'teacher' ? null : "/recordingList"
+                    href: userType !== 'teacher' ? null : "/(recordingList)"
                 }}
             />
 

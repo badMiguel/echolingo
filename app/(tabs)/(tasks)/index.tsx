@@ -3,7 +3,7 @@ import courseData from '@/data/json/course_data.json';
 import React from 'react'
 import images from '@/constants/images';
 import { router } from 'expo-router';
-import { useSetCourseContext } from './courseProvider';
+import { useSetCourseContext } from '@/contexts/CourseContext';
 
 type CourseCardProps = {
     courseNum: number,

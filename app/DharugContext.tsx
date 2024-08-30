@@ -1,6 +1,6 @@
 import React, { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
-import { useCourseContext } from "./courseProvider";
+import { useCourseContext } from "@/contexts/CourseContext";
 import dharugData from '@/data/json/dharug_list.json'
 import courseData from '@/data/json/course_data.json'
 

@@ -1,8 +1,8 @@
 import { router, useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native'
-import { useCourseContext, useSetCourseContext } from './courseProvider';
-import { DharugDataType, useDharugListContext, useSetDharugContextID } from './dharugProvider';
+import { useCourseContext } from '@/contexts/CourseContext';
+import { DharugDataType, useDharugListContext, useSetDharugContextID } from '@/contexts/DharugContext';
 
 export default function Course() {
     const navigation = useNavigation();

@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text } from "react-native";
-import { DharugDataType } from "./dharugProvider";
+import { DharugDataType } from "@/contexts/DharugContext";
 
 type CurrentType = {
     current: DharugDataType;

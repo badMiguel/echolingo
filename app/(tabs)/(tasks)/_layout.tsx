@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { Stack } from 'expo-router'
-import { CourseProvider } from './courseProvider'
-import { DharugProvider } from './dharugProvider'
+import { CourseProvider } from '@/contexts/CourseContext'
+import { DharugProvider } from '@/contexts/DharugContext'
 
 const TasksLayout = () => {
     return (
@@ -33,5 +33,3 @@ const TasksLayout = () => {
 }
 
 export default TasksLayout
-
-const styles = StyleSheet.create({})

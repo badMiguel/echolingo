@@ -3,8 +3,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 import Slider from '@react-native-community/slider'
-import { DharugDataType, useDharugListContext, useDharugContextID } from './dharugProvider';
-import { router } from 'expo-router';
+import { DharugDataType, useDharugListContext, useDharugContextID } from '@/contexts/DharugContext';
 import { useEffect, useState } from 'react';
 
 type QuestionProp = {
