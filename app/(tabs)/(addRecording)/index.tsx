@@ -13,7 +13,7 @@ export default function Add() {
     return (
         <View>
             <AddDetails current={current} />
-            <AddRecording current={currentID} />
+            <AddRecording currentID={currentID} />
             <Button title={currentID ? 'Update' : 'Add'} onPress={() => { }} />
             {currentID
                 ? <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />
@@ -73,6 +73,7 @@ const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) =>
 }
 
 function AddRecording({ currentID }: { currentID: number | undefined}) {
+    console.log('meow', currentID)
     const record = () => {
         router.push({
             pathname: '/record',
