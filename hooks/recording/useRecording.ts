@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export default function useRecording() {
     const [recording, setRecording] = useState<Audio.Recording>();
+    const [haveRecording, setHaveRecording] = useState<boolean>(false);
     const [permissionResponse, requestPermission] = Audio.usePermissions();
     const [uri, setUri] = useState<string | null | undefined>(undefined);
 
@@ -39,9 +40,10 @@ export default function useRecording() {
 
         const uri = recording?.getURI();
         setUri(uri);
+        setHaveRecording(true);
 
     }
 
-    return { startRecording, stopRecording, recording, uri };
+    return { startRecording, stopRecording, recording, uri, haveRecording};
 
 }
