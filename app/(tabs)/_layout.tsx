@@ -5,26 +5,26 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 export default function RootLayout() {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
+    const tabFocusColor = useThemeColor({}, 'tabIconSelected');
+    const tabUnfocusedColor = useThemeColor({}, 'tabIconDefault');
 
     const params = useLocalSearchParams();
     const userType = Array.isArray(params.userType) ? params.userType[0] : params.userType;
     const userName = Array.isArray(params.userName) ? params.userName[0] : params.userName;
 
     return (
-        <Tabs
-            screenOptions={{
-                headerStyle: {
-                    backgroundColor: bgColor,
-                },
-                headerTintColor: textColor,
-            }}
-        >
+        <Tabs>
             <Tabs.Screen
                 name="index"
                 options={{
                     title: "Home",
-                    tabBarIcon: ({ color, size, focused }) => (
-                        <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} size={size} />
+                    tabBarActiveTintColor: tabFocusColor,
+                    tabBarInactiveTintColor: tabUnfocusedColor,
+                    tabBarIcon: ({ size, focused }) => (
+                        <TabBarIcon
+                            name={focused ? 'home' : 'home-outline'}
+                            color={focused ? tabFocusColor : tabUnfocusedColor}
+                            size={size} />
                     ),
                 }}
             />
@@ -33,8 +33,10 @@ export default function RootLayout() {
                 options={{
                     title: "Tasks",
                     headerShown: false,
-                    tabBarIcon: ({ color }) => (
-                        <ClipboardListIcon color={color} />
+                    tabBarActiveTintColor: tabFocusColor,
+                    tabBarInactiveTintColor: tabUnfocusedColor,
+                    tabBarIcon: ({ color, focused }) => (
+                        <ClipboardListIcon color={focused ? tabFocusColor : tabUnfocusedColor} />
                     ),
                     href: userType === 'teacher' ? null : "/(tasks)"
                 }}
@@ -44,8 +46,12 @@ export default function RootLayout() {
                 options={{
                     title: "Recording List",
                     headerShown: false,
+                    tabBarActiveTintColor: tabFocusColor,
+                    tabBarInactiveTintColor: tabUnfocusedColor,
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon name={focused ? 'list' : 'list-sharp'} color={color} />
+                        <TabBarIcon
+                            name={focused ? 'list' : 'list-sharp'}
+                            color={focused ? tabFocusColor : tabUnfocusedColor} />
                     ),
                     href: userType !== 'teacher' ? null : "/(recordingList)"
                 }}
@@ -56,8 +62,12 @@ export default function RootLayout() {
                 options={{
                     title: "Add Recording",
                     headerShown: false,
+                    tabBarActiveTintColor: tabFocusColor,
+                    tabBarInactiveTintColor: tabUnfocusedColor,
                     tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon name={focused ? 'add' : 'add-sharp'} color={color} />
+                        <TabBarIcon
+                            name={focused ? 'add' : 'add-sharp'}
+                            color={focused ? tabFocusColor : tabUnfocusedColor} />
                     ),
                     href: userType !== 'teacher' ? null : "/(addRecording)"
                 }}
@@ -67,8 +77,10 @@ export default function RootLayout() {
                 name="profile"
                 options={{
                     title: "Profile",
-                    tabBarIcon: ({ color }) => (
-                        <UserIcon color={color} />
+                    tabBarActiveTintColor: tabFocusColor,
+                    tabBarInactiveTintColor: tabUnfocusedColor,
+                    tabBarIcon: ({ color, focused }) => (
+                        <UserIcon color={focused ? tabFocusColor : tabUnfocusedColor} />
                     )
                 }}
             />

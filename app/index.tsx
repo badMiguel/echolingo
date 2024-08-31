@@ -7,6 +7,7 @@ export const UserTypeContext = createContext('');
 
 export default function Index() {
     const bgColor = useThemeColor({}, 'background');
+    const buttonColor = useThemeColor({}, 'tint');
 
     const login = (type: string, name: string) => {
         router.push({
@@ -19,13 +20,25 @@ export default function Index() {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: bgColor }}>
+        <View style={[styles.mainView, { backgroundColor: bgColor }]}>
             <Button
+                color={buttonColor}
                 onPress={() => login('student', 'Student')}
                 title='Student View' />
             <Button
+                color={buttonColor}
                 onPress={() => login('teacher', 'Teacher')}
                 title='Teacher View' />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    mainView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        gap: 20,
+    }
+})
