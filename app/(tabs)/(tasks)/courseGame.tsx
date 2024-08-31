@@ -1,8 +1,8 @@
 import { StyleSheet, View, Text } from "react-native";
-import { DharugDataType } from "@/contexts/DharugContext";
+import { DataType } from "@/contexts/DharugContext";
 
 type CurrentType = {
-    current: DharugDataType;
+    current: DataType;
 };
 
 export default function CourseGame() {

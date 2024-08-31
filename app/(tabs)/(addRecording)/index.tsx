@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
 
-import { DharugDataType } from '@/contexts/DharugContext';
+import { DataType } from '@/contexts/DharugContext';
 import data from '@/data/json/dharug_list.json'
 
 export default function Add() {
     const { sentenceID } = useLocalSearchParams();
     const currentID = Array.isArray(sentenceID) ? parseInt(sentenceID[0]) : parseInt(sentenceID);
-    const current: DharugDataType | undefined = data.find(item => item.id === currentID);
+    const current: DataType | undefined = data.find(item => item.id === currentID);
 
     return (
         <View>
@@ -23,7 +23,7 @@ export default function Add() {
     )
 }
 
-const AddDetails: React.FC<{ current: DharugDataType | undefined }> = ({ current }) => {
+const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) => {
     const [dharug, setDharug] = useState('');
     const [dharugGloss, setDharugGloss] = useState('');
     const [english, setEnglish] = useState('');

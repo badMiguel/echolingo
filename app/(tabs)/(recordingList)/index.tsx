@@ -1,35 +1,21 @@
 import { Button, FlatList, SectionList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { DharugDataType, useSetDharugContextID } from '@/contexts/DharugContext'
+import { DataType, emptyDharugData, useSetDharugContext } from '@/contexts/DharugContext'
 import { router } from 'expo-router'
 import data from '@/data/json/dharug_list.json'
 
 const RecordingList = () => {
 
-    const recorded: DharugDataType[] = data.filter(item => item.recording);
-    const notRecorded: DharugDataType[] = data.filter(item => !item.recording);
-
-    const empty = () => {
-        return {
-            id: 0,
-            English: null,
-            "Gloss (english)": null,
-            "Dharug(Gloss)": null,
-            Dharug: null,
-            Topic: null,
-            "Image Name (optional)": null,
-            recording: null,
-            completed: false,
-        }
-    }
+    const recorded: DataType[] = data.filter(item => item.recording);
+    const notRecorded: DataType[] = data.filter(item => !item.recording);
 
     const sections = [
         {
             title: "Not yet recorded",
-            data: notRecorded.length > 0 ? notRecorded : [empty()]
+            data: notRecorded.length > 0 ? notRecorded : [emptyDharugData()]
         }, {
             title: "With recordings",
-            data: recorded.length > 0 ? recorded : [empty()]
+            data: recorded.length > 0 ? recorded : [emptyDharugData()]
         }];
 
     return (
@@ -55,7 +41,7 @@ const RecordingList = () => {
     )
 }
 
-const SentenceCard: React.FC<{ dharug: DharugDataType, finished: boolean }> = ({ dharug, finished }) => {
+const SentenceCard: React.FC<{ dharug: DataType, finished: boolean }> = ({ dharug, finished }) => {
     const goToSentence = () => {
         router.push({
             pathname: '/(addRecording)',

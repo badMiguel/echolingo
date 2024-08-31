@@ -2,7 +2,7 @@ import { router, useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native'
 import { useCourseContext } from '@/contexts/CourseContext';
-import { DharugDataType, useDharugListContext, useSetDharugContextID } from '@/contexts/DharugContext';
+import { DataType, useDharugListContext, useSetDharugContext } from '@/contexts/DharugContext';
 
 export default function Course() {
     const navigation = useNavigation();
@@ -37,11 +37,11 @@ export default function Course() {
     );
 }
 
-const SentenceCard: React.FC<{ dharug: DharugDataType }> = ({ dharug }) => {
-    const setCurrentID = useSetDharugContextID();
+const SentenceCard: React.FC<{ dharug: DataType }> = ({ dharug }) => {
+    const setCurrentID = useSetDharugContext();
 
     const goToSentence = () => {
-        setCurrentID(dharug.id);
+        setCurrentID(dharug);
 
         router.push({
             pathname: '/sentence'

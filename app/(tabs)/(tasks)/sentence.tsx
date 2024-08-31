@@ -1,14 +1,12 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
-import { Audio } from 'expo-av';
-import { Sound } from 'expo-av/build/Audio';
 import Slider from '@react-native-community/slider'
-import { DharugDataType, useDharugListContext, useDharugContextID } from '@/contexts/DharugContext';
-import { useEffect, useState } from 'react';
+import { DataType, useDharugContext } from '@/contexts/DharugContext';
 import { router } from "expo-router";
+import useAudio from "@/hooks/recording/useAudio";
 
 type QuestionProp = {
-    current: DharugDataType;
+    current: DataType;
 }
 
 type RecordingProp = {
@@ -16,13 +14,7 @@ type RecordingProp = {
 }
 
 export default function Sentence() {
-    const dharugList: DharugDataType[] | undefined = useDharugListContext();
-    const ID = useDharugContextID();
-    let current: DharugDataType | undefined;
-
-    if (dharugList) {
-        current = dharugList.find(item => item.id === ID);
-    }
+    const current = useDharugContext();
 
     const handleNext = () => {
         router.back();
@@ -84,28 +76,18 @@ function Question({ current }: QuestionProp) {
 }
 
 function Recording({ link }: RecordingProp) {
-    const [sound, setSound] = useState<Sound>();
+    const { playSound } = useAudio('');
 
-    const playSound = async () => {
-        const { sound } = await Audio.Sound.createAsync(require('@/assets/audio/Jazz.mp3'));
-        setSound(sound);
-        await sound.playAsync();
+    const play = () => {
+        playSound();
     }
-
-    useEffect(() => {
-        return sound
-            ? () => {
-                sound.unloadAsync();
-            }
-            : undefined;
-    }, [sound])
 
     return (
         <View>
             <Slider />
             <View>
                 <Button title='5-' onPress={() => { }} />
-                <Button title='Play Sound' onPress={playSound} />
+                <Button title='Play Sound' onPress={() => play()} />
                 <Button title='5+' onPress={() => { }} />
             </View>
         </View>
