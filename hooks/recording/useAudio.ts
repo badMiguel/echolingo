@@ -6,7 +6,7 @@ export default function useAudio() {
     const [sound, setSound] = useState<Audio.Sound>();
     const [status, setStatus] = useState(false);
 
-    const playSound = async (uri: string) => {
+    const startSound = async (uri: string) => {
 
         // cleanup previous sound if exists
         if (sound) {
@@ -24,6 +24,14 @@ export default function useAudio() {
         await playbackObject.playAsync();
     }
 
+    const pausePlaySound = (playing: boolean) => {
+        if (playing) {
+            sound?.pauseAsync();
+        } else {
+            sound?.playAsync();
+        }
+    }
+
     const onPlaybackStatusUpdate = (status: any) => {
         if (status.didJustFinish) {
             setStatus(true);
@@ -38,5 +46,5 @@ export default function useAudio() {
             : undefined;
     }, [sound])
 
-    return { playSound, status };
+    return { startSound, pausePlaySound, status };
 }

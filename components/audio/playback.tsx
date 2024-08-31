@@ -3,31 +3,11 @@ import Slider from "@react-native-community/slider";
 import { useEffect, useState } from "react";
 import { Button, StyleSheet, View } from "react-native";
 
-type AudioPlaybackProp = {
+type URI = {
     uri: string | null | undefined;
 }
 
-export default function AudioPlayback({ uri }: AudioPlaybackProp) {
-    const [playing, setPlaying] = useState<boolean>(false);
-    const [finished, setFinished] = useState<boolean>(false);
-    const { playSound, status } = useAudio();
-
-    const playAudio = () => {
-        console.log(status)
-        if (uri) {
-            setPlaying(true);
-            const audio = playSound(uri);
-        }
-    }
-
-    const pauseAudio = () => {
-        setPlaying(false);
-    }
-
-    useEffect(() => {
-        setFinished(status);
-        console.log(status)
-    }, [status])
+export default function AudioPlayback({ uri }: URI) {
 
     return (
         <View>
@@ -38,20 +18,7 @@ export default function AudioPlayback({ uri }: AudioPlaybackProp) {
                     onPress={() => { }}
                 />
 
-                <Button
-                    title={playing && finished
-                        ? 'Play'
-                        : !playing && finished ? 'Pause'
-                        : playing ? 'Pause'
-                            : 'Play'
-                    }
-                    onPress={() => playing && finished
-                        ? playAudio()
-                        : !playing && finished ? playAudio()
-                        : playing ? pauseAudio()
-                        : playAudio()
-                    }
-                />
+                <PlayButton uri={uri} />
 
                 <Button
                     title='5+'
@@ -60,6 +27,46 @@ export default function AudioPlayback({ uri }: AudioPlaybackProp) {
             </View>
         </View>
     );
+}
+
+const PlayButton: React.FC<URI> = ({ uri }) => {
+    const [playing, setPlaying] = useState<boolean>(false);
+    const [onGoing, setOnGoing] = useState<boolean>(false);
+    const { startSound, pausePlaySound, status } = useAudio();
+
+    const startButton = () => {
+        if (uri) {
+            startSound(uri);
+        }
+
+        setOnGoing(true);
+        setPlaying(true)
+    }
+
+    const pausePlayButton = () => {
+        pausePlaySound(playing);
+        setPlaying(!playing);
+    }
+
+    useEffect(() => {
+        if (status) {
+            setOnGoing(false);
+            setPlaying(false);
+        }
+    }, [status])
+
+    return (
+        <Button
+            title={playing
+                ? "Pause"
+                : "Play"
+            }
+            onPress={onGoing
+                ? () => pausePlayButton()
+                : () => startButton()
+            }
+        />
+    )
 }
 
 const styles = StyleSheet.create({
