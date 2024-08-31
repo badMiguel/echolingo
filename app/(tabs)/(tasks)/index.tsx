@@ -4,6 +4,7 @@ import React from 'react'
 import images from '@/constants/images';
 import { router } from 'expo-router';
 import { useSetCourseContext } from '@/contexts/CourseContext';
+import { ThemedText } from '@/components/ThemedText';
 
 type CourseCardProps = {
     courseNum: number,
@@ -42,9 +43,9 @@ export default function Tasks() {
             renderItem={({ item }) =>
                 item.courseName === '' ? (
                     !item.completed ? (
-                        <Text style={styles.emptySection}>Congratulations! You have finished courses currently available.</Text>
+                        <ThemedText type='default' style={styles.emptySection}>Congratulations! You have finished courses currently available.</ThemedText>
                     ) : (
-                        <Text style={styles.emptySection}>You currently have not finished any course yet.</Text>
+                        <ThemedText type='default' style={styles.emptySection}>You currently have not finished any course yet.</ThemedText>
                     )
                 ) : (
                     <CourseCard
@@ -55,7 +56,7 @@ export default function Tasks() {
                 )
             }
             renderSectionHeader={({ section: { title } }) => (
-                <Text style={styles.tasks__header}>{title}</Text>
+                <ThemedText type='subtitle' style={styles.tasks__header}>{title}</ThemedText>
             )}
             style={styles.tasks}
         />
@@ -75,8 +76,8 @@ function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
     return (
         <View style={styles.courseCard}>
             <View style={styles.courseCard__label}>
-                <Text>Course {courseNum}</Text>
-                <Text>{courseName}</Text>
+                <ThemedText type='subtitle'>Course {courseNum}</ThemedText>
+                <ThemedText>{courseName}</ThemedText>
                 <Button
                     onPress={() => goToCourse(courseName)}
                     title='Start Now' />
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     },
 
     courseCard__imageContainer: {
-        flex: 2,
+        flex: 1.5,
         overflow: 'hidden',
     },
 

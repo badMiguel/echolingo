@@ -1,8 +1,14 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { router, useLocalSearchParams } from 'expo-router';
+import { ThemedText } from '@/components/ThemedText';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
-function Home() {
+
+export default function Home() {
+    const bgColor = useThemeColor({}, 'background');
+    const textColor = useThemeColor({}, 'text');
+
     const params = useLocalSearchParams();
     const userName: string = Array.isArray(params.userName) ? params.userName[0] : params.userName;
     const date = new Date();
@@ -19,12 +25,18 @@ function Home() {
     }
 
     return (
-        <View>
-            <Text>Good {greetings()}</Text>
-            <Text>Hello, {userName}</Text>
+        <View style={[styles.mainView, { backgroundColor: bgColor }]}>
+            <ThemedText style={{ color: textColor }} type='title'>Good {greetings()}</ThemedText>
+            <ThemedText style={{ color: textColor }} type='subtitle'>Hello, {userName}</ThemedText>
             <Button title='home DELETE THIS' onPress={() => router.navigate('/')} />
         </View>
     );
 }
 
-export default Home;
+const styles = StyleSheet.create({
+    mainView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+});

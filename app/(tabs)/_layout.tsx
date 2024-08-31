@@ -1,13 +1,24 @@
 import { Tabs, useLocalSearchParams } from "expo-router";
 import { TabBarIcon, UserIcon, ClipboardListIcon } from "@/components/navigation/TabBarIcon";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function RootLayout() {
+    const bgColor = useThemeColor({}, 'background');
+    const textColor = useThemeColor({}, 'text');
+
     const params = useLocalSearchParams();
     const userType = Array.isArray(params.userType) ? params.userType[0] : params.userType;
     const userName = Array.isArray(params.userName) ? params.userName[0] : params.userName;
 
     return (
-        <Tabs>
+        <Tabs
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: bgColor,
+                },
+                headerTintColor: textColor,
+            }}
+        >
             <Tabs.Screen
                 name="index"
                 options={{

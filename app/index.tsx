@@ -1,10 +1,12 @@
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StyleSheet } from 'react-native'
 import React, { createContext, useEffect, useState } from 'react'
 import { Link, router } from 'expo-router';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export const UserTypeContext = createContext('');
 
 export default function Index() {
+    const bgColor = useThemeColor({}, 'background');
 
     const login = (type: string, name: string) => {
         router.push({
@@ -17,13 +19,13 @@ export default function Index() {
     }
 
     return (
-        <View>
+        <View style={{ flex: 1, backgroundColor: bgColor }}>
             <Button
                 onPress={() => login('student', 'Student')}
                 title='Student View' />
             <Button
                 onPress={() => login('teacher', 'Teacher')}
-                title='Teacher View'/>
+                title='Teacher View' />
         </View>
     )
 }

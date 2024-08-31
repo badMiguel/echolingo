@@ -1,10 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
+import { useThemeColor } from '@/hooks/useThemeColor'
 
-function RootLayout() {
+export default function RootLayout() {
+
+    const bgColor = useThemeColor({}, 'background');
+    const textColor = useThemeColor({}, 'text');
+
     return (
-        <Stack>
+        <Stack
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: bgColor,
+                },
+                headerTintColor: textColor,
+            }}
+        >
             <Stack.Screen
                 name='(tabs)'
                 options={{
@@ -21,7 +33,3 @@ function RootLayout() {
         </Stack>
     )
 }
-
-export default RootLayout
-
-const styles = StyleSheet.create({})
