@@ -1,11 +1,9 @@
 import useAudio from "@/hooks/recording/useAudio";
 import Slider from "@react-native-community/slider";
-import { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { Button, StyleSheet, View } from "react-native";
 
-type URI = {
-    uri: string | null | undefined;
-}
+export type URI = string | null | undefined;
 
 type PlayButtonProps = {
     uri: URI;
@@ -18,13 +16,20 @@ type PlayButtonProps = {
     setOnGoing: React.Dispatch<SetStateAction<boolean>>;
 }
 
-type SliderProp = {
+type ForwardBackwardProp = {
+    f_or_b: string;
     uri: URI;
     startSound: (uri: string, startPos: number | undefined) => Promise<void>;
     progress: number;
     duration: number;
 }
 
+type SliderProp = {
+    uri: URI;
+    startSound: (uri: string, startPos: number | undefined) => Promise<void>;
+    progress: number;
+    duration: number;
+}
 
 export default function AudioPlayback({ uri }: { uri: URI }) {
     const { startSound, pausePlaySound, status, progress, duration } = useAudio();
@@ -41,16 +46,15 @@ export default function AudioPlayback({ uri }: { uri: URI }) {
 
     return (
         <View>
+
             <AudioSlider
                 uri={uri}
                 progress={progress}
                 duration={duration}
                 startSound={startSound}
             />
-            <Button
-                title='5-'
-                onPress={() => { }}
-            />
+
+            <ForwardBackward f_or_b="b" uri={uri} startSound={startSound} progress={progress} duration={duration} />
 
             <PlayButton
                 uri={uri}
@@ -63,10 +67,8 @@ export default function AudioPlayback({ uri }: { uri: URI }) {
                 setOnGoing={setOnGoing}
             />
 
-            <Button
-                title='5+'
-                onPress={() => { }}
-            />
+            <ForwardBackward f_or_b="f" uri={uri} startSound={startSound} progress={progress} duration={duration}/>
+
         </View>
     );
 }
@@ -90,6 +92,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({
 
     return (
         <Button
+            disabled={uri ? undefined : true}
             title={playing
                 ? "Pause"
                 : "Play"
@@ -102,8 +105,29 @@ const PlayButton: React.FC<PlayButtonProps> = ({
     )
 }
 
+const ForwardBackward: React.FC<ForwardBackwardProp> = ({ f_or_b, uri, startSound, progress, duration }) => {
+    const changePosition = () => {
+        if (typeof uri === "string") {
+            if (f_or_b === 'f') {
+                const moveTo = duration < 5000 ? duration : progress + 5000
+                startSound(uri, moveTo);
+            } else {
+                const moveTo = progress < 5000 ? 0 : progress - 5000
+                startSound(uri, moveTo);
+            }
+        }
+    }
+
+    return (
+        <Button
+            disabled={uri ? undefined : true}
+            title={f_or_b === 'f' ? '+5' : '-5'}
+            onPress={() => changePosition()}
+        />
+    );
+}
+
 const AudioSlider: React.FC<SliderProp> = ({ uri, startSound, progress, duration }) => {
-    // const [currentPos, setCurrentPos] = useState(0);
     const changePosition = (val: number) => {
         if (typeof uri === 'string') {
             startSound(uri, val);

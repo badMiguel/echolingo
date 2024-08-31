@@ -17,7 +17,7 @@ export default function useAudio() {
             await sound.unloadAsync();
         }
 
-        if (typeof startPos === 'number') {
+        if (startPos) {
             initialStatus = { shouldPlay: true, positionMillis: startPos }
         } else {
             initialStatus = { shouldPlay: true }

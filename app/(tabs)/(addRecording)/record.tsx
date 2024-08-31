@@ -8,14 +8,12 @@ export default function Record() {
 
     return (
         <View>
-            {haveRecording &&
-                <AudioPlayback uri={uri}/>
-            }
+            <AudioPlayback uri={uri} />
             <Button
-                title={recording 
-                    ? "Stop Recording" 
+                title={recording
+                    ? "Stop Recording"
                     : haveRecording ? "Record Another"
-                    : "Start Recording"}
+                        : "Start Recording"}
                 onPress={recording ? stopRecording : startRecording}
             />
         </View>
