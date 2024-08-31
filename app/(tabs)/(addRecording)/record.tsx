@@ -1,30 +1,23 @@
 import React, { useState } from "react";
-import { Text, View, Button, StyleSheet } from "react-native";
-import { Audio } from "expo-av";
+import { View, Button, StyleSheet } from "react-native";
 import useRecording from "@/hooks/recording/useRecording";
-import useAudio from "@/hooks/recording/useAudio";
+import AudioPlayback from "@/components/audio/playback";
 
 export default function Record() {
     const { startRecording, stopRecording, recording, uri, haveRecording } = useRecording();
-    const { playSound } = useAudio();
 
-    const playAudio = () => {
-        if (uri) {
-            const audio = playSound(uri);
-        }
-    }
     return (
         <View>
+            {haveRecording &&
+                <AudioPlayback uri={uri}/>
+            }
             <Button
-                title={recording ? "Stop Recording" : "Start Recording"}
+                title={recording 
+                    ? "Stop Recording" 
+                    : haveRecording ? "Record Another"
+                    : "Start Recording"}
                 onPress={recording ? stopRecording : startRecording}
             />
-            {haveRecording &&
-                <Button
-                    title="Play Audio"
-                    onPress={() => playAudio()}
-                />
-            }
         </View>
     );
 }

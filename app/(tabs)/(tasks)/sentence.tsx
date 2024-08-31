@@ -4,10 +4,7 @@ import Slider from '@react-native-community/slider'
 import { DataType, useDharugContext } from '@/contexts/DharugContext';
 import { router } from "expo-router";
 import useAudio from "@/hooks/recording/useAudio";
-
-type QuestionProp = {
-    current: DataType;
-}
+import AudioPlayback from "@/components/audio/playback";
 
 type RecordingProp = {
     link: string;
@@ -36,7 +33,7 @@ export default function Sentence() {
     );
 }
 
-function Question({ current }: QuestionProp) {
+const Question: React.FC<{ current: DataType }> = ({ current }) => {
     return (
         <View>
             {current.Dharug &&
@@ -54,7 +51,7 @@ function Question({ current }: QuestionProp) {
             }
 
             {current.recording
-                ? <Recording link={current.recording} />
+                ? <AudioPlayback uri={current.recording} />
                 : <Text>No recording available yet</Text>
             }
 
@@ -71,25 +68,6 @@ function Question({ current }: QuestionProp) {
                     <Text>{current['Gloss (english)']}</Text>
                 </>
             }
-        </View>
-    );
-}
-
-function Recording({ link }: RecordingProp) {
-    const { playSound } = useAudio('');
-
-    const play = () => {
-        playSound();
-    }
-
-    return (
-        <View>
-            <Slider />
-            <View>
-                <Button title='5-' onPress={() => { }} />
-                <Button title='Play Sound' onPress={() => play()} />
-                <Button title='5+' onPress={() => { }} />
-            </View>
         </View>
     );
 }
