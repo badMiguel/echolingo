@@ -15,7 +15,6 @@ export default function Record() {
     const { current } = useLocalSearchParams();
 
     const currentID: number = Array.isArray(current) ? parseInt(current[0]) : parseInt(current);
-    console.log(currentID)
 
     useEffect(() => {
         setTempUri(uri);

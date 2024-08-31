@@ -13,7 +13,15 @@ export default function RootLayout() {
     const userName = Array.isArray(params.userName) ? params.userName[0] : params.userName;
 
     return (
-        <Tabs>
+        <Tabs
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: bgColor,
+                    shadowColor: textColor,
+                },
+                headerTintColor: textColor,
+            }}
+        >
             <Tabs.Screen
                 name="index"
                 options={{

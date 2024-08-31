@@ -1,10 +1,11 @@
-import { Button, Image, SectionList, StyleSheet, Text, View } from 'react-native'
+import { Button, Image, Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
 import courseData from '@/data/json/course_data.json';
 import React from 'react'
 import images from '@/constants/images';
 import { router } from 'expo-router';
 import { useSetCourseContext } from '@/contexts/CourseContext';
 import { ThemedText } from '@/components/ThemedText';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type CourseCardProps = {
     courseNum: number,
@@ -12,7 +13,19 @@ type CourseCardProps = {
     courseImgSrc: any,
 };
 
+const colors = () => {
+    return {
+        bgColor: useThemeColor({}, 'background'),
+        buttonColor: useThemeColor({}, 'tint'),
+        textColor: useThemeColor({}, 'text'),
+        accent: useThemeColor({}, 'accent'),
+        tint: useThemeColor({}, 'tint'),
+    }
+}
+
 export default function Tasks() {
+    const color = colors();
+
     const unfinished = courseData.filter(item => !item.completed);
     const finished = courseData.filter(item => item.completed);
 
@@ -37,33 +50,36 @@ export default function Tasks() {
     ]
 
     return (
-        <SectionList
-            sections={sections}
-            keyExtractor={(item) => item.courseName}
-            renderItem={({ item }) =>
-                item.courseName === '' ? (
-                    !item.completed ? (
-                        <ThemedText type='default' style={styles.emptySection}>Congratulations! You have finished courses currently available.</ThemedText>
+        <View style={{ backgroundColor: color.bgColor }}>
+            <SectionList
+                sections={sections}
+                keyExtractor={(item) => item.courseName}
+                renderItem={({ item }) =>
+                    item.courseName === '' ? (
+                        !item.completed ? (
+                            <ThemedText type='default' style={[styles.emptySection, { color: color.textColor }]}>Congratulations! You have finished courses currently available.</ThemedText>
+                        ) : (
+                            <ThemedText type='default' style={[styles.emptySection, { color: color.textColor }]}>You currently have not finished any course yet.</ThemedText>
+                        )
                     ) : (
-                        <ThemedText type='default' style={styles.emptySection}>You currently have not finished any course yet.</ThemedText>
+                        <CourseCard
+                            courseNum={item.courseNum}
+                            courseName={item.courseName}
+                            courseImgSrc={images[item.courseName]}
+                        />
                     )
-                ) : (
-                    <CourseCard
-                        courseNum={item.courseNum}
-                        courseName={item.courseName}
-                        courseImgSrc={images[item.courseName]}
-                    />
-                )
-            }
-            renderSectionHeader={({ section: { title } }) => (
-                <ThemedText type='subtitle' style={styles.tasks__header}>{title}</ThemedText>
-            )}
-            style={styles.tasks}
-        />
+                }
+                renderSectionHeader={({ section: { title } }) => (
+                    <ThemedText type='subtitle' style={[styles.tasks__header, { color: color.textColor }]}>{title}</ThemedText>
+                )}
+                style={styles.tasks}
+            />
+        </View>
     )
 }
 
 function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
+    const color = colors();
     const setCourse = useSetCourseContext();
 
     const goToCourse = (courseName: string) => {
@@ -74,13 +90,18 @@ function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
     };
 
     return (
-        <View style={styles.courseCard}>
-            <View style={styles.courseCard__label}>
+        <View style={[styles.courseCard, { backgroundColor: color.accent }]}>
+            <View style={[styles.courseCard__label, { backgroundColor: color.accent }]}>
                 <ThemedText type='subtitle'>Course {courseNum}</ThemedText>
                 <ThemedText>{courseName}</ThemedText>
-                <Button
+                <Pressable
                     onPress={() => goToCourse(courseName)}
-                    title='Start Now' />
+                    style={[
+                        styles.button,
+                        { backgroundColor: color.tint }
+                    ]}>
+                    <Text style={[styles.button__title, {color: color.bgColor}]}>Start Now</Text>
+                </Pressable>
             </View>
             <View style={styles.courseCard__imageContainer}>
                 <Image
@@ -131,4 +152,10 @@ const styles = StyleSheet.create({
         width: '100%',
         resizeMode: 'cover',
     },
+
+    button: {
+    },
+
+    button__title: {
+    }
 })
