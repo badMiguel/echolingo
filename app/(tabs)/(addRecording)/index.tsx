@@ -5,22 +5,27 @@ import { router, useLocalSearchParams } from 'expo-router'
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 
 export default function Add() {
+    const [dharugList, setDharugList] = useState<DataType[] | undefined>(undefined);
     const data = useDharugListContext();
+
+    useEffect(() => {
+        setDharugList(data);
+    }, [data])
 
     let currentID: number = 0;
     let current: DataType | undefined
 
     const { sentenceID } = useLocalSearchParams();
-    if (data) {
+    if (dharugList) {
         currentID = Array.isArray(sentenceID) ? parseInt(sentenceID[0]) : parseInt(sentenceID);
-        current = data.find(item => item.id === currentID);
+        current = dharugList.find(item => item.id === currentID);
     }
 
     return (
         <View>
             <AddDetails current={current} />
-            <AddRecording currentID={currentID} />
             <Button title={currentID ? 'Update' : 'Add'} onPress={() => { }} />
+            < AddRecording currentID={currentID} />
             {currentID
                 ? <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />
                 : null

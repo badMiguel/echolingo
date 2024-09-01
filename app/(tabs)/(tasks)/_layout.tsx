@@ -9,37 +9,33 @@ const TasksLayout = () => {
     const textColor = useThemeColor({}, 'text');
 
     return (
-        <CourseProvider>
-            <DharugProvider>
-                <Stack
-                    screenOptions={{
-                        headerStyle: {
-                            backgroundColor: bgColor,
-                        },
-                        headerTintColor: textColor,
-                    }}
-                >
-                    <Stack.Screen
-                        name='index'
-                        options={{
-                            title: 'Tasks',
-                        }}
-                    />
-                    <Stack.Screen
-                        name='course'
-                        options={{
-                            title: 'Course',
-                        }}
-                    />
-                    <Stack.Screen
-                        name='sentence'
-                        options={{
-                            title: 'Course',
-                        }}
-                    />
-                </Stack>
-            </DharugProvider>
-        </CourseProvider>
+        <Stack
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: bgColor,
+                },
+                headerTintColor: textColor,
+            }}
+        >
+            <Stack.Screen
+                name='index'
+                options={{
+                    title: 'Tasks',
+                }}
+            />
+            <Stack.Screen
+                name='course'
+                options={{
+                    title: 'Course',
+                }}
+            />
+            <Stack.Screen
+                name='sentence'
+                options={{
+                    title: 'Course',
+                }}
+            />
+        </Stack>
     )
 }
 

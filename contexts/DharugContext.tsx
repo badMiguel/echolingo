@@ -31,9 +31,10 @@ export const emptyDharugData = () => {
 }
 
 
-export const DharugContext = createContext<DataType | undefined>(undefined);
-export const SetDharugContext = createContext<Dispatch<SetStateAction<DataType>> | undefined>(undefined);
-export const DharugListContext = createContext<DataType[] | undefined>(undefined);
+const DharugContext = createContext<DataType | undefined>(undefined);
+const SetDharugContext = createContext<Dispatch<SetStateAction<DataType>> | undefined>(undefined);
+const DharugListContext = createContext<DataType[] | undefined>(undefined);
+const UpdateDataContext = createContext<() => void>(() => { });
 
 export const DharugProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [currentDharug, setCurrentDharug] = useState<DataType>(emptyDharugData);
@@ -55,26 +56,31 @@ export const DharugProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     useEffect(() => {
         if (Array.isArray(dharugData)) {
             const selectedCourse = courseData.filter(item => item.courseName === course)
-
-            let dharugList: DataType[]
+            let dharugList: DataType[] = dharugData;
             if (selectedCourse.length > 0) {
                 dharugList = dharugData.filter(item =>
                     selectedCourse.some(course => course.topic.includes(item.Topic)) &&
                     !item.completed
                 );
-            } else {
-                dharugList = dharugData;
             }
-
             setFilteredList(dharugList);
         }
     }, [dharugData, course]);
+
+    const updateData = async () => {
+        const data = await loadJson();
+        if (data) {
+            setDharugData(data);
+        }
+    }
 
     return (
         <DharugListContext.Provider value={filteredList}>
             <DharugContext.Provider value={currentDharug}>
                 <SetDharugContext.Provider value={setCurrentDharug}>
-                    {children}
+                    <UpdateDataContext.Provider value={updateData}>
+                        {children}
+                    </UpdateDataContext.Provider>
                 </SetDharugContext.Provider>
             </DharugContext.Provider>
         </DharugListContext.Provider>
@@ -95,4 +101,8 @@ export function useSetDharugContext() {
 
 export const useDharugListContext = () => {
     return useContext(DharugListContext);
+}
+
+export const useUpdateData = () => {
+    return useContext(UpdateDataContext);
 }

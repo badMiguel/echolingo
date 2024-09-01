@@ -1,26 +1,40 @@
-import { Button, FlatList, SectionList, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import { Button, SectionList, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { DataType, emptyDharugData, useDharugListContext } from '@/contexts/DharugContext'
 import { router } from 'expo-router'
 
 const RecordingList = () => {
+    const [dataRecorded, setDataRecorded] = useState<DataType[]>([]);
+    const [dataNotRecorded, setDataNotRecorded] = useState<DataType[]>([]);
     const data = useDharugListContext();
 
-    let recorded: DataType[] = [];
-    let notRecorded: DataType[] = [];
+    useEffect(() => {
+        if (data) {
+            const recorded = data.filter(item => item.recording);
+            const notRecorded = data.filter(item => !item.recording);
 
-    if (data) {
-        recorded = data.filter(item => item.recording);
-        notRecorded = data.filter(item => !item.recording);
-    }
+            setDataRecorded(recorded);
+            setDataNotRecorded(notRecorded);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (data) {
+            const recorded = data.filter(item => item.recording);
+            const notRecorded = data.filter(item => !item.recording);
+
+            setDataRecorded(recorded);
+            setDataNotRecorded(notRecorded);
+        }
+    }, [data]);
 
     const sections = [
         {
             title: "Not yet recorded",
-            data: notRecorded.length > 0 ? notRecorded : [emptyDharugData()]
+            data: dataNotRecorded.length > 0 ? dataNotRecorded : [emptyDharugData()]
         }, {
             title: "With recordings",
-            data: recorded.length > 0 ? recorded : [emptyDharugData()]
+            data: dataRecorded.length > 0 ? dataRecorded : [emptyDharugData()]
         }];
 
     return (

@@ -5,12 +5,6 @@ import AudioPlayback from "@/components/audio/playback";
 import useCRUD from "@/hooks/recording/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import * as FileSystem from 'expo-file-system';
-
-const color = () => {
-    return {
-    }
-}
 
 export default function Record() {
     const bgColor = useThemeColor({}, 'background');

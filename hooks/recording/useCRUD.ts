@@ -1,5 +1,5 @@
 import * as FileSystem from 'expo-file-system';
-import { DataType } from '@/contexts/DharugContext';
+import { DataType, useUpdateData } from '@/contexts/DharugContext';
 import data from '@/data/json/dharug_list.json';
 import useData from './useData';
 
@@ -9,6 +9,7 @@ type SaveType = {
 }
 
 export default function useCRUD() {
+    const update = useUpdateData()
 
     // add recording to existing sentence
     async function save(uri: string, id: number): Promise<SaveType> {
@@ -33,7 +34,7 @@ export default function useCRUD() {
                 return { status: false };
             }
 
-            const saveStatus = await saveJsonFile(id, fileName);
+            const saveStatus = await saveJsonFile(id, fileName, update);
             if (!saveStatus.status) {
                 console.error('Failed to save json data to local storage')
                 return { status: false };
@@ -50,7 +51,7 @@ export default function useCRUD() {
 }
 
 // save json data with recording
-async function saveJsonFile(id: number, recordingURI: string): Promise<SaveType> {
+async function saveJsonFile(id: number, recordingURI: string, updateData: () => void): Promise<SaveType> {
     const { loadJson } = useData();
     try {
         const fileUri = FileSystem.documentDirectory + 'dharug_list.json';
@@ -60,6 +61,13 @@ async function saveJsonFile(id: number, recordingURI: string): Promise<SaveType>
             const dharug = jsonData.find(item => item.id === id);
             if (dharug) {
                 dharug.recording = recordingURI;
+
+                // write update json data
+                FileSystem.writeAsStringAsync(fileUri, JSON.stringify(jsonData));
+
+                // small delay
+                await new Promise(resolve => setTimeout(resolve, 100));
+                updateData()
             } else {
                 console.error('Dharug data is undefined')
                 return { status: false };
