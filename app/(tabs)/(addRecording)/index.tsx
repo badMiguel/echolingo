@@ -4,15 +4,26 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 import useCRUD from '@/hooks/recording/useCRUD';
-import { NavigationProp } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
+
+type AddDetailProp = {
+    current: DataType | undefined;
+    changeCurrent: (currentID: number) => void;
+};
 
 export default function Add() {
     const [dharugList, setDharugList] = useState<DataType[] | undefined>();
     const [currentID, setCurrentID] = useState<number>();
     const [current, setCurrent] = useState<DataType | undefined>();
 
-    const { sentenceID } = useLocalSearchParams();
+    let { sentenceID } = useLocalSearchParams();
     const data = useDharugListContext();
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        setCurrentID(undefined);
+        setCurrent(undefined);
+    }, [isFocused])
 
     useEffect(() => {
         if (dharugList) {  // todo error handling
@@ -26,14 +37,15 @@ export default function Add() {
 
     useEffect(() => {
         setDharugList(data);
-    }, [data])
+    }, [data, currentID])
 
-    useEffect(() => {
-    }, [])
+    const updateCurrent = (currentID: number) => {
+        setCurrentID(currentID);
+    }
 
     return (
         <View>
-            <AddDetails current={current} />
+            <AddDetails current={current} changeCurrent={updateCurrent} />
             {currentID ? (
                 <>
                     <AddRecording currentID={currentID} />
@@ -44,7 +56,7 @@ export default function Add() {
     )
 }
 
-const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) => {
+const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     const [dharug, setDharug] = useState<string | undefined>();
     const [dharugGloss, setDharugGloss] = useState<string | undefined>();
     const [english, setEnglish] = useState<string | undefined>();
@@ -52,6 +64,7 @@ const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) =>
     const [topic, setTopic] = useState<string | undefined>();
 
     const { saveDetails, addDetails } = useCRUD();
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         if (current) {
@@ -60,14 +73,16 @@ const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) =>
             current.English && setEnglish(current.English);
             current['Gloss (english)'] && setEnglishGloss(current['Gloss (english)']);
             current.Topic && setEnglishGloss(current.Topic);
-        } else {
-            setDharug(undefined);
-            setDharugGloss(undefined);
-            setEnglish(undefined);
-            setEnglishGloss(undefined);
-            setTopic(undefined);
         }
     }, [current]);
+
+    useEffect(() => {
+        setDharug(undefined);
+        setDharugGloss(undefined);
+        setEnglish(undefined);
+        setEnglishGloss(undefined);
+        setTopic(undefined);
+    }, [isFocused]);
 
     // todo add validation and error handling
     const updateDetails = async () => {
@@ -78,6 +93,9 @@ const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) =>
                 if (!status) {
                     throw new Error('Failed to create new data');
                 }
+
+                // todo error handling
+                currentID && changeCurrent(currentID);
             } else {
                 await saveDetails(current.id, { dharug: dharug, gDharug: dharugGloss, english: english, gEnglish: englishGloss, topic: topic });
             }
