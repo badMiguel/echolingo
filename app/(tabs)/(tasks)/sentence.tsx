@@ -1,24 +1,42 @@
-import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import Slider from '@react-native-community/slider'
+import React, { useEffect } from "react";
+import { Button, Pressable, StyleSheet, Text, View } from "react-native";
 import { DataType, useDharugContext } from '@/contexts/DharugContext';
-import { router } from "expo-router";
-import useAudio from "@/hooks/recording/useAudio";
+import { router, useNavigation } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedText } from "@/components/ThemedText";
+import { useCourseContext } from "@/contexts/CourseContext";
 
-type RecordingProp = {
-    link: string;
-}
+const useColor = () => {
+    return {
+        bgColor: useThemeColor({}, 'background'),
+        textColor: useThemeColor({}, 'text'),
+        tint: useThemeColor({}, 'tint'),
+        accent: useThemeColor({}, 'accent'),
+    };
+};
 
 export default function Sentence() {
+    const navigation = useNavigation();
     const current = useDharugContext();
+    const color = useColor();
+    const { course } = useCourseContext();
+
+    // change header title dynamically
+    useEffect(() => {
+        if (course !== 'unknown') {
+            navigation.setOptions({
+                title: course
+            })
+        }
+    }, [navigation])
 
     const handleNext = () => {
         router.back();
     }
 
     return (
-        <View>
+        <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>
             {!current ? (
                 <View>
                     <Text>Congratulations! You have completed this course.</Text>
@@ -26,7 +44,13 @@ export default function Sentence() {
             ) : (
                 <>
                     <Question current={current} />
-                    <Button title='Back' onPress={() => handleNext()} />
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                        <View style={[styles.button__container, { backgroundColor: color.tint }]}>
+                            <Pressable onPress={() => handleNext()}>
+                                <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Back</ThemedText>
+                            </Pressable>
+                        </View>
+                    </View>
                 </>
             )}
         </View>
@@ -35,42 +59,64 @@ export default function Sentence() {
 
 const Question: React.FC<{ current: DataType }> = ({ current }) => {
     return (
-        <View>
+        <View style={styles.questionView}>
             {current.Dharug &&
-                <>
-                    <Text>Dharug:</Text>
-                    <Text>{current.Dharug}</Text>
-                </>
+                <View>
+                    <ThemedText type="defaultSemiBold">Dharug:</ThemedText>
+                    <ThemedText>{current.Dharug}</ThemedText>
+                </View>
             }
 
             {current['Dharug(Gloss)'] &&
-                <>
-                    <Text>Dharug (Gloss):</Text>
-                    <Text>{current['Dharug(Gloss)']}</Text>
-                </>
+                <View>
+                    <ThemedText type="defaultSemiBold">Dharug (Gloss):</ThemedText>
+                    <ThemedText>{current['Dharug(Gloss)']}</ThemedText>
+                </View>
             }
 
-            {current.recording
-                ? <AudioPlayback uri={current.recording} />
-                : <Text>No recording available yet</Text>
-            }
+            <View>
+                {current.recording
+                    ? <AudioPlayback uri={current.recording} />
+                    : <ThemedText>No recording available yet</ThemedText>}
+            </View>
 
             {current.English &&
-                <>
-                    <Text>English:</Text>
-                    <Text>{current.English}</Text>
-                </>
+                <View>
+                    <ThemedText type="defaultSemiBold">English:</ThemedText>
+                    <ThemedText>{current.English}</ThemedText>
+                </View>
             }
 
             {current['Gloss (english)'] &&
-                <>
-                    <Text>English (Gloss):</Text>
-                    <Text>{current['Gloss (english)']}</Text>
-                </>
+                <View>
+                    <ThemedText type="defaultSemiBold">English (Gloss):</ThemedText>
+                    <ThemedText>{current['Gloss (english)']}</ThemedText>
+                </View>
             }
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    mainView: {
+        flex: 1,
+        paddingLeft: 30,
+        paddingRight: 30,
+        justifyContent: 'space-around',
+    },
+
+    questionView: {
+        flex: 2,
+        justifyContent: 'space-evenly'
+    },
+
+    button__container: {
+        marginTop: 5,
+        paddingTop: 1,
+        paddingBottom: 1,
+        paddingLeft: 20,
+        paddingRight: 20,
+        borderRadius: 10,
+        alignSelf: 'center',
+    },
 });
