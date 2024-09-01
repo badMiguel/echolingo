@@ -100,7 +100,7 @@ export default function useCRUD() {
             await new Promise(resolve => setTimeout(resolve, 100));
             update()
 
-            return { status: true, currentID: newID  };
+            return { status: true, currentID: newID };
         } catch (err) {
             console.error('Failed to save json file', err);
             return { status: false };
