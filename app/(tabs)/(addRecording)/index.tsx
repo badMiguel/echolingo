@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
 
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
+import useCRUD from '@/hooks/recording/useCRUD';
 
 export default function Add() {
     const [dharugList, setDharugList] = useState<DataType[] | undefined>(undefined);
@@ -24,7 +25,6 @@ export default function Add() {
     return (
         <View>
             <AddDetails current={current} />
-            <Button title={currentID ? 'Update' : 'Add'} onPress={() => { }} />
             < AddRecording currentID={currentID} />
             {currentID
                 ? <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />
@@ -35,10 +35,12 @@ export default function Add() {
 }
 
 const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) => {
-    const [dharug, setDharug] = useState('');
-    const [dharugGloss, setDharugGloss] = useState('');
-    const [english, setEnglish] = useState('');
-    const [englishGloss, setEnglishGloss] = useState('');
+    const [dharug, setDharug] = useState<string | undefined>();
+    const [dharugGloss, setDharugGloss] = useState<string | undefined>();
+    const [english, setEnglish] = useState<string | undefined>();
+    const [englishGloss, setEnglishGloss] = useState<string | undefined>();
+
+    const { saveDetails } = useCRUD();
 
     useEffect(() => {
         if (current) {
@@ -47,12 +49,20 @@ const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) =>
             current.English && setEnglish(current.English);
             current['Gloss (english)'] && setEnglishGloss(current['Gloss (english)']);
         } else {
-            setDharug('');
-            setDharugGloss('');
-            setEnglish('');
-            setEnglishGloss('');
+            setDharug(undefined);
+            setDharugGloss(undefined);
+            setEnglish(undefined);
+            setEnglishGloss(undefined);
         }
-    }, [current])
+    }, [current]);
+
+    const updateDetails = async () => {
+        if (current) {
+            await saveDetails(current.id, 
+                {dharug:dharug, gDharug: dharugGloss, english: english, gEnglish: englishGloss });
+        } else {
+        }
+    }
 
     return (
         <View>
@@ -78,6 +88,10 @@ const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) =>
             <TextInput
                 value={englishGloss}
                 onChangeText={(text) => setEnglishGloss(text)}
+            />
+            <Button
+                title={current?.id ? 'Update' : 'Add'}
+                onPress={() => updateDetails()}
             />
         </View>
     );

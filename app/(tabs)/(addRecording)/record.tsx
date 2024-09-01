@@ -18,7 +18,7 @@ export default function Record() {
     const [tempUri, setTempUri] = useState<string | undefined | null>();
 
     const { startRecording, stopRecording, recording, uri, haveRecording } = useRecording();
-    const { save } = useCRUD();
+    const { saveRecording } = useCRUD();
     const { current } = useLocalSearchParams();
 
     const currentID: number = Array.isArray(current) ? parseInt(current[0]) : parseInt(current);
@@ -27,13 +27,13 @@ export default function Record() {
         setTempUri(uri);
     }, [uri])
 
-    const saveRecording = async () => {
+    const save = async () => {
         if (typeof tempUri === 'string') {
             setTempUri(undefined);
             setIsLoading(true);
 
             const startTime = performance.now();
-            const status = await save(tempUri, currentID);
+            const status = await saveRecording(tempUri, currentID);
             const endTime = performance.now();
 
             // avoid upload spam
@@ -60,7 +60,7 @@ export default function Record() {
             <Button
                 disabled={!tempUri || isLoading ? true : undefined}
                 title={isLoading ? 'Loading' : 'Save'}
-                onPress={() => saveRecording()}
+                onPress={() => save()}
             />
             <Button
                 title={recording

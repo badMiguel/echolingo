@@ -1,18 +1,25 @@
 import * as FileSystem from 'expo-file-system';
 import { DataType, useUpdateData } from '@/contexts/DharugContext';
-import data from '@/data/json/dharug_list.json';
 import useData from './useData';
 
-type SaveType = {
+type SaveRecReturn = {
     status: boolean;
     filePath?: string;
+}
+
+type DataDetail = {
+    dharug?: string;
+    gDharug?: string;
+    english?: string;
+    gEnglish?: string;
+    recordingURI?: string;
 }
 
 export default function useCRUD() {
     const update = useUpdateData()
 
     // add recording to existing sentence
-    async function save(uri: string, id: number): Promise<SaveType> {
+    async function saveRecording(uri: string, id: number): Promise<SaveRecReturn> {
         try {
             const fileName = uri.split('/').pop();
             let filePath;
@@ -34,10 +41,9 @@ export default function useCRUD() {
                 return { status: false };
             }
 
-            const saveStatus = await saveJsonFile(id, fileName, update);
+            const saveStatus = await saveJsonFile(id, { recordingURI: fileName }, update);
             if (!saveStatus.status) {
-                console.error('Failed to save json data to local storage')
-                return { status: false };
+                throw new Error('Failed to save recording details to json in local storage')
             }
 
             return { status: true, filePath: filePath };
@@ -47,11 +53,29 @@ export default function useCRUD() {
         }
     }
 
-    return { save };
+    // save other details
+    async function saveDetails(id: number, { dharug, gDharug, english, gEnglish }: DataDetail) {
+        try {
+            const saveStatus = await saveJsonFile(id,
+                { dharug: dharug, gDharug: gDharug, english: english, gEnglish: gEnglish }, update);
+
+            if (!saveStatus) {
+                throw new Error('Failed to save sentence details');
+            }
+
+            return true; 
+
+        } catch (err) {
+            console.error('Failed to save sentence details', err);
+            return false;
+        }
+    }
+
+    return { saveRecording, saveDetails };
 }
 
-// save json data with recording
-async function saveJsonFile(id: number, recordingURI: string, updateData: () => void): Promise<SaveType> {
+// rewrite the actual json data
+async function saveJsonFile(id: number, updatedData: DataDetail, updateData: () => void): Promise<SaveRecReturn> {
     const { loadJson } = useData();
     try {
         const fileUri = FileSystem.documentDirectory + 'dharug_list.json';
@@ -60,7 +84,25 @@ async function saveJsonFile(id: number, recordingURI: string, updateData: () => 
         if (jsonData) {
             const dharug = jsonData.find(item => item.id === id);
             if (dharug) {
-                dharug.recording = recordingURI;
+                if (updatedData.dharug) {
+                    dharug.Dharug = updatedData.dharug;
+                }
+
+                if (updatedData.gDharug) {
+                    dharug['Dharug(Gloss)'] = updatedData.gDharug;
+                }
+
+                if (updatedData.english) {
+                    dharug.English = updatedData.english;
+                }
+
+                if (updatedData.gEnglish) {
+                    dharug['Gloss (english)'] = updatedData.gEnglish;
+                }
+
+                if (updatedData.recordingURI) {
+                    dharug.recording = updatedData.recordingURI;
+                }
 
                 // write update json data
                 FileSystem.writeAsStringAsync(fileUri, JSON.stringify(jsonData));
