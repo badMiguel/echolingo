@@ -1,8 +1,8 @@
 import React, { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 import { useCourseContext } from "@/contexts/CourseContext";
-import dharugData from '@/data/json/dharug_list.json'
 import courseData from '@/data/json/course_data.json'
+import useData from "@/hooks/recording/useData";
 
 export type DataType = {
     id: number;
@@ -37,16 +37,41 @@ export const DharugListContext = createContext<DataType[] | undefined>(undefined
 
 export const DharugProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [currentDharug, setCurrentDharug] = useState<DataType>(emptyDharugData);
-    const { course } = useCourseContext();
+    const [dharugData, setDharugData] = useState<Promise<any>>();
+    const [filteredList, setFilteredList] = useState<DataType[] | undefined>(undefined);
 
-    const selectedCourse = courseData.filter(item => item.courseName === course);
-    const dharugList: DataType[] = dharugData.filter(item =>
-        selectedCourse.some(course => course.topic.includes(item.Topic)) &&
-        !item.completed
-    );
+    const { course } = useCourseContext();
+    const { loadJson } = useData();
+
+    // todo add error handling
+    useEffect(() => {
+        const getData = async () => {
+            const data = await loadJson()
+            setDharugData(data);
+        }
+        getData();
+    }, []);
+
+    useEffect(() => {
+        if (Array.isArray(dharugData)) {
+            const selectedCourse = courseData.filter(item => item.courseName === course)
+
+            let dharugList: DataType[]
+            if (selectedCourse.length > 0) {
+                dharugList = dharugData.filter(item =>
+                    selectedCourse.some(course => course.topic.includes(item.Topic)) &&
+                    !item.completed
+                );
+            } else {
+                dharugList = dharugData;
+            }
+
+            setFilteredList(dharugList);
+        }
+    }, [dharugData, course]);
 
     return (
-        <DharugListContext.Provider value={dharugList}>
+        <DharugListContext.Provider value={filteredList}>
             <DharugContext.Provider value={currentDharug}>
                 <SetDharugContext.Provider value={setCurrentDharug}>
                     {children}

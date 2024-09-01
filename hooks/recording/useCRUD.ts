@@ -1,6 +1,7 @@
 import * as FileSystem from 'expo-file-system';
 import { DataType } from '@/contexts/DharugContext';
 import data from '@/data/json/dharug_list.json';
+import useData from './useData';
 
 type SaveType = {
     status: boolean;
@@ -50,9 +51,10 @@ export default function useCRUD() {
 
 // save json data with recording
 async function saveJsonFile(id: number, recordingURI: string): Promise<SaveType> {
+    const { loadJson } = useData();
     try {
         const fileUri = FileSystem.documentDirectory + 'dharug_list.json';
-        let jsonData: DataType[] = await loadJsonData();
+        let jsonData: DataType[] = await loadJson();
 
         if (jsonData) {
             const dharug = jsonData.find(item => item.id === id);
@@ -75,15 +77,3 @@ async function saveJsonFile(id: number, recordingURI: string): Promise<SaveType>
     }
 }
 
-// load the data from local storage
-async function loadJsonData() {
-    try {
-        const fileUri = FileSystem.documentDirectory + 'dharug_list.json';
-        const fileContents = await FileSystem.readAsStringAsync(fileUri);
-        const jsonData = JSON.parse(fileContents);
-        return jsonData;
-    } catch (err) {
-        console.error('Error loading json file', err);
-        return false;
-    }
-}

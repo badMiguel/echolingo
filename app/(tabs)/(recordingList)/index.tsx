@@ -1,13 +1,18 @@
 import { Button, FlatList, SectionList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { DataType, emptyDharugData, useSetDharugContext } from '@/contexts/DharugContext'
+import React, { useEffect } from 'react'
+import { DataType, emptyDharugData, useDharugListContext } from '@/contexts/DharugContext'
 import { router } from 'expo-router'
-import data from '@/data/json/dharug_list.json'
 
 const RecordingList = () => {
+    const data = useDharugListContext();
 
-    const recorded: DataType[] = data.filter(item => item.recording);
-    const notRecorded: DataType[] = data.filter(item => !item.recording);
+    let recorded: DataType[] = [];
+    let notRecorded: DataType[] = [];
+
+    if (data) {
+        recorded = data.filter(item => item.recording);
+        notRecorded = data.filter(item => !item.recording);
+    }
 
     const sections = [
         {
@@ -25,9 +30,9 @@ const RecordingList = () => {
             renderItem={({ item }) =>
                 item.id === 0 ? (
                     !item.completed ? (
-                        <Text style={{}}>Congratulations! You have finished courses currently available.</Text>
+                        <Text style={{}}>All sentences have been recorded</Text>
                     ) : (
-                        <Text style={{}}>You currently have not finished any course yet.</Text>
+                        <Text style={{}}>No sentences recorded yet</Text>
                     )
                 ) : (
                     <SentenceCard dharug={item} finished={false} />

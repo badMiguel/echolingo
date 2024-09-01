@@ -1,5 +1,5 @@
 import { View, Text, Button, StyleSheet } from 'react-native'
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext } from 'react'
 import { router } from 'expo-router';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import * as FileSystem from 'expo-file-system';

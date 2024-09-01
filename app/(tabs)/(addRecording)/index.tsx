@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
 
-import { DataType } from '@/contexts/DharugContext';
-import data from '@/data/json/dharug_list.json'
+import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 
 export default function Add() {
+    const data = useDharugListContext();
+
+    let currentID: number = 0;
+    let current: DataType | undefined
+
     const { sentenceID } = useLocalSearchParams();
-    const currentID = Array.isArray(sentenceID) ? parseInt(sentenceID[0]) : parseInt(sentenceID);
-    const current: DataType | undefined = data.find(item => item.id === currentID);
+    if (data) {
+        currentID = Array.isArray(sentenceID) ? parseInt(sentenceID[0]) : parseInt(sentenceID);
+        current = data.find(item => item.id === currentID);
+    }
 
     return (
         <View>
@@ -72,7 +78,7 @@ const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) =>
     );
 }
 
-function AddRecording({ currentID }: { currentID: number | undefined}) {
+function AddRecording({ currentID }: { currentID: number | undefined }) {
     const record = () => {
         router.push({
             pathname: '/record',
