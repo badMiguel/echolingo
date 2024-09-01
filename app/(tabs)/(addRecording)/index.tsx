@@ -73,7 +73,6 @@ const AddDetails: React.FC<{ current: DataType | undefined }> = ({ current }) =>
 }
 
 function AddRecording({ currentID }: { currentID: number | undefined}) {
-    console.log('meow', currentID)
     const record = () => {
         router.push({
             pathname: '/record',

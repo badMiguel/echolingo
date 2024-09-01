@@ -31,12 +31,10 @@ export default function Record() {
 
     useEffect(() => {
         setTempUri(uri);
-        console.log('out', uri);
     }, [uri])
 
     const saveRecording = async () => {
         if (typeof tempUri === 'string') {
-            console.log('in', uri);
             setTempUri(undefined);
             setIsLoading(true);
 
