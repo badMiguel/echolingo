@@ -91,17 +91,21 @@ function CourseCard({ courseNum, courseName, courseImgSrc }: CourseCardProps) {
 
     return (
         <View style={[styles.courseCard, { backgroundColor: color.accent }]}>
-            <View style={[styles.courseCard__label, { backgroundColor: color.accent }]}>
-                <ThemedText type='subtitle'>Course {courseNum}</ThemedText>
-                <ThemedText>{courseName}</ThemedText>
-                <Pressable
-                    onPress={() => goToCourse(courseName)}
-                    style={[
-                        styles.button,
-                        { backgroundColor: color.tint }
-                    ]}>
-                    <Text style={[styles.button__title, {color: color.bgColor}]}>Start Now</Text>
-                </Pressable>
+            <View style={[styles.courseCard__label__container, { backgroundColor: color.accent }]}>
+                <View style={styles.courseCard__label}>
+                    <ThemedText type='subtitle'>Course {courseNum}</ThemedText>
+                    <ThemedText>{courseName}</ThemedText>
+                </View>
+                <View style={styles.button__container}>
+                    <Pressable
+                        onPress={() => goToCourse(courseName)}
+                        style={[
+                            styles.button,
+                            { backgroundColor: color.tint }
+                        ]}>
+                        <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Start Now</ThemedText>
+                    </Pressable>
+                </View>
             </View>
             <View style={styles.courseCard__imageContainer}>
                 <Image
@@ -137,13 +141,20 @@ const styles = StyleSheet.create({
     },
 
     courseCard__label: {
+        flex: 1,
+    },
+
+    courseCard__label__container: {
         flex: 1.5,
-        padding: 10,
-        backgroundColor: 'pink',
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 10,
+        paddingBottom: 10,
+        justifyContent: 'space-around',
     },
 
     courseCard__imageContainer: {
-        flex: 1.5,
+        flex: 1.7,
         overflow: 'hidden',
     },
 
@@ -154,8 +165,19 @@ const styles = StyleSheet.create({
     },
 
     button: {
+        alignSelf: 'flex-start',
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 1,
+        paddingTop: 1,
+        borderRadius: 10,
+        flexShrink: 1,
     },
 
-    button__title: {
+    button__container: {
+        flex: 1,
+        alignSelf: 'center',
+        justifyContent: 'flex-end',
+        margin: 10,
     }
 })
