@@ -1,7 +1,7 @@
 import useAudio from "@/hooks/recording/useAudio";
 import Slider from "@react-native-community/slider";
 import React, { SetStateAction, useEffect, useState } from "react";
-import { Button, Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { TabBarIcon } from "../navigation/TabBarIcon";
 
 export type URI = string | null | undefined;
@@ -128,18 +128,26 @@ const ForwardBackward: React.FC<ForwardBackwardProp> = ({ f_or_b, uri, startSoun
 }
 
 const AudioSlider: React.FC<SliderProp> = ({ uri, startSound, progress, duration }) => {
+    const [position, setPosition] = useState<number>();
+
+    useEffect(() => {
+        setPosition(progress);
+    }, [progress]);
+
     const changePosition = (val: number) => {
+        setPosition(val)
+
         if (typeof uri === 'string') {
             startSound(uri, val);
         }
-    }
+    };
 
     return (
         <Slider
             minimumValue={0}
             maximumValue={duration}
-            value={progress}
-            onValueChange={(val) => changePosition(val)}
+            value={position}
+            onSlidingComplete={(val) => changePosition(val)}
         />
     );
 }
