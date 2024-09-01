@@ -1,4 +1,3 @@
-import { DataType } from '@/contexts/DharugContext';
 import * as FileSystem from 'expo-file-system';
 
 // load the data from local storage
