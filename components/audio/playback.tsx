@@ -1,7 +1,8 @@
 import useAudio from "@/hooks/recording/useAudio";
 import Slider from "@react-native-community/slider";
 import React, { SetStateAction, useEffect, useState } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, Pressable, StyleSheet, View } from "react-native";
+import { TabBarIcon } from "../navigation/TabBarIcon";
 
 export type URI = string | null | undefined;
 
@@ -54,20 +55,20 @@ export default function AudioPlayback({ uri }: { uri: URI }) {
                 startSound={startSound}
             />
 
-            <ForwardBackward f_or_b="b" uri={uri} startSound={startSound} progress={progress} duration={duration} />
-
-            <PlayButton
-                uri={uri}
-                startSound={startSound}
-                pausePlaySound={pausePlaySound}
-                status={status}
-                playing={playing}
-                setPlaying={setPlaying}
-                onGoing={onGoing}
-                setOnGoing={setOnGoing}
-            />
-
-            <ForwardBackward f_or_b="f" uri={uri} startSound={startSound} progress={progress} duration={duration}/>
+            <View style={{ flexDirection: "row", justifyContent: "center", gap: 40 }}>
+                <ForwardBackward f_or_b="b" uri={uri} startSound={startSound} progress={progress} duration={duration} />
+                <PlayButton
+                    uri={uri}
+                    startSound={startSound}
+                    pausePlaySound={pausePlaySound}
+                    status={status}
+                    playing={playing}
+                    setPlaying={setPlaying}
+                    onGoing={onGoing}
+                    setOnGoing={setOnGoing}
+                />
+                <ForwardBackward f_or_b="f" uri={uri} startSound={startSound} progress={progress} duration={duration} />
+            </View>
 
         </View>
     );
@@ -91,17 +92,15 @@ const PlayButton: React.FC<PlayButtonProps> = ({
     }
 
     return (
-        <Button
-            disabled={uri ? undefined : true}
-            title={playing
-                ? "Pause"
-                : "Play"
-            }
+        <Pressable
             onPress={onGoing
                 ? () => pausePlayButton()
                 : () => startButton()
             }
-        />
+            disabled={uri ? undefined : true}
+        >
+            <TabBarIcon name={playing ? "pause" : "play"} />
+        </Pressable>
     )
 }
 
@@ -119,11 +118,12 @@ const ForwardBackward: React.FC<ForwardBackwardProp> = ({ f_or_b, uri, startSoun
     }
 
     return (
-        <Button
-            disabled={uri ? undefined : true}
-            title={f_or_b === 'f' ? '+5' : '-5'}
+        <Pressable
             onPress={() => changePosition()}
-        />
+            disabled={uri ? undefined : true}
+        >
+            <TabBarIcon name={f_or_b === 'f' ? 'play-skip-forward' : 'play-skip-back'} />
+        </Pressable>
     );
 }
 
