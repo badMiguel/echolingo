@@ -4,9 +4,22 @@ import useRecording from "@/hooks/recording/useRecording";
 import AudioPlayback from "@/components/audio/playback";
 import useCRUD from "@/hooks/recording/useCRUD";
 import { useLocalSearchParams } from "expo-router";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import * as FileSystem from 'expo-file-system';
+
+const color = () => {
+    return {
+    }
+}
 
 export default function Record() {
-    const [saveStatus, setSaveStatus] = useState<boolean>(false);
+    const bgColor = useThemeColor({}, 'background');
+    const textColor = useThemeColor({}, 'text');
+    const accent = useThemeColor({}, 'accent');
+    const tint = useThemeColor({}, 'tint');
+
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [show, setShow] = useState<boolean>(false);
     const [tempUri, setTempUri] = useState<string | undefined | null>();
 
@@ -18,32 +31,43 @@ export default function Record() {
 
     useEffect(() => {
         setTempUri(uri);
+        console.log('out', uri);
     }, [uri])
 
     const saveRecording = async () => {
         if (typeof tempUri === 'string') {
+            console.log('in', uri);
             setTempUri(undefined);
-            const status = await save(tempUri, currentID);
-            console.log(status.filePath);
+            setIsLoading(true);
 
-            setTempUri(status.filePath);
-            setSaveStatus(status.status);
+            const startTime = performance.now();
+            const status = await save(tempUri, currentID);
+            const endTime = performance.now();
+
+            // avoid upload spam
+            const uploadTime = endTime - startTime;
+            if (uploadTime < 3000 && status.status) {
+                await new Promise(resolve => setTimeout(resolve, 3000 - uploadTime));
+            }
+
+            setIsLoading(false);
+            setTempUri(status.filePath);  // recording removed from original temp storage
+            setIsSuccess(status.status);
         }
 
         setShow(true);
         setTimeout(() => {
             setShow(false);
+            setIsSuccess(false);
         }, 3000)
-
-        setSaveStatus(false);
     }
 
     return (
-        <View>
+        <View style={styles.mainView}>
             <AudioPlayback uri={tempUri} />
             <Button
-                disabled={tempUri ? undefined : true}
-                title="Save"
+                disabled={!tempUri || isLoading ? true : undefined}
+                title={isLoading ? 'Loading' : 'Save'}
                 onPress={() => saveRecording()}
             />
             <Button
@@ -52,23 +76,42 @@ export default function Record() {
                     : haveRecording ? "Record Another"
                         : "Start Recording"}
                 onPress={recording ? stopRecording : startRecording}
+                disabled={isLoading ? true : undefined}
             />
-
-            {show &&
-                <Modal
-                    animationType="fade"
-                >
-                    <Text>{saveStatus
+            <View style={[styles.modal__view, { opacity: show ? 1 : 0 }]} >
+                <Text
+                    style={[styles.modal__text, { backgroundColor: accent, color: textColor }]}>
+                    {isSuccess
                         ? 'Recording successfully saved'
-                        : 'Failed to save recordign'}
-                    </Text>
-                </Modal>
-            }
-        </View>
+                        : 'Failed to save recording'
+                    }
+                </Text>
+            </View>
+        </View >
     );
 }
 
 
 
 const styles = StyleSheet.create({
+    mainView: {
+        flex: 1
+    },
+
+    modal__view: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 20,
+        marginLeft: 30,
+    },
+
+    modal__text: {
+        alignSelf: 'flex-start',
+        textAlign: 'center',
+        paddingTop: 7,
+        paddingBottom: 7,
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 5
+    }
 });

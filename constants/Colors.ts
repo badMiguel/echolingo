@@ -26,3 +26,4 @@ export const Colors = {
         accent: '#362f33',
     },
 };
+// #241d1e
