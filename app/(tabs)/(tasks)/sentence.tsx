@@ -41,7 +41,7 @@ export default function Sentence() {
         <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>
             {!current ? (
                 <View>
-                    <Text>Congratulations! You have completed this course.</Text>
+                    <ThemedText>Congratulations! You have completed this course.</ThemedText>
                 </View>
             ) : (
                 <>

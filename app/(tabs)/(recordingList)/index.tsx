@@ -1,7 +1,18 @@
-import { Button, SectionList, StyleSheet, Text, View } from 'react-native'
+import { Button, Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { DataType, emptyDharugData, useDharugListContext } from '@/contexts/DharugContext'
 import { router } from 'expo-router'
+import { ThemedText } from '@/components/ThemedText'
+import { useThemeColor } from '@/hooks/useThemeColor'
+
+const useColor =()=> {
+    return {
+        bgColor: useThemeColor({}, 'background'),
+        textColor: useThemeColor({}, 'text'),
+        accent: useThemeColor({}, 'accent'),
+        tint: useThemeColor({}, 'tint'),
+    }
+}
 
 const RecordingList = () => {
     const [dataRecorded, setDataRecorded] = useState<DataType[]>([]);
@@ -43,24 +54,25 @@ const RecordingList = () => {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) =>
                 item.id === 0 ? (
-                    !item.completed ? (
-                        <Text style={{}}>All sentences have been recorded</Text>
+                    item.completed ? (
+                        <ThemedText style={{}}>All sentences have been recorded</ThemedText>
                     ) : (
-                        <Text style={{}}>No sentences recorded yet</Text>
+                        <ThemedText style={{marginBottom: 30}}>No sentences recorded yet</ThemedText>
                     )
                 ) : (
                     <SentenceCard dharug={item} finished={false} />
                 )
             }
             renderSectionHeader={({ section: { title } }) => (
-                <Text style={{}}>{title}</Text>
+                <ThemedText type='subtitle' style={styles.sectionlist__header}>{title}</ThemedText>
             )}
-            style={{}}
+            style={styles.sectionlist}
         />
     )
 }
 
 const SentenceCard: React.FC<{ dharug: DataType, finished: boolean }> = ({ dharug, finished }) => {
+    const color = useColor();
     const goToSentence = () => {
         router.push({
             pathname: '/(addRecording)',
@@ -71,18 +83,49 @@ const SentenceCard: React.FC<{ dharug: DataType, finished: boolean }> = ({ dharu
     }
 
     return (
-        <View>
-            <Text> {dharug.id}</Text>
-            <Text>{dharug.Dharug || dharug['Dharug(Gloss)']}</Text>
-            <Text>{dharug.English || dharug['Gloss (english)']}</Text>
-            <Button
-                title='Make Recording'
-                onPress={() => goToSentence()}
-            />
+        <View style={[styles.sentenceCard__container, { backgroundColor: color.accent }]}>
+            <ThemedText type='defaultSemiBold'>{dharug.Dharug ? 'Dharug: ' : 'Dharug Gloss: '}</ThemedText>
+            <ThemedText>{dharug.Dharug || dharug['Dharug(Gloss)']}</ThemedText>
+            <ThemedText type='defaultSemiBold'>{dharug.English ? 'English: ' : 'English Gloss: '}</ThemedText>
+            <ThemedText>{dharug.English || dharug['Gloss (english)']}</ThemedText>
+            <View style={[styles.button__container, { backgroundColor: color.tint }]}>
+                <Pressable onPress={() => goToSentence()}>
+                    <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Add Recording</ThemedText>
+                </Pressable>
+            </View>
         </View>
     );
 }
 
 export default RecordingList
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    sectionlist: {
+        paddingLeft: 30,
+        paddingRight: 30,
+    },
+
+    sectionlist__header: {
+        marginTop: 30,
+    },
+
+    sentenceCard__container: {
+        marginBottom: 10,
+        marginTop: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        borderRadius: 10,
+    },
+
+    button__container: {
+        marginTop: 5,
+        paddingTop: 1,
+        paddingBottom: 1,
+        paddingLeft: 20,
+        paddingRight: 20,
+        borderRadius: 10,
+        alignSelf: 'center',
+    },
+})
