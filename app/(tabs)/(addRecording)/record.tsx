@@ -70,9 +70,9 @@ export default function Record() {
                 onPress={recording ? stopRecording : startRecording}
                 disabled={isLoading ? true : undefined}
             />
-            <View style={[styles.modal__view, { opacity: show ? 1 : 0 }]} >
+            <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
                 <Text
-                    style={[styles.modal__text, { backgroundColor: accent, color: textColor }]}>
+                    style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>
                     {isSuccess
                         ? 'Recording successfully saved'
                         : 'Failed to save recording'
@@ -90,14 +90,14 @@ const styles = StyleSheet.create({
         flex: 1
     },
 
-    modal__view: {
+    notif__view: {
         flex: 1,
         justifyContent: 'flex-end',
         marginBottom: 20,
         marginLeft: 30,
     },
 
-    modal__text: {
+    notif__text: {
         alignSelf: 'flex-start',
         textAlign: 'center',
         paddingTop: 7,

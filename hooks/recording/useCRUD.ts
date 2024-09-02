@@ -2,7 +2,7 @@ import * as FileSystem from 'expo-file-system';
 import { DataType, useUpdateData } from '@/contexts/DharugContext';
 import useData from './useData';
 
-type SaveRecReturn = {
+export type SaveRecReturn = {
     status: boolean;
     filePath?: string;
 }

@@ -32,7 +32,7 @@ type SliderProp = {
     duration: number;
 }
 
-export default function AudioPlayback({ uri }: { uri: URI }) {
+export default function AudioPlayback({ uri, disabled }: { uri: URI, disabled?: boolean }) {
     const { startSound, pausePlaySound, status, progress, duration } = useAudio();
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);

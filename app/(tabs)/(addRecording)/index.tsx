@@ -11,7 +11,6 @@ type AddDetailProp = {
 };
 
 export default function Add() {
-    const [dharugList, setDharugList] = useState<DataType[] | undefined>();
     const [currentID, setCurrentID] = useState<number>();
     const [current, setCurrent] = useState<DataType | undefined>();
 
@@ -19,18 +18,14 @@ export default function Add() {
     const data = useDharugListContext();
 
     useEffect(() => {
-        if (dharugList) {  // todo error handling
+        if (data) {  // todo error handling
             const id: number = Array.isArray(sentenceID) ? parseInt(sentenceID[0]) : parseInt(sentenceID);
-            const item: DataType | undefined = dharugList.find(item => item.id === id);
+            const item: DataType | undefined = data.find(item => item.id === id);
 
             setCurrentID(id);
             setCurrent(item);
         }
-    }, [sentenceID]);
-
-    useEffect(() => {
-        setDharugList(data);
-    }, [data, currentID])
+    }, [sentenceID, data]);
 
     const updateCurrent = (currentID: number) => { setCurrentID(currentID) }
 
@@ -64,13 +59,17 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
             current['Gloss (english)'] && setEnglishGloss(current['Gloss (english)']);
             current.Topic && setEnglishGloss(current.Topic);
         } else {
-            setDharug(undefined);
-            setDharugGloss(undefined);
-            setEnglish(undefined);
-            setEnglishGloss(undefined);
-            setTopic(undefined);
+            clearForm();
         }
     }, [current]);
+
+    const clearForm = () => {
+        setDharug(undefined);
+        setDharugGloss(undefined);
+        setEnglish(undefined);
+        setEnglishGloss(undefined);
+        setTopic(undefined);
+    }
 
     // todo add validation and error handling
     const updateDetails = async () => {
@@ -127,6 +126,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 title={current?.id ? 'Update' : 'Add'}
                 onPress={() => updateDetails()}
             />
+            <Button title="Clear" onPress={() => clearForm()} />
         </View>
     );
 }
