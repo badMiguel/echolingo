@@ -4,6 +4,7 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 import useCRUD from '@/hooks/recording/useCRUD';
+import { useIsFocused } from '@react-navigation/native';
 
 type AddDetailProp = {
     current: DataType | undefined;
@@ -14,7 +15,7 @@ export default function Add() {
     const [currentID, setCurrentID] = useState<number>();
     const [current, setCurrent] = useState<DataType | undefined>();
 
-    let { sentenceID } = useLocalSearchParams();
+    const { sentenceID } = useLocalSearchParams();
     const data = useDharugListContext();
 
     useEffect(() => {
@@ -22,10 +23,11 @@ export default function Add() {
             const id: number = Array.isArray(sentenceID) ? parseInt(sentenceID[0]) : parseInt(sentenceID);
             const item: DataType | undefined = data.find(item => item.id === id);
 
-            setCurrentID(id);
-            setCurrent(item);
+            setCurrentID(id)
+            setCurrent(item)
         }
     }, [sentenceID, data]);
+
 
     const updateCurrent = (currentID: number) => { setCurrentID(currentID) }
 
@@ -83,6 +85,8 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
 
                 // todo error handling
                 currentID && changeCurrent(currentID);
+
+                router.setParams({sentenceID: currentID});
             } else {
                 await saveDetails(current.id, { dharug: dharug, gDharug: dharugGloss, english: english, gEnglish: englishGloss, topic: topic });
             }
