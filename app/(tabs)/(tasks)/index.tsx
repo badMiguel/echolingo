@@ -1,4 +1,4 @@
-import { Button, Image, Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
 import courseData from '@/data/json/course_data.json';
 import React from 'react'
 import images from '@/constants/images';

@@ -7,6 +7,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import { useCourseContext } from "@/contexts/CourseContext";
 import Record from "../(addRecording)/record";
+import * as FileSystem from 'expo-file-system';
 
 const useColor = () => {
     return {
@@ -32,7 +33,7 @@ export default function Sentence() {
         }
     }, [navigation])
 
-    const handleNext = () => {
+    const goBack = () => {
         router.back();
     }
 
@@ -49,7 +50,7 @@ export default function Sentence() {
                     <Record />
                     <View style={{ flex: 1, justifyContent: 'center' }}>
                         <View style={[styles.button__container, { backgroundColor: color.tint }]}>
-                            <Pressable onPress={() => handleNext()}>
+                            <Pressable onPress={() => goBack()}>
                                 <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Back</ThemedText>
                             </Pressable>
                         </View>
@@ -80,7 +81,7 @@ const Question: React.FC<{ current: DataType }> = ({ current }) => {
             {current.recording ?
                 <View>
                     <ThemedText type="defaultSemiBold">Teachers Recording:</ThemedText>
-                    <AudioPlayback uri={current.recording} />
+                    <AudioPlayback uri={FileSystem.documentDirectory + current.recording} />
                 </View>
                 : <ThemedText>No recording available yet</ThemedText>
             }

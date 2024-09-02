@@ -8,29 +8,35 @@ export default function useAudio() {
     const [duration, setDuration] = useState<number>(0);
 
     const startSound = async (uri: string, startPos?: number) => {
-        let initialStatus;
 
-        // cleanup previous sound if exists
-        if (sound) {
-            setStatus(false);
-            setProgress(0);
-            await sound.unloadAsync();
+        try {
+            console.log(uri);
+            let initialStatus;
+
+            // cleanup previous sound if exists
+            if (sound) {
+                setStatus(false);
+                setProgress(0);
+                await sound.unloadAsync();
+            }
+
+            if (startPos) {
+                initialStatus = { shouldPlay: true, positionMillis: startPos }
+            } else {
+                initialStatus = { shouldPlay: true }
+            }
+
+            const { sound: playbackObject } = await Audio.Sound.createAsync(
+                { uri: uri },
+                initialStatus,
+                onPlaybackStatusUpdate,
+            );
+
+            setSound(playbackObject);
+            await playbackObject.playAsync();
+        } catch (err) {
+            console.error('Error playing sound', err);
         }
-
-        if (startPos) {
-            initialStatus = { shouldPlay: true, positionMillis: startPos }
-        } else {
-            initialStatus = { shouldPlay: true }
-        }
-
-        const { sound: playbackObject } = await Audio.Sound.createAsync(
-            { uri: uri },
-            initialStatus,
-            onPlaybackStatusUpdate,
-        );
-
-        setSound(playbackObject);
-        await playbackObject.playAsync();
     }
 
     const pausePlaySound = (playing: boolean) => {
