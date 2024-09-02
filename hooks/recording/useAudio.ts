@@ -8,9 +8,7 @@ export default function useAudio() {
     const [duration, setDuration] = useState<number>(0);
 
     const startSound = async (uri: string, startPos?: number) => {
-
         try {
-            console.log(uri);
             let initialStatus;
 
             // cleanup previous sound if exists
