@@ -5,6 +5,7 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 import useCRUD from '@/hooks/recording/useCRUD';
 import { useIsFocused } from '@react-navigation/native';
+import { ThemedText } from '@/components/ThemedText';
 
 type AddDetailProp = {
     current: DataType | undefined;
@@ -51,6 +52,8 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     const [englishGloss, setEnglishGloss] = useState<string | undefined>();
     const [topic, setTopic] = useState<string | undefined>();
 
+    
+
     const { saveDetails, addDetails } = useCRUD();
 
     useEffect(() => {
@@ -65,6 +68,10 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
         }
     }, [current]);
 
+    useEffect(() => {
+        setShowError(false);
+    }, [dharug, dharugGloss, english, englishGloss]);
+
     const clearForm = () => {
         setDharug(undefined);
         setDharugGloss(undefined);
@@ -75,6 +82,11 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
 
     // todo add validation and error handling
     const updateDetails = async () => {
+        if (!((dharug || dharugGloss) && (english || englishGloss))) {
+            setShowError(true);
+            return;
+        }
+
         try {
             if (!current) {
                 const { status, currentID } = await addDetails(
@@ -85,8 +97,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
 
                 // todo error handling
                 currentID && changeCurrent(currentID);
-
-                router.setParams({sentenceID: currentID});
+                router.setParams({ sentenceID: currentID });
             } else {
                 await saveDetails(current.id, { dharug: dharug, gDharug: dharugGloss, english: english, gEnglish: englishGloss, topic: topic });
             }
@@ -96,36 +107,58 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     }
 
     return (
-        <View>
-            <Text>Dharug</Text>
-            <TextInput
-                value={dharug}
-                onChangeText={(text) => setDharug(text)}
-            />
+        <View style={styles.mainView}>
+            <View style={styles.formItem}>
+                <ThemedText type='defaultSemiBold'>Dharug</ThemedText>
+                <TextInput
+                    autoCorrect={false}  // might be frustrating if yes for uncommon language
+                    value={dharug}
+                    onChangeText={(text) => setDharug(text)}
+                    style={[styles.formItem,
+                    {}]}
+                />
+            </View>
 
-            <Text>Dharug (Gloss)</Text>
-            <TextInput
-                value={dharugGloss}
-                onChangeText={(text) => setDharugGloss(text)}
-            />
+            <View style={styles.formItem}>
+                <ThemedText type='defaultSemiBold'>Dharug (Gloss)</ThemedText>
+                <TextInput
+                    autoCorrect={false}  // might be frustrating if yes for uncommon language
+                    value={dharugGloss}
+                    onChangeText={(text) => setDharugGloss(text)}
+                    style={styles.formItem}
+                />
+            </View>
 
-            <Text>English</Text>
-            <TextInput
-                value={english}
-                onChangeText={(text) => setEnglish(text)}
-            />
+            <View style={styles.formItem}>
+                <ThemedText type='defaultSemiBold'>English</ThemedText>
+                <TextInput
+                    autoCorrect={false}  // might be frustrating if yes for uncommon language
+                    value={english}
+                    onChangeText={(text) => setEnglish(text)}
+                    style={styles.formItem}
+                />
+            </View>
 
-            <Text>English Gloss</Text>
-            <TextInput
-                value={englishGloss}
-                onChangeText={(text) => setEnglishGloss(text)}
-            />
+            <View style={styles.formItem}>
+                <ThemedText type='defaultSemiBold'>English Gloss</ThemedText>
+                <TextInput
+                    autoCorrect={false}  // might be frustrating if yes for uncommon language
+                    value={englishGloss}
+                    onChangeText={(text) => setEnglishGloss(text)}
+                    style={styles.formItem}
+                />
+            </View>
 
-            <Text>Topic</Text>
-            <TextInput
-                value={topic}
-                onChangeText={(text) => setEnglishGloss(text)}
-            />
+            <View style={styles.formItem}>
+                <ThemedText type='defaultSemiBold'>Topic</ThemedText>
+                <TextInput
+                    autoCorrect={false}  // might be frustrating if yes for uncommon language
+                    value={topic}
+                    onChangeText={(text) => setEnglishGloss(text)}
+                    style={styles.formItem}
+                />
+            </View>
+
             <Button
                 title={current?.id ? 'Update' : 'Add'}
                 onPress={() => updateDetails()}
@@ -162,4 +195,14 @@ function AddRecording({ currentID }: { currentID: number | undefined }) {
     );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    mainView: {
+        marginRight: 30,
+        marginLeft: 30,
+        marginTop: 30,
+    },
+
+    formItem: {
+        borderBottomWidth: 0.2,
+    },
+})
