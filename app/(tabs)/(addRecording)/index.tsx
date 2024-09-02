@@ -4,7 +4,6 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 import useCRUD from '@/hooks/recording/useCRUD';
-import { useIsFocused } from '@react-navigation/native';
 
 type AddDetailProp = {
     current: DataType | undefined;
@@ -18,12 +17,6 @@ export default function Add() {
 
     let { sentenceID } = useLocalSearchParams();
     const data = useDharugListContext();
-    const isFocused = useIsFocused();
-
-    useEffect(() => {
-        setCurrentID(undefined);
-        setCurrent(undefined);
-    }, [isFocused])
 
     useEffect(() => {
         if (dharugList) {  // todo error handling
@@ -39,9 +32,7 @@ export default function Add() {
         setDharugList(data);
     }, [data, currentID])
 
-    const updateCurrent = (currentID: number) => {
-        setCurrentID(currentID);
-    }
+    const updateCurrent = (currentID: number) => { setCurrentID(currentID) }
 
     return (
         <View>
@@ -49,7 +40,7 @@ export default function Add() {
             {currentID ? (
                 <>
                     <AddRecording currentID={currentID} />
-                    <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />
+                    {sentenceID && <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />}
                 </>
             ) : null}
         </View>
@@ -64,7 +55,6 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     const [topic, setTopic] = useState<string | undefined>();
 
     const { saveDetails, addDetails } = useCRUD();
-    const isFocused = useIsFocused();
 
     useEffect(() => {
         if (current) {
@@ -73,16 +63,14 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
             current.English && setEnglish(current.English);
             current['Gloss (english)'] && setEnglishGloss(current['Gloss (english)']);
             current.Topic && setEnglishGloss(current.Topic);
+        } else {
+            setDharug(undefined);
+            setDharugGloss(undefined);
+            setEnglish(undefined);
+            setEnglishGloss(undefined);
+            setTopic(undefined);
         }
     }, [current]);
-
-    useEffect(() => {
-        setDharug(undefined);
-        setDharugGloss(undefined);
-        setEnglish(undefined);
-        setEnglishGloss(undefined);
-        setTopic(undefined);
-    }, [isFocused]);
 
     // todo add validation and error handling
     const updateDetails = async () => {
