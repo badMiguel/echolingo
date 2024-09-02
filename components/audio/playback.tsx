@@ -40,6 +40,7 @@ const useColor = () => {
         textColor: useThemeColor({}, 'text'),
         tint: useThemeColor({}, 'tint'),
         accent: useThemeColor({}, 'accent'),
+        tabIconColor: useThemeColor({}, 'tabIconDefault'),
     }
 };
 
@@ -47,6 +48,7 @@ export default function AudioPlayback({ uri, disabled }: { uri: URI, disabled?: 
     const { startSound, pausePlaySound, status, progress, duration } = useAudio();
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);
+    const color = useColor();
 
     useEffect(() => {
         if (status) {
@@ -57,8 +59,7 @@ export default function AudioPlayback({ uri, disabled }: { uri: URI, disabled?: 
 
 
     return (
-        <View>
-
+        <View style={[styles.mainView, { backgroundColor: color.accent }]}>
             <AudioSlider
                 uri={uri}
                 progress={progress}
@@ -66,7 +67,6 @@ export default function AudioPlayback({ uri, disabled }: { uri: URI, disabled?: 
                 startSound={startSound}
                 setPlaying={setPlaying}
             />
-
             <View style={styles.playControls}>
                 <ForwardBackward f_or_b="b" uri={uri} startSound={startSound} progress={progress} duration={duration} />
                 <PlayButton
@@ -81,7 +81,6 @@ export default function AudioPlayback({ uri, disabled }: { uri: URI, disabled?: 
                 />
                 <ForwardBackward f_or_b="f" uri={uri} startSound={startSound} progress={progress} duration={duration} />
             </View>
-
         </View>
     );
 }
@@ -113,7 +112,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({
             }
             disabled={uri ? undefined : true}
         >
-            <TabBarIcon color={uri ? color.tint : color.accent} size={50} name={playing ? "pause-circle-sharp" : "play-circle-sharp"} />
+            <TabBarIcon color={uri ? color.tint : color.tabIconColor} size={50} name={playing ? "pause-circle-sharp" : "play-circle-sharp"} />
         </Pressable>
     )
 }
@@ -137,7 +136,7 @@ const ForwardBackward: React.FC<ForwardBackwardProp> = ({ f_or_b, uri, startSoun
             onPress={() => changePosition()}
             disabled={uri ? undefined : true}
         >
-            <TabBarIcon color={uri ? color.tint : color.accent} size={30} name={f_or_b === 'f' ? 'play-skip-forward' : 'play-skip-back'} />
+            <TabBarIcon color={uri ? color.tint : color.tabIconColor} size={30} name={f_or_b === 'f' ? 'play-skip-forward' : 'play-skip-back'} />
         </Pressable>
     );
 }
@@ -161,23 +160,39 @@ const AudioSlider: React.FC<SliderProp> = ({ uri, startSound, progress, duration
 
     return (
         <Slider
+            style={styles.slider}
             minimumValue={0}
             maximumValue={duration}
             value={position}
             onSlidingComplete={(val) => changePosition(val)}
             minimumTrackTintColor={color.tint}
-            maximumTrackTintColor={color.accent}
+            maximumTrackTintColor={color.tabIconColor}
             thumbTintColor={color.tint}
+            disabled={uri ? false : true}
         />
     );
 }
 
 const styles = StyleSheet.create({
+    mainView: {
+        marginTop: 10,
+        borderRadius: 20,
+        marginBottom: 10,
+    },
+
     playControls: {
         flexDirection: "row",
         justifyContent: "center",
         gap: 40,
         alignItems: "center",
-    }
+        paddingTop: 10,
+        paddingBottom: 20,
+    },
+
+    slider: {
+        paddingTop: 20,
+        marginLeft: 20,
+        marginRight: 20,
+    },
 })
 

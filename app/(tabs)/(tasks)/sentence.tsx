@@ -47,7 +47,7 @@ export default function Sentence() {
                 <>
                     <Question current={current} />
                     <ThemedText type="defaultSemiBold">Make your own recording:</ThemedText>
-                    <Record />
+                    <Record fromStudent={true} />
                     <View style={{ flex: 1, justifyContent: 'center' }}>
                         <View style={[styles.button__container, { backgroundColor: color.tint }]}>
                             <Pressable onPress={() => goBack()}>

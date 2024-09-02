@@ -6,7 +6,7 @@ import useCRUD from "@/hooks/recording/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
-export default function Record() {
+export default function Record({ fromStudent }: { fromStudent?: boolean }) {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
     const accent = useThemeColor({}, 'accent');
@@ -57,11 +57,13 @@ export default function Record() {
     return (
         <View style={styles.mainView}>
             <AudioPlayback uri={tempUri} />
-            <Button
-                disabled={!tempUri || isLoading ? true : undefined}
-                title={isLoading ? 'Loading' : 'Save'}
-                onPress={() => save()}
-            />
+            {!fromStudent &&
+                <Button
+                    disabled={!tempUri || isLoading ? true : undefined}
+                    title={isLoading ? 'Loading' : 'Save'}
+                    onPress={() => save()}
+                />
+            }
             <Button
                 title={recording
                     ? "Stop Recording"
