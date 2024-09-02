@@ -48,13 +48,7 @@ export default function Sentence() {
                     <Question current={current} />
                     <ThemedText type="defaultSemiBold">Make your own recording:</ThemedText>
                     <Record fromStudent={true} />
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
-                        <View style={[styles.button__container, { backgroundColor: color.tint }]}>
-                            <Pressable onPress={() => goBack()}>
-                                <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Back</ThemedText>
-                            </Pressable>
-                        </View>
-                    </View>
+                    <View style={{ flex: 1 }} />
                 </>
             )}
         </View>
@@ -83,7 +77,7 @@ const Question: React.FC<{ current: DataType }> = ({ current }) => {
                     <ThemedText type="defaultSemiBold">Teachers Recording:</ThemedText>
                     <AudioPlayback uri={FileSystem.documentDirectory + current.recording} />
                 </View>
-                : <ThemedText>No recording available yet</ThemedText>
+                : <ThemedText type='defaultSemiBold' style={{ alignSelf: 'center' }}>No recording available yet</ThemedText>
             }
 
             {

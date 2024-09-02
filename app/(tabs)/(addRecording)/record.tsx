@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Button, StyleSheet, Modal, Text } from "react-native";
+import { View, Button, StyleSheet, Pressable } from "react-native";
 import useRecording from "@/hooks/recording/useRecording";
 import AudioPlayback from "@/components/audio/playback";
 import useCRUD from "@/hooks/recording/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedText } from "@/components/ThemedText";
 
 export default function Record({ fromStudent }: { fromStudent?: boolean }) {
     const bgColor = useThemeColor({}, 'background');
@@ -64,22 +65,25 @@ export default function Record({ fromStudent }: { fromStudent?: boolean }) {
                     onPress={() => save()}
                 />
             }
-            <Button
-                title={recording
-                    ? "Stop Recording"
-                    : haveRecording ? "Record Another"
-                        : "Start Recording"}
+            <Pressable
                 onPress={recording ? stopRecording : startRecording}
                 disabled={isLoading ? true : undefined}
-            />
+                style={[styles.recordButton,]}
+            >
+                <ThemedText style={[styles.recordButton__text, { color: bgColor, backgroundColor: tint }]}>
+                    {recording ? "Stop Recording"
+                        : haveRecording ? "Record Another"
+                            : "Start Recording"}
+                </ThemedText>
+            </Pressable>
             <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
-                <Text
+                <ThemedText
                     style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>
                     {isSuccess
                         ? 'Recording successfully saved'
                         : 'Failed to save recording'
                     }
-                </Text>
+                </ThemedText>
             </View>
         </View >
     );
@@ -107,5 +111,18 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         borderRadius: 5
-    }
+    },
+
+    recordButton: {
+        alignSelf: 'center',
+    },
+
+    recordButton__text: {
+        paddingRight: 15,
+        paddingLeft: 15,
+        paddingTop: 2,
+        paddingBottom: 2,
+        borderRadius: 10,
+        alignSelf: 'flex-start',
+    },
 });
