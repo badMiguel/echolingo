@@ -4,13 +4,22 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 import useCRUD from '@/hooks/recording/useCRUD';
-import { useIsFocused } from '@react-navigation/native';
 import { ThemedText } from '@/components/ThemedText';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type AddDetailProp = {
     current: DataType | undefined;
     changeCurrent: (currentID: number) => void;
 };
+
+const useColor = () => {
+    return {
+        bgColor: useThemeColor({}, 'background'),
+        textColor: useThemeColor({}, 'text'),
+        tint: useThemeColor({}, 'tint'),
+        accent: useThemeColor({}, 'accent'),
+    }
+}
 
 export default function Add() {
     const [currentID, setCurrentID] = useState<number>();
@@ -18,6 +27,7 @@ export default function Add() {
 
     const { sentenceID } = useLocalSearchParams();
     const data = useDharugListContext();
+    const color = useColor();
 
     useEffect(() => {
         if (data) {  // todo error handling
@@ -33,15 +43,17 @@ export default function Add() {
     const updateCurrent = (currentID: number) => { setCurrentID(currentID) }
 
     return (
-        <View>
+        <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>
             <AddDetails current={current} changeCurrent={updateCurrent} />
-            {currentID ? (
-                <>
-                    <AddRecording currentID={currentID} />
-                    {sentenceID && <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />}
-                </>
-            ) : null}
-        </View>
+            {
+                currentID ? (
+                    <>
+                        <AddRecording currentID={currentID} />
+                        {sentenceID && <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />}
+                    </>
+                ) : null
+            }
+        </View >
     )
 }
 
@@ -52,9 +64,13 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     const [englishGloss, setEnglishGloss] = useState<string | undefined>();
     const [topic, setTopic] = useState<string | undefined>();
 
-    
+    const [dharugError, setDharugError] = useState<boolean>(false);
+    const [dharugGlossError, setDharugGlossError] = useState<boolean>(false);
+    const [englishError, setEnglishError] = useState<boolean>(false);
+    const [englishGlossError, setEnglishGlossError] = useState<boolean>(false);
 
     const { saveDetails, addDetails } = useCRUD();
+    const color = useColor();
 
     useEffect(() => {
         if (current) {
@@ -69,7 +85,6 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     }, [current]);
 
     useEffect(() => {
-        setShowError(false);
     }, [dharug, dharugGloss, english, englishGloss]);
 
     const clearForm = () => {
@@ -82,8 +97,11 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
 
     // todo add validation and error handling
     const updateDetails = async () => {
-        if (!((dharug || dharugGloss) && (english || englishGloss))) {
-            setShowError(true);
+        if (!(dharug || dharugGloss)) {
+            return;
+        }
+
+        if (!(english || englishGloss)) {
             return;
         }
 
@@ -107,55 +125,59 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     }
 
     return (
-        <View style={styles.mainView}>
-            <View style={styles.formItem}>
+        <View>
+            <View style={styles.formItem__container}>
                 <ThemedText type='defaultSemiBold'>Dharug</ThemedText>
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={dharug}
                     onChangeText={(text) => setDharug(text)}
-                    style={[styles.formItem,
-                    {}]}
+                    style={[styles.formItem]}
+                    cursorColor={color.textColor}
                 />
             </View>
 
-            <View style={styles.formItem}>
+            <View style={styles.formItem__container}>
                 <ThemedText type='defaultSemiBold'>Dharug (Gloss)</ThemedText>
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={dharugGloss}
                     onChangeText={(text) => setDharugGloss(text)}
                     style={styles.formItem}
+                    cursorColor={color.textColor}
                 />
             </View>
 
-            <View style={styles.formItem}>
+            <View style={styles.formItem__container}>
                 <ThemedText type='defaultSemiBold'>English</ThemedText>
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={english}
                     onChangeText={(text) => setEnglish(text)}
                     style={styles.formItem}
+                    cursorColor={color.textColor}
                 />
             </View>
 
-            <View style={styles.formItem}>
+            <View style={styles.formItem__container}>
                 <ThemedText type='defaultSemiBold'>English Gloss</ThemedText>
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={englishGloss}
                     onChangeText={(text) => setEnglishGloss(text)}
                     style={styles.formItem}
+                    cursorColor={color.textColor}
                 />
             </View>
 
-            <View style={styles.formItem}>
+            <View style={styles.formItem__container}>
                 <ThemedText type='defaultSemiBold'>Topic</ThemedText>
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={topic}
-                    onChangeText={(text) => setEnglishGloss(text)}
+                    onChangeText={(text) => setTopic(text)}
                     style={styles.formItem}
+                    cursorColor={color.textColor}
                 />
             </View>
 
@@ -197,12 +219,17 @@ function AddRecording({ currentID }: { currentID: number | undefined }) {
 
 const styles = StyleSheet.create({
     mainView: {
-        marginRight: 30,
-        marginLeft: 30,
-        marginTop: 30,
+        paddingTop: 30,
+        paddingRight: 30,
+        paddingLeft: 30,
+        flex: 1,
     },
 
     formItem: {
         borderBottomWidth: 0.2,
+    },
+
+    formItem__container: {
+        marginBottom: 30,
     },
 })

@@ -5,7 +5,7 @@ import { router } from 'expo-router'
 import { ThemedText } from '@/components/ThemedText'
 import { useThemeColor } from '@/hooks/useThemeColor'
 
-const useColor =()=> {
+const useColor = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
         textColor: useThemeColor({}, 'text'),
@@ -18,6 +18,7 @@ const RecordingList = () => {
     const [dataRecorded, setDataRecorded] = useState<DataType[]>([]);
     const [dataNotRecorded, setDataNotRecorded] = useState<DataType[]>([]);
     const data = useDharugListContext();
+    const color = useColor();
 
     useEffect(() => {
         if (data) {
@@ -49,25 +50,27 @@ const RecordingList = () => {
         }];
 
     return (
-        <SectionList
-            sections={sections}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) =>
-                item.id === 0 ? (
-                    item.completed ? (
-                        <ThemedText style={{}}>All sentences have been recorded</ThemedText>
+        <View style={{ backgroundColor: color.bgColor }}>
+            <SectionList
+                sections={sections}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) =>
+                    item.id === 0 ? (
+                        item.completed ? (
+                            <ThemedText style={{}}>All sentences have been recorded</ThemedText>
+                        ) : (
+                            <ThemedText style={{ marginBottom: 30 }}>No sentences recorded yet</ThemedText>
+                        )
                     ) : (
-                        <ThemedText style={{marginBottom: 30}}>No sentences recorded yet</ThemedText>
+                        <SentenceCard dharug={item} finished={false} />
                     )
-                ) : (
-                    <SentenceCard dharug={item} finished={false} />
-                )
-            }
-            renderSectionHeader={({ section: { title } }) => (
-                <ThemedText type='subtitle' style={styles.sectionlist__header}>{title}</ThemedText>
-            )}
-            style={styles.sectionlist}
-        />
+                }
+                renderSectionHeader={({ section: { title } }) => (
+                    <ThemedText type='subtitle' style={styles.sectionlist__header}>{title}</ThemedText>
+                )}
+                style={styles.sectionlist}
+            />
+        </View>
     )
 }
 
