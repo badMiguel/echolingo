@@ -33,6 +33,7 @@ export default function Upload() {
         const uploadedUri = await openDocumentPicker({ saveRecording: saveRecording, currentID: id });
         setUri(uploadedUri);
         setUploaded(true);
+        setIsSuccess(false);
     };
 
     const saveUpload = async () => {
@@ -49,6 +50,8 @@ export default function Upload() {
                 throw new Error('Failed to save uploaded recording');
             }
 
+            setUri(status.filePath);  
+
             // delay to avoid spam upload
             const uploadTime = end - start;
             if (uploadTime < 3000) {
@@ -61,8 +64,8 @@ export default function Upload() {
 
             setTimeout(() => {
                 setShow(false);
-                setIsSuccess(false);
             }, 3000);
+
         } catch (err) {
             console.error('Upload Failed', err)
 
@@ -80,27 +83,29 @@ export default function Upload() {
 
     return (
         <View style={[styles.mainView, { backgroundColor: bgColor }]}>
-            <AudioPlayback uri={uri} disabled={!uploaded} />
-            <Pressable
-                style={[styles.button, { backgroundColor: tint }]}
-                onPress={() => saveUpload()}
-                disabled={saving ? true : false}
-            >
-                <ThemedText
-                    type='defaultSemiBold'
-                    style={{ color: bgColor }}
-                >{saving ? 'Saving' : 'Save'}</ThemedText>
-            </Pressable>
-            <Pressable
-                style={[styles.button, { backgroundColor: tint }]}
-                onPress={() => saveUpload()}
-                disabled={saving ? true : false}
-            >
-                <ThemedText
-                    type='defaultSemiBold'
-                    style={{ color: bgColor }}
-                >{isSuccess ? 'Upload Another' : 'Upload'}</ThemedText>
-            </Pressable>
+            <View style={styles.content}>
+                <AudioPlayback uri={uri} disabled={!uploaded} />
+                <Pressable
+                    style={[styles.button, { backgroundColor: isSuccess ? accent : tint }]}
+                    onPress={() => saveUpload()}
+                    disabled={isSuccess ? true : saving ? true : false}
+                >
+                    <ThemedText
+                        type='defaultSemiBold'
+                        style={{ color: isSuccess ? tint : bgColor }}
+                    >{saving ? 'Saving' : 'Save'}</ThemedText>
+                </Pressable>
+                <Pressable
+                    style={[styles.button, { backgroundColor: tint }]}
+                    onPress={() => useDocumentPicker()}
+                    disabled={saving ? true : false}
+                >
+                    <ThemedText
+                        type='defaultSemiBold'
+                        style={{ color: bgColor }}
+                    >{isSuccess ? 'Upload Another From Device' : 'Upload From Device'}</ThemedText>
+                </Pressable>
+            </View>
             <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
                 <Text
                     style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>
@@ -137,10 +142,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
+    content: {
+        flex: 2,
+        justifyContent: 'center'
+    },
+
     notif__view: {
         justifyContent: 'flex-end',
         marginBottom: 20,
-        alignSelf: 'flex-end',
     },
 
     notif__text: {
