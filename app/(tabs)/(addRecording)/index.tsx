@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import { ExpoRoot, router, useLocalSearchParams, useNavigation } from 'expo-router'
 
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
@@ -45,13 +45,22 @@ export default function Add() {
     return (
         <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>
             <AddDetails current={current} changeCurrent={updateCurrent} />
-            {
-                currentID ? (
-                    <>
-                        <AddRecording currentID={currentID} />
-                        {sentenceID && <Button title='Back' onPress={() => router.navigate('/(recordingList)')} />}
-                    </>
-                ) : null
+            {currentID ? (
+                <>
+                    <AddRecording currentID={currentID} />
+                    {sentenceID && (
+                        <Pressable
+                            style={[styles.button, { backgroundColor: color.tint }]}
+                            onPress={() => router.navigate('/(recordingList)')}
+                        >
+                            <ThemedText
+                                type='defaultSemiBold'
+                                style={{ color: color.bgColor }}
+                            >Back</ThemedText>
+                        </Pressable>
+                    )}
+                </>
+            ) : null
             }
         </View >
     )
@@ -134,7 +143,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={dharug}
                     onChangeText={(text) => {
-                    setDharug(text)
+                        setDharug(text)
                         setDharugError(false);
                     }}
                     style={[styles.formItem, { borderColor: dharugError ? 'red' : 'black' }]}
@@ -217,16 +226,26 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 />
             </View>
 
-            <Button
-                title={current?.id ? 'Update' : 'Add'}
-                onPress={() => updateDetails()}
-            />
-            <Button title="Clear" onPress={() => clearForm()} />
+            <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => updateDetails()}>
+                <ThemedText
+                    type='defaultSemiBold'
+                    style={{ color: color.bgColor }}
+                >
+                    {current?.id ? 'Update' : 'Add'}
+                </ThemedText>
+            </Pressable>
+            <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => clearForm()}>
+                <ThemedText
+                    type='defaultSemiBold'
+                    style={{ color: color.bgColor }}
+                >Clear</ThemedText>
+            </Pressable>
         </View>
     );
 }
 
 function AddRecording({ currentID }: { currentID: number | undefined }) {
+    const color = useColor();
     const record = () => {
         router.push({
             pathname: '/record',
@@ -247,8 +266,18 @@ function AddRecording({ currentID }: { currentID: number | undefined }) {
 
     return (
         <View>
-            <Button title='Record Now' onPress={() => record()} />
-            <Button title='Upload From Device' onPress={() => upload()} />
+            <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => record()}>
+                <ThemedText
+                    type='defaultSemiBold'
+                    style={{ color: color.bgColor }}
+                >Record Now</ThemedText>
+            </Pressable>
+            <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => upload()}>
+                <ThemedText
+                    type='defaultSemiBold'
+                    style={{ color: color.bgColor }}
+                >Upload From Device</ThemedText>
+            </Pressable>
         </View>
     );
 }
@@ -267,5 +296,13 @@ const styles = StyleSheet.create({
 
     formItem__container: {
         marginBottom: 30,
+    },
+
+    button: {
+        marginBottom: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignItems: 'center',
+        borderRadius: 10,
     },
 })
