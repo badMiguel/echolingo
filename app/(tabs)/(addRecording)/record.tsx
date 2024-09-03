@@ -7,10 +7,35 @@ import { useLocalSearchParams } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 
-export default function Record({ fromStudent }: { fromStudent?: boolean }) {
-    const bgColor = useThemeColor({}, 'background');
+export default function RecordView() {
     const textColor = useThemeColor({}, 'text');
     const accent = useThemeColor({}, 'accent');
+
+    const getShowStatus = () => {
+    }
+
+    const getIsSuccessStatus = () => {
+    }
+
+            // <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
+            //     <ThemedText
+            //         style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>
+            //         {isSuccess
+            //             ? 'Recording successfully saved'
+            //             : 'Failed to save recording'
+            //         }
+            //     </ThemedText>
+            // </View>
+    return (
+        <View style={styles.mainView}>
+            <Record passShow={() => getShowStatus} passIsSuccess={() => getIsSuccessStatus} />
+        </View>
+    );
+}
+
+export function Record({ fromStudent, passShow, passIsSuccess }:
+    { fromStudent?: boolean, passShow?: () => {}, passIsSuccess?: () => {} }) {
+    const bgColor = useThemeColor({}, 'background');
     const tint = useThemeColor({}, 'tint');
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -29,6 +54,7 @@ export default function Record({ fromStudent }: { fromStudent?: boolean }) {
     }, [uri])
 
     const save = async () => {
+        setIsSuccess(false);
         if (typeof tempUri === 'string') {
             setTempUri(undefined);
             setIsLoading(true);
@@ -51,40 +77,34 @@ export default function Record({ fromStudent }: { fromStudent?: boolean }) {
         setShow(true);
         setTimeout(() => {
             setShow(false);
-            setIsSuccess(false);
         }, 3000)
     }
 
     return (
-        <View style={styles.mainView}>
+        <View style={{ flex: 1 }}>
             <AudioPlayback uri={tempUri} />
             {!fromStudent &&
-                <Button
-                    disabled={!tempUri || isLoading ? true : undefined}
-                    title={isLoading ? 'Loading' : 'Save'}
+                <Pressable
                     onPress={() => save()}
-                />
+                    disabled={!tempUri || isLoading || isSuccess ? true : undefined}
+                    style={[styles.button, { backgroundColor: tint }]}
+                >
+                    <ThemedText style={[styles.button__text, { color: bgColor }]}>
+                        {isLoading ? "Loading" : "Save"}
+                    </ThemedText>
+                </Pressable>
             }
             <Pressable
                 onPress={recording ? stopRecording : startRecording}
                 disabled={isLoading ? true : undefined}
-                style={[styles.recordButton,]}
+                style={[styles.button, { backgroundColor: tint }]}
             >
-                <ThemedText style={[styles.recordButton__text, { color: bgColor, backgroundColor: tint }]}>
+                <ThemedText style={[styles.button__text, { color: bgColor }]}>
                     {recording ? "Stop Recording"
                         : haveRecording ? "Record Another"
                             : "Start Recording"}
                 </ThemedText>
             </Pressable>
-            <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
-                <ThemedText
-                    style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>
-                    {isSuccess
-                        ? 'Recording successfully saved'
-                        : 'Failed to save recording'
-                    }
-                </ThemedText>
-            </View>
         </View >
     );
 }
@@ -93,14 +113,15 @@ export default function Record({ fromStudent }: { fromStudent?: boolean }) {
 
 const styles = StyleSheet.create({
     mainView: {
-        flex: 1
+        flex: 1,
+        marginLeft: 30,
+        marginRight: 30,
     },
 
     notif__view: {
         flex: 1,
         justifyContent: 'flex-end',
         marginBottom: 20,
-        marginLeft: 30,
     },
 
     notif__text: {
@@ -113,16 +134,19 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
 
-    recordButton: {
-        alignSelf: 'center',
+    button: {
+        alignItems: 'center',
+        borderRadius: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 10
     },
 
-    recordButton__text: {
+    button__text: {
         paddingRight: 15,
         paddingLeft: 15,
         paddingTop: 2,
         paddingBottom: 2,
         borderRadius: 10,
-        alignSelf: 'flex-start',
     },
 });

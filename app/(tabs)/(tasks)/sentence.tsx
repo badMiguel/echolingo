@@ -6,8 +6,8 @@ import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import { useCourseContext } from "@/contexts/CourseContext";
-import Record from "../(addRecording)/record";
 import * as FileSystem from 'expo-file-system';
+import { Record } from "../(addRecording)/record";
 
 const useColor = () => {
     return {
