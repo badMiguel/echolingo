@@ -50,7 +50,7 @@ export default function Upload() {
                 throw new Error('Failed to save uploaded recording');
             }
 
-            setUri(status.filePath);  
+            setUri(status.filePath);
 
             // delay to avoid spam upload
             const uploadTime = end - start;
@@ -86,23 +86,29 @@ export default function Upload() {
             <View style={styles.content}>
                 <AudioPlayback uri={uri} disabled={!uploaded} />
                 <Pressable
-                    style={[styles.button, { backgroundColor: isSuccess ? accent : tint }]}
+                    style={[
+                        styles.button,
+                        { backgroundColor: isSuccess || saving ? accent : tint }
+                    ]}
                     onPress={() => saveUpload()}
                     disabled={isSuccess ? true : saving ? true : false}
                 >
                     <ThemedText
                         type='defaultSemiBold'
-                        style={{ color: isSuccess ? tint : bgColor }}
-                    >{saving ? 'Saving' : 'Save'}</ThemedText>
+                        style={{ color: isSuccess || saving ? tint : bgColor }}
+                    >{saving ? 'Saving ...' : 'Save'}</ThemedText>
                 </Pressable>
                 <Pressable
-                    style={[styles.button, { backgroundColor: tint }]}
+                    style={[
+                        styles.button,
+                        { backgroundColor: saving ? accent : tint }
+                    ]}
                     onPress={() => useDocumentPicker()}
                     disabled={saving ? true : false}
                 >
                     <ThemedText
                         type='defaultSemiBold'
-                        style={{ color: bgColor }}
+                        style={{ color: saving ? tint : bgColor }}
                     >{isSuccess ? 'Upload Another From Device' : 'Upload From Device'}</ThemedText>
                 </Pressable>
             </View>

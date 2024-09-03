@@ -15,15 +15,8 @@ export default function RecordView() {
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [show, setShow] = useState<boolean>(false);
 
-    const getShow = (show: boolean) => {
-        setShow(show);
-        console.log('show', show)
-    }
-
-    const getIsSuccess = (success: boolean) => {
-        setIsSuccess(success);
-        console.log('success', success)
-    }
+    const getShow = (show: boolean) => { setShow(show) }
+    const getIsSuccess = (success: boolean) => { setIsSuccess(success) }
 
     return (
         <View style={[styles.mainView, { backgroundColor: bgColor }]}>
@@ -69,8 +62,6 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
             passShow(show);
             passIsSuccess(isSuccess);
         }
-        console.log('useeffect show', show)
-        console.log('useffect success', isSuccess)
     }, [isSuccess, show]);
 
     useEffect(() => {
