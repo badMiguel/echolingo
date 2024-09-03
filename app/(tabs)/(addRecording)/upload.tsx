@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Button, StyleSheet } from "react-native";
+import { Text, View, Button, StyleSheet, Pressable } from "react-native";
 import * as DocumentPicker from 'expo-document-picker'
 import useCRUD, { SaveRecReturn } from "@/hooks/recording/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedText } from "@/components/ThemedText";
 
 type OpenDocumentPickerProp = {
     saveRecording: (uri: string, id: number) => Promise<SaveRecReturn>
@@ -15,6 +16,7 @@ export default function Upload() {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
     const accent = useThemeColor({}, 'accent');
+    const tint = useThemeColor({}, 'tint');
 
     const [uri, setUri] = useState<string | undefined>();
     const [uploaded, setUploaded] = useState<boolean>(false);
@@ -34,32 +36,41 @@ export default function Upload() {
     };
 
     const saveUpload = async () => {
-        let status;
+        try {
+            let status;
 
-        setSaving(true);
-        const start = performance.now();
-        if (uri) { status = await saveRecording(uri, id) }
-        const end = performance.now();
+            setSaving(true);
+            const start = performance.now();
+            if (uri) { status = await saveRecording(uri, id) }
+            const end = performance.now();
 
-        if (!status) {
+            if (!status?.status) {
+                setSaving(false);
+                throw new Error('Failed to save uploaded recording');
+            }
+
+            // delay to avoid spam upload
+            const uploadTime = end - start;
+            if (uploadTime < 3000) {
+                await new Promise(resolve => setTimeout(resolve, 3000 - uploadTime));
+            }
+
             setSaving(false);
-            throw new Error('Failed to save uploaded recording');
+            setIsSuccess(true);
+            setShow(true);
+
+            setTimeout(() => {
+                setShow(false);
+                setIsSuccess(false);
+            }, 3000);
+        } catch (err) {
+            console.error('Upload Failed', err)
+
+            setShow(true);
+            setTimeout(() => {
+                setShow(false);
+            }, 3000);
         }
-
-        // delay to avoid spam upload
-        const uploadTime = end - start;
-        if (uploadTime < 3000) {
-            await new Promise(resolve => setTimeout(resolve, 3000 - uploadTime));
-        }
-
-        setSaving(false);
-        setIsSuccess(true);
-        setShow(true);
-
-        setTimeout(() => {
-            setShow(false);
-            setIsSuccess(false);
-        }, 3000);
     };
 
 
@@ -68,18 +79,28 @@ export default function Upload() {
     }, []);
 
     return (
-        <View style={[styles.mainView, {backgroundColor: bgColor}]}>
+        <View style={[styles.mainView, { backgroundColor: bgColor }]}>
             <AudioPlayback uri={uri} disabled={!uploaded} />
-            <Button
-                title={saving ? 'Saving' : 'Save'}
+            <Pressable
+                style={[styles.button, { backgroundColor: tint }]}
                 onPress={() => saveUpload()}
-                disabled={saving ? true : false} 
-            />
-            <Button
-                title={isSuccess ? 'Upload Another' : 'Upload'}
-                onPress={() => useDocumentPicker()}
-                disabled={saving ? true : false} 
-            />
+                disabled={saving ? true : false}
+            >
+                <ThemedText
+                    type='defaultSemiBold'
+                    style={{ color: bgColor }}
+                >{saving ? 'Saving' : 'Save'}</ThemedText>
+            </Pressable>
+            <Pressable
+                style={[styles.button, { backgroundColor: tint }]}
+                onPress={() => saveUpload()}
+                disabled={saving ? true : false}
+            >
+                <ThemedText
+                    type='defaultSemiBold'
+                    style={{ color: bgColor }}
+                >{isSuccess ? 'Upload Another' : 'Upload'}</ThemedText>
+            </Pressable>
             <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
                 <Text
                     style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>
@@ -111,13 +132,15 @@ async function openDocumentPicker({ saveRecording, currentID }: OpenDocumentPick
 const styles = StyleSheet.create({
     mainView: {
         flex: 1,
+        paddingLeft: 30,
+        paddingRight: 30,
+        justifyContent: 'center',
     },
 
     notif__view: {
-        flex: 1,
         justifyContent: 'flex-end',
         marginBottom: 20,
-        marginLeft: 30,
+        alignSelf: 'flex-end',
     },
 
     notif__text: {
@@ -128,5 +151,13 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         borderRadius: 5
-    }
+    },
+
+    button: {
+        marginBottom: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignItems: 'center',
+        borderRadius: 10,
+    },
 });
