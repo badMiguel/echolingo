@@ -68,12 +68,18 @@ export default function Upload() {
     }, []);
 
     return (
-        <View style={styles.mainView}>
+        <View style={[styles.mainView, {backgroundColor: bgColor}]}>
             <AudioPlayback uri={uri} disabled={!uploaded} />
             <Button
                 title={saving ? 'Saving' : 'Save'}
                 onPress={() => saveUpload()}
-                disabled={saving ? true : false} />
+                disabled={saving ? true : false} 
+            />
+            <Button
+                title={isSuccess ? 'Upload Another' : 'Upload'}
+                onPress={() => useDocumentPicker()}
+                disabled={saving ? true : false} 
+            />
             <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
                 <Text
                     style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>

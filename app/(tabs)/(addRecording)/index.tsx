@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
-import { router, useLocalSearchParams, useNavigation } from 'expo-router'
+import { ExpoRoot, router, useLocalSearchParams, useNavigation } from 'expo-router'
 
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 import useCRUD from '@/hooks/recording/useCRUD';
@@ -65,9 +65,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     const [topic, setTopic] = useState<string | undefined>();
 
     const [dharugError, setDharugError] = useState<boolean>(false);
-    const [dharugGlossError, setDharugGlossError] = useState<boolean>(false);
     const [englishError, setEnglishError] = useState<boolean>(false);
-    const [englishGlossError, setEnglishGlossError] = useState<boolean>(false);
 
     const { saveDetails, addDetails } = useCRUD();
     const color = useColor();
@@ -84,26 +82,30 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
         }
     }, [current]);
 
-    useEffect(() => {
-    }, [dharug, dharugGloss, english, englishGloss]);
-
     const clearForm = () => {
         setDharug(undefined);
         setDharugGloss(undefined);
         setEnglish(undefined);
         setEnglishGloss(undefined);
         setTopic(undefined);
+        setEnglishError(false);
+        setDharugError(false);
     }
 
     // todo add validation and error handling
     const updateDetails = async () => {
+        let error: boolean = false;
         if (!(dharug || dharugGloss)) {
-            return;
+            setDharugError(true)
+            error = true;
         }
 
         if (!(english || englishGloss)) {
-            return;
+            setEnglishError(true)
+            error = true;
         }
+
+        if (error) { return }
 
         try {
             if (!current) {
@@ -131,8 +133,16 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={dharug}
-                    onChangeText={(text) => setDharug(text)}
-                    style={[styles.formItem]}
+                    onChangeText={(text) => {
+                    setDharug(text)
+                        setDharugError(false);
+                    }}
+                    style={[styles.formItem, { borderColor: dharugError ? 'red' : 'black' }]}
+                    placeholder={dharugError
+                        ? 'Should add at least either Dharug or Dharug gloss'
+                        : 'Enter dharug'
+                    }
+                    placeholderTextColor={dharugError ? '#ff474c' : color.tint}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -142,8 +152,16 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={dharugGloss}
-                    onChangeText={(text) => setDharugGloss(text)}
+                    onChangeText={(text) => {
+                        setDharugGloss(text)
+                        setDharugError(false);
+                    }}
                     style={styles.formItem}
+                    placeholder={dharugError
+                        ? 'Should add at least either Dharug or Dharug gloss'
+                        : 'Enter dharug gloss'
+                    }
+                    placeholderTextColor={dharugError ? '#ff474c' : color.tint}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -153,8 +171,16 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={english}
-                    onChangeText={(text) => setEnglish(text)}
-                    style={styles.formItem}
+                    onChangeText={(text) => {
+                        setEnglish(text)
+                        setEnglishError(false);
+                    }}
+                    style={[styles.formItem, { borderColor: dharugError ? 'red' : 'black' }]}
+                    placeholder={englishError
+                        ? 'Should add at least either English or English gloss'
+                        : 'Enter English'
+                    }
+                    placeholderTextColor={englishError ? '#ff474c' : color.tint}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -164,8 +190,16 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={englishGloss}
-                    onChangeText={(text) => setEnglishGloss(text)}
-                    style={styles.formItem}
+                    onChangeText={(text) => {
+                        setEnglishGloss(text)
+                        setEnglishError(false);
+                    }}
+                    style={[styles.formItem, { borderColor: englishError ? 'red' : 'black' }]}
+                    placeholder={englishError
+                        ? 'Should add at least either English or English gloss'
+                        : 'Enter English gloss'
+                    }
+                    placeholderTextColor={englishError ? '#ff474c' : color.tint}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -177,6 +211,8 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                     value={topic}
                     onChangeText={(text) => setTopic(text)}
                     style={styles.formItem}
+                    placeholder='Topic (optional)'
+                    placeholderTextColor={color.tint}
                     cursorColor={color.textColor}
                 />
             </View>
