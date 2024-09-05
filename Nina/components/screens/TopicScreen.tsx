@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, Text, Button, FlatList } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import dharugList from '../../assets/data/dharugList.json';
-import { Sentence } from './types';
+import { Sentence, StackParamList } from './types';
 import styles from '../styles/TopicScreen_style';
+
+type TopicScreenRouteProp = RouteProp<StackParamList, 'TopicScreen'>;
 
 // Modify to extract the role (userType) from the route params
 export default function TopicScreen() {
     const navigation = useNavigation();
-    const route = useRoute(); // Use useRoute to extract params
+    const route = useRoute<TopicScreenRouteProp>();  // Use useRoute to extract params
     console.log(route.params)
     const { userType } = route.params;  // Extract userType from navigation params
     console.log('userType:', userType);
@@ -28,7 +30,7 @@ export default function TopicScreen() {
 
     return (
         <View style={styles.container}>
-            console.log('role:', userType);
+            {/* console.log('role:', userType); */}
 
             <FlatList
                 data={topicList}
@@ -38,13 +40,9 @@ export default function TopicScreen() {
                         
                         {/* Conditionally render the button based on userType */}
                         <Button
-                            title={userType === 'teacher' ? 'View' : 'Learn'}  
+                            title= {userType === 'teacher'? 'View' : 'Learn'}
                             onPress={() => {
-                                if (userType === 'teacher') {
-                                    navigation.navigate('TeacherView', { sentences: item.sentences });
-                                } else {
-                                    navigation.navigate('StudentView', { sentences: item.sentences });
-                                }
+                                navigation.navigate('Sentences', { sentences: item.sentences });
                             }}
                         />
                     </View>
