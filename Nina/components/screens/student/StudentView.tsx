@@ -57,7 +57,7 @@ export default function StudentView({ sentence }: { sentence: Sentence }) {
                 const uri = recording.getURI();
                 setRecording(null);
 
-                // Save the recording URI
+                // save the recording URI
                 setRecordingUri(uri);
                 await AsyncStorage.setItem(`recordings_${sentence.id}`, uri);
 
@@ -106,7 +106,7 @@ export default function StudentView({ sentence }: { sentence: Sentence }) {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.student_container}>
             <Button title="Play Teacher’s Recording" onPress={playPublishedRecording} />
             <Button title="Start Recording" onPress={startRecording} />
             <Button title="Stop Recording" onPress={stopRecording} />

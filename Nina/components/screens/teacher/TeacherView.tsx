@@ -6,10 +6,6 @@ import { Sentence, StackParamList } from '../types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../../styles/TeacherView_style';
 
-// interface TeacherViewProps {
-//     sentence: Sentence;  
-// }
-
 export default function TeacherView({ sentence }: { sentence: Sentence }) {
     const [recording, setRecording] = useState<Audio.Recording | null>(null);
     const [sound, setSound] = useState<Audio.Sound | null>(null);
@@ -25,35 +21,27 @@ export default function TeacherView({ sentence }: { sentence: Sentence }) {
     }, [sentence.id]);
 
     const loadRecordings = async () => {
-        console.log('Loading recordings for sentence:', sentence.id);
-        try {
-            const savedRecordings = await AsyncStorage.getItem(`recordings_${sentence.id}`);
-            if (savedRecordings) {
-                setRecordingUris(JSON.parse(savedRecordings));
-            }
-        } catch (error) {
-            console.error('Failed to load recordings', error);
-        }    
+        // console.log('loading recordings for sentence:', sentence.id);
+        const savedRecordings = await AsyncStorage.getItem(`recordings_${sentence.id}`);
+        if (savedRecordings) {
+            setRecordingUris(JSON.parse(savedRecordings));
+        } 
     };
 
     const loadPublishedRecording = async () => {
-        try {
-            const savedPublishedRecording = await AsyncStorage.getItem(`publishedRecording_${sentence.id}`);
-            if (savedPublishedRecording) {
-                const parsedRecording = JSON.parse(savedPublishedRecording);
-                setPublishedRecording(parsedRecording);
-                setSelectedRecording(parsedRecording);  // Set the previously published recording as selected
-            }
-        } catch (error) {
-            console.error('Failed to load published recording', error);
-        }    
+        const savedPublishedRecording = await AsyncStorage.getItem(`publishedRecording_${sentence.id}`);
+        if (savedPublishedRecording) {
+            const parsedRecording = JSON.parse(savedPublishedRecording);
+            setPublishedRecording(parsedRecording);
+            setSelectedRecording(parsedRecording);  // set previous published recording as selected
+        }   
     };
 
     const publishRecording = async () => {
         if (selectedRecording) {
             console.log('Storing recording:', selectedRecording);
             await AsyncStorage.setItem(`publishedRecording_${sentence.id}`, JSON.stringify(selectedRecording));
-            setPublishedRecording(selectedRecording);  // Set the newly selected recording as published
+            setPublishedRecording(selectedRecording);  // set new selected recording as published
             Alert.alert('Recording published for students!');
         }
     };
@@ -80,8 +68,8 @@ export default function TeacherView({ sentence }: { sentence: Sentence }) {
     const deleteRecording = async (uri: string) => {
         const updatedRecordingUris = recordingUris.filter(item => item !== uri);
         setRecordingUris(updatedRecordingUris);
-        setSelectedRecording(null);  // Deselect if deleted
-        setIsPublishable(false);     // Disable publish button if deleted
+        setSelectedRecording(null);  // deselect if deleted
+        setIsPublishable(false);     // disable publish button if deleted
         await AsyncStorage.setItem(`recordings_${sentence.id}`, JSON.stringify(updatedRecordingUris));
         Alert.alert('Recording deleted');
     };
