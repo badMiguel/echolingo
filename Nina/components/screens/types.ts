@@ -1,8 +1,9 @@
 export type StackParamList = {
-  TopicScreen: { userType: 'teacher' | 'student' };  // userType to determine if it's student or teacher
-  TeacherView: { sentences: Sentence[] };  // Array of sentences passed to TeacherView
-  RecordingScreen: { sentence: Sentence };  // Sentence object passed to RecordingScreen
-  StudentView: { sentences: Sentence[] };  // StudentView for student access
+  TopicScreen: { userType: 'teacher' | 'student' };  // userType passed from HomeScreen
+  TeacherView: { sentences: Sentence[], userType: 'teacher' };  // userType also passed to TeacherView
+  Sentences: { sentences: Sentence[], userType: 'teacher' | 'student' };  // Sentences with userType
+  RecordingScreen: { sentence: Sentence, userType: 'teacher' | 'student' };  // RecordingScreen needs the userType
+  StudentView: { sentence: Sentence };  // StudentView does not need the userType (only sentence)
 };
 
 export interface Sentence {

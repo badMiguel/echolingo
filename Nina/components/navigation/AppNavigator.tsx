@@ -12,10 +12,10 @@ export default function AppNavigator() {
     return (
         <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Topic Screen" component={TopicScreen} />
+            <Stack.Screen name="TopicScreen" component={TopicScreen} />
             <Stack.Screen name="Sentences" component={Sentences} />
             {/* <Stack.Screen name="StudentView" component={StudentView} /> */}
-            <Stack.Screen name="Recording Screen" component={RecordingScreen} />
+            <Stack.Screen name="RecordingScreen" component={RecordingScreen} />
         </Stack.Navigator>
     );
 }

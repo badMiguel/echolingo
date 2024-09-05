@@ -1,21 +1,19 @@
 import React from 'react';
 import { View, Text, FlatList, Button } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';  
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';  
 import { StackNavigationProp } from '@react-navigation/stack';  
 import { StackParamList, Sentence } from './types';  
-import styles from '../styles/TeacherView_style';  
+import styles from '../styles/Sentences_style';  
 
-type TeacherViewNavigationProp = StackNavigationProp<any, 'TeacherView'>;
+type SentencesNavigationProp = StackNavigationProp<StackParamList, 'Sentences'>;
 
-export default function TeacherView() {
-    const navigation = useNavigation<TeacherViewNavigationProp>();  
-
-    // sentences passed from TopicScreen
+export default function Sentences() {
+    const navigation = useNavigation<SentencesNavigationProp>();
     const route = useRoute();
-    const sentences = (route.params as { sentences: Sentence[] } | undefined)?.sentences || [];
+    const { sentences, userType } = route.params as { sentences: Sentence[], userType: 'teacher' | 'student' };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.sentences_container}>
             <FlatList
                 data={sentences}  // use sentences passed from the TopicScreen
                 renderItem={({ item }) => (
@@ -27,7 +25,7 @@ export default function TeacherView() {
                         {/* go to the RecordingScreen */}
                         <Button
                             title="View Recordings"
-                            onPress={() => navigation.navigate('Recording Screen', { sentence: item })}
+                            onPress={() => navigation.navigate('RecordingScreen', { sentence: item, userType })}
                         />
                     </View>
                 )}

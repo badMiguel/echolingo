@@ -5,7 +5,7 @@ import styles from '../styles/HomeScreen_style';
 export default function HomeScreen({ navigation }: { navigation: any }) {
   // Function to handle navigation and pass the role
   const handleNavigation = (role: 'teacher' | 'student') => {
-    navigation.navigate('Topic Screen', { userType: role });  // Pass 'userType' here
+    navigation.navigate('TopicScreen', { userType: role });  // Pass 'userType' here
   };
 
   return (

@@ -7,13 +7,11 @@ import styles from '../styles/TopicScreen_style';
 
 type TopicScreenRouteProp = RouteProp<StackParamList, 'TopicScreen'>;
 
-// Modify to extract the role (userType) from the route params
+// extract the role (userType) from the route params
 export default function TopicScreen() {
     const navigation = useNavigation();
-    const route = useRoute<TopicScreenRouteProp>();  // Use useRoute to extract params
-    console.log(route.params)
-    const { userType } = route.params;  // Extract userType from navigation params
-    console.log('userType:', userType);
+    const route = useRoute<TopicScreenRouteProp>();  
+    const { userType } = route.params;  
     
     // extract topics, categorizing by topic
     const topics = dharugList.reduce((acc: { [key: string]: Sentence[] }, sentence: Sentence) => {
@@ -38,11 +36,10 @@ export default function TopicScreen() {
                     <View style={styles.topicContainer}>
                         <Text style={ styles.topic_title }>{item.topic}</Text>
                         
-                        {/* Conditionally render the button based on userType */}
                         <Button
                             title= {userType === 'teacher'? 'View' : 'Learn'}
                             onPress={() => {
-                                navigation.navigate('Sentences', { sentences: item.sentences });
+                                navigation.navigate('Sentences', { sentences: item.sentences, userType });
                             }}
                         />
                     </View>
