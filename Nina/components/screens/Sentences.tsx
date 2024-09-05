@@ -20,14 +20,14 @@ export default function TeacherView() {
                 data={sentences}  // use sentences passed from the TopicScreen
                 renderItem={({ item }) => (
                     <View style={styles.sentenceContainer}>
-                        <Text>English: {item.English}</Text>
-                        <Text>Dharug (Gloss): {item["Dharug(Gloss)"]}</Text>
-                        <Text>Gloss (english): {item["Gloss (english)"]}</Text>
+                        <Text style={styles.txt}>English: {item.English}</Text>
+                        <Text style={styles.txt}>Dharug (Gloss): {item["Dharug(Gloss)"]}</Text>
+                        <Text style={styles.txt}>Gloss (english): {item["Gloss (english)"]}</Text>
 
                         {/* go to the RecordingScreen */}
                         <Button
                             title="View Recordings"
-                            onPress={() => navigation.navigate('RecordingScreen', { sentence: item })}
+                            onPress={() => navigation.navigate('Recording Screen', { sentence: item })}
                         />
                     </View>
                 )}

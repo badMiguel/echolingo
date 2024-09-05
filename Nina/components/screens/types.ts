@@ -1,7 +1,8 @@
 export type StackParamList = {
-  TeacherView: undefined;  // no parameters expected
-  RecordingScreen: { sentence: Sentence };
-    // Sentence is passed as a parameter
+  TopicScreen: { userType: 'teacher' | 'student' };  // userType to determine if it's student or teacher
+  TeacherView: { sentences: Sentence[] };  // Array of sentences passed to TeacherView
+  RecordingScreen: { sentence: Sentence };  // Sentence object passed to RecordingScreen
+  StudentView: { sentences: Sentence[] };  // StudentView for student access
 };
 
 export interface Sentence {
