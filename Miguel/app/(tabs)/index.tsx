@@ -29,7 +29,7 @@ export default function Home() {
         <View style={[styles.mainView, { backgroundColor: bgColor }]}>
             <ThemedText style={{ color: textColor }} type='title'>Good {greetings()}</ThemedText>
             <ThemedText style={{ color: textColor }} type='subtitle'>Hello, {userName}</ThemedText>
-            <Button title='Go back to user type' color={tint} onPress={() => router.navigate('/')} />
+            <Button title='Go back to user type' color={tint} onPress={() => router.navigate('..')} />
         </View>
     );
 }
