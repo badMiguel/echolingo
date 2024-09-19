@@ -30,6 +30,7 @@ export default function Home() {
             <ThemedText style={{ color: textColor }} type='title'>Good {greetings()}</ThemedText>
             <ThemedText style={{ color: textColor }} type='subtitle'>Hello, {userName}</ThemedText>
             <Button title='Go back to user type' color={tint} onPress={() => router.navigate('..')} />
+            {/* <Button title='Challenges' color={tint} onPress={() => router.push('/(tabs)/(challenges)')} /> */}
         </View>
     );
 }

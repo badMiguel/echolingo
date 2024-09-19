@@ -86,6 +86,22 @@ export default function RootLayout() {
                     />
 
                     <Tabs.Screen
+                        name="(challenges)"
+                        options={{
+                            title: "Challenges",
+                            headerShown: false,
+                            tabBarActiveTintColor: tabFocusColor,
+                            tabBarInactiveTintColor: tabUnfocusedColor,
+                            tabBarIcon: ({ color, focused }) => (
+                                <TabBarIcon
+                                    name={focused ? 'checkmark' : 'checkmark-outline'} // Different icon for challenges
+                                    color={focused ? tabFocusColor : tabUnfocusedColor} />
+                            ),
+                            href: userType !== 'student' ? null : "/(challenges)" // Only show for students
+                        }}
+                    />
+
+                    <Tabs.Screen
                         name="profile"
                         options={{
                             title: "Profile",
@@ -97,6 +113,7 @@ export default function RootLayout() {
                         }}
                     />
                 </Tabs>
+
             </DharugProvider>
         </CourseProvider >
     );
