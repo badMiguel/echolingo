@@ -1,5 +1,5 @@
 import * as FileSystem from 'expo-file-system';
-import { DataType, useUpdateData } from '@/contexts/DharugContext';
+import { DataType, useUpdateData } from '@/contexts/TiwiContext';
 import useData from './useData';
 
 export type SaveRecReturn = {
@@ -8,8 +8,8 @@ export type SaveRecReturn = {
 }
 
 type DataDetail = {
-    dharug?: string;
-    gDharug?: string;
+    tiwi?: string;
+    gTiwi?: string;
     english?: string;
     gEnglish?: string;
     recordingURI?: string;
@@ -53,10 +53,10 @@ export default function useCRUD() {
     }
 
     // save other details
-    async function saveDetails(id: number, { dharug, gDharug, english, gEnglish, topic }: DataDetail) {
+    async function saveDetails(id: number, { tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
         try {
             const saveStatus = await saveJsonFile(id,
-                { dharug: dharug, gDharug: gDharug, english: english, gEnglish: gEnglish, topic: topic }, update);
+                { tiwi: tiwi, gTiwi: gTiwi, english: english, gEnglish: gEnglish, topic: topic }, update);
 
             if (!saveStatus) {
                 throw new Error('Failed to save sentence details');
@@ -70,7 +70,7 @@ export default function useCRUD() {
         }
     }
 
-    async function addDetails({ dharug, gDharug, english, gEnglish, topic }: DataDetail) {
+    async function addDetails({ tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
         const { loadJson } = useData();
         try {
             const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
@@ -84,8 +84,8 @@ export default function useCRUD() {
                 id: newID,
                 English: english ? english : null,
                 "Gloss (english)": gEnglish ? gEnglish : null,
-                "Gloss (tiwi)": gDharug ? gDharug : null,
-                Tiwi: dharug ? dharug : null,
+                "Gloss (tiwi)": gTiwi ? gTiwi : null,
+                Tiwi: tiwi ? tiwi : null,
                 Topic: topic ? topic : null,
                 "Image Name (optional)": null,
                 recording: null,
@@ -122,18 +122,18 @@ async function saveJsonFile(id: number, updatedData: DataDetail, updateData: () 
             return { status: false };
         }
 
-        const dharug = jsonData.find(item => item.id === id);
-        if (!dharug) {
+        const tiwi = jsonData.find(item => item.id === id);
+        if (!tiwi) {
             console.error('Dharug data is undefined')
             return { status: false };
         }
 
-        if (updatedData.dharug) { dharug.Tiwi = updatedData.dharug }
-        if (updatedData.gDharug) { dharug['Gloss (tiwi)'] = updatedData.gDharug }
-        if (updatedData.english) { dharug.English = updatedData.english }
-        if (updatedData.gEnglish) { dharug['Gloss (english)'] = updatedData.gEnglish }
-        if (updatedData.topic) { dharug.Topic = updatedData.topic }
-        if (updatedData.recordingURI) { dharug.recording = updatedData.recordingURI }
+        if (updatedData.tiwi) { tiwi.Tiwi = updatedData.tiwi }
+        if (updatedData.gTiwi) { tiwi['Gloss (tiwi)'] = updatedData.gTiwi }
+        if (updatedData.english) { tiwi.English = updatedData.english }
+        if (updatedData.gEnglish) { tiwi['Gloss (english)'] = updatedData.gEnglish }
+        if (updatedData.topic) { tiwi.Topic = updatedData.topic }
+        if (updatedData.recordingURI) { tiwi.recording = updatedData.recordingURI }
 
         // write update json data
         FileSystem.writeAsStringAsync(fileUri, JSON.stringify(jsonData));

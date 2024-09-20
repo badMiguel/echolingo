@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { DataType, useDharugContext } from '@/contexts/DharugContext';
+import { DataType, useDharugContext } from '@/contexts/TiwiContext';
 import { useNavigation } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";

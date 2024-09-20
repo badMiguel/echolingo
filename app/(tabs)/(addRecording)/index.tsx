@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
 
-import { DataType, useDharugListContext } from '@/contexts/DharugContext';
+import { DataType, useDharugListContext } from '@/contexts/TiwiContext';
 import useCRUD from '@/hooks/recording/useCRUD';
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -67,8 +67,8 @@ export default function Add() {
 }
 
 const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
-    const [dharug, setDharug] = useState<string | undefined>();
-    const [dharugGloss, setDharugGloss] = useState<string | undefined>();
+    const [tiwi, setDharug] = useState<string | undefined>();
+    const [tiwiGloss, setDharugGloss] = useState<string | undefined>();
     const [english, setEnglish] = useState<string | undefined>();
     const [englishGloss, setEnglishGloss] = useState<string | undefined>();
     const [topic, setTopic] = useState<string | undefined>();
@@ -104,7 +104,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
     // todo add validation and error handling
     const updateDetails = async () => {
         let error: boolean = false;
-        if (!(dharug || dharugGloss)) {
+        if (!(tiwi || tiwiGloss)) {
             setDharugError(true)
             error = true;
         }
@@ -119,7 +119,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
         try {
             if (!current) {
                 const { status, currentID } = await addDetails(
-                    { dharug: dharug, gDharug: dharugGloss, english: english, gEnglish: englishGloss, topic: topic })
+                    { tiwi: tiwi, gTiwi: tiwiGloss, english: english, gEnglish: englishGloss, topic: topic })
                 if (!status) {
                     throw new Error('Failed to create new data');
                 }
@@ -128,7 +128,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 currentID && changeCurrent(currentID);
                 router.setParams({ sentenceID: currentID });
             } else {
-                await saveDetails(current.id, { dharug: dharug, gDharug: dharugGloss, english: english, gEnglish: englishGloss, topic: topic });
+                await saveDetails(current.id, { tiwi: tiwi, gTiwi: tiwiGloss, english: english, gEnglish: englishGloss, topic: topic });
             }
         } catch (err) {
             console.error('Failed to create new data', err);
@@ -141,7 +141,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 <ThemedText type='defaultSemiBold'>Dharug</ThemedText>
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
-                    value={dharug}
+                    value={tiwi}
                     onChangeText={(text) => {
                         setDharug(text)
                         setDharugError(false);
@@ -149,7 +149,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                     style={[styles.formItem, { borderColor: dharugError ? 'red' : 'black' }]}
                     placeholder={dharugError
                         ? 'Should add at least either Dharug or Dharug gloss'
-                        : 'Enter dharug'
+                        : 'Enter tiwi'
                     }
                     placeholderTextColor={dharugError ? '#ff474c' : color.tint}
                     cursorColor={color.textColor}
@@ -160,7 +160,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 <ThemedText type='defaultSemiBold'>Dharug (Gloss)</ThemedText>
                 <TextInput
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
-                    value={dharugGloss}
+                    value={tiwiGloss}
                     onChangeText={(text) => {
                         setDharugGloss(text)
                         setDharugError(false);
@@ -168,7 +168,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                     style={styles.formItem}
                     placeholder={dharugError
                         ? 'Should add at least either Dharug or Dharug gloss'
-                        : 'Enter dharug gloss'
+                        : 'Enter tiwi gloss'
                     }
                     placeholderTextColor={dharugError ? '#ff474c' : color.tint}
                     cursorColor={color.textColor}

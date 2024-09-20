@@ -2,7 +2,7 @@ import { router, useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useCourseContext } from '@/contexts/CourseContext';
-import { DataType, useDharugListContext, useSetDharugContext } from '@/contexts/DharugContext';
+import { DataType, useDharugListContext, useSetDharugContext } from '@/contexts/TiwiContext';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/components/ThemedText';
 
