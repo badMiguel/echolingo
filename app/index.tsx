@@ -3,7 +3,7 @@ import React, { createContext, } from 'react'
 import { router } from 'expo-router';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import * as FileSystem from 'expo-file-system';
-import data from '../data/json/dharug_list.json';
+import data from '../data/json/tiwi_list.json';
 
 export const UserTypeContext = createContext('');
 
@@ -12,7 +12,7 @@ export default function Index() {
     const buttonColor = useThemeColor({}, 'tint');
 
     const copyData = async () => {
-        const fileUri = FileSystem.documentDirectory + 'dharug_list.json';
+        const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
         const fileInfo = await FileSystem.getInfoAsync(fileUri);
 
         // dharug_list does not exist on user device
@@ -61,7 +61,7 @@ async function copyJsonData() {
         // const data = Asset.fromModule(require('@/data/json/dharug_list.json'));
         // await data.downloadAsync();
         // const sourceUri = data.localUri;
-        const targetUri = FileSystem.documentDirectory + 'dharug_list.json';
+        const targetUri = FileSystem.documentDirectory + 'tiwi_list.json';
         // try {
         //     if (sourceUri) {
         //         await FileSystem.copyAsync({

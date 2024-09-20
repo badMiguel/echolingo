@@ -1,68 +1,18 @@
 [
     {
         "courseNum": 1,
-        "courseName": "Animals",
-        "img_link": "kangaroo-painting-in-the-abstract-aboriginal-style-vector-1035818.jpg",
+        "courseName": "Feelings and Behaviours",
         "completed": false,
         "topic": [
-            "Animals",
-            "Bird",
-            "Reptile",
-            "Mammal"
+            "feelings_and_behaviours"
         ]
     },
     {
         "courseNum": 2,
-        "courseName": "Country and Geography",
-        "img_link": "map-of-australia-painting-in-the-aboriginal-style-vector-1035812.jpg",
+        "courseName": "Greetings and Checking In",
         "completed": false,
         "topic": [
-            "Country",
-            "Mudjin",
-            "Nura",
-            "Warami"
-        ]
-    },
-    {
-        "courseNum": 3,
-        "courseName": "Gathering and Food",
-        "img_link": "audrey-rubuntja-woman-gathering-bush-tucker-200808311339-1024x1024.jpg",
-        "completed": false,
-        "topic": [
-            "Food",
-            "Gathering"
-        ]
-    },
-    {
-        "courseNum": 4,
-        "courseName": "Weather",
-        "img_link": "weather.jpg",
-        "completed": false,
-        "topic": [
-            "Weather",
-            "Weather"
-        ]
-    },
-    {
-        "courseNum": 5,
-        "courseName": "Greeting and Health",
-        "img_link": "health-and-wellbeing.jpg",
-        "completed": false,
-        "topic": [
-            "Greeting",
-            "Health"
-        ]
-    },
-    {
-        "courseNum": 6,
-        "courseName": "Additional Phrases",
-        "img_link": "Australian Aborignial Art-f5d4a953-b130-4e1d-9a36-e0f07a31112c.png",
-        "completed": false,
-        "topic": [
-            "Badalya",
-            "Manyaniya",
-            "Barrang",
-            null
+            "greetings_and_checking_in"
         ]
     }
 ]

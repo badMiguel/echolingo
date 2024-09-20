@@ -73,7 +73,7 @@ export default function useCRUD() {
     async function addDetails({ dharug, gDharug, english, gEnglish, topic }: DataDetail) {
         const { loadJson } = useData();
         try {
-            const fileUri = FileSystem.documentDirectory + 'dharug_list.json';
+            const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
             let jsonData: DataType[] = await loadJson();
 
             if (!jsonData) {
@@ -114,7 +114,7 @@ export default function useCRUD() {
 async function saveJsonFile(id: number, updatedData: DataDetail, updateData: () => void): Promise<SaveRecReturn> {
     const { loadJson } = useData();
     try {
-        const fileUri = FileSystem.documentDirectory + 'dharug_list.json';
+        const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
         let jsonData: DataType[] = await loadJson();
 
         if (!jsonData) {

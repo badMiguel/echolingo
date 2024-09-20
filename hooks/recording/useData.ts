@@ -4,7 +4,7 @@ import * as FileSystem from 'expo-file-system';
 export default function useData() {
     async function loadJson() {
         try {
-            const fileUri = FileSystem.documentDirectory + 'dharug_list.json';
+            const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
             const fileContents = await FileSystem.readAsStringAsync(fileUri);
             const jsonData = JSON.parse(fileContents);
             return jsonData;
