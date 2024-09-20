@@ -94,10 +94,10 @@ export default function RootLayout() {
                             tabBarInactiveTintColor: tabUnfocusedColor,
                             tabBarIcon: ({ color, focused }) => (
                                 <TabBarIcon
-                                    name={focused ? 'checkmark' : 'checkmark-outline'} // Different icon for challenges
+                                    name={focused ? 'checkmark' : 'checkmark-outline'} 
                                     color={focused ? tabFocusColor : tabUnfocusedColor} />
                             ),
-                            href: userType !== 'student' ? null : "/(challenges)" // Only show for students
+                            href: userType !== 'student' ? null : "/(challenges)" 
                         }}
                     />
 

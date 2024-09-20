@@ -73,7 +73,7 @@ export default function Tasks() {
                     <ThemedText type='subtitle' style={[styles.tasks__header, { color: color.textColor }]}>{title}</ThemedText>
                 )}
                 style={styles.tasks}
-            />34wesxzc543rt
+            />
         </View>
     )
 }
