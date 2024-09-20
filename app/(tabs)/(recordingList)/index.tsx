@@ -1,6 +1,6 @@
 import { Pressable, SectionList, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { DataType, emptyDharugData, useDharugListContext } from '@/contexts/TiwiContext'
+import { DataType, emptyTiwiData, useTiwiListContext } from '@/contexts/TiwiContext'
 import { router } from 'expo-router'
 import { ThemedText } from '@/components/ThemedText'
 import { useThemeColor } from '@/hooks/useThemeColor'
@@ -17,7 +17,7 @@ const useColor = () => {
 const RecordingList = () => {
     const [dataRecorded, setDataRecorded] = useState<DataType[]>([]);
     const [dataNotRecorded, setDataNotRecorded] = useState<DataType[]>([]);
-    const data = useDharugListContext();
+    const data = useTiwiListContext();
     const color = useColor();
 
     useEffect(() => {
@@ -43,10 +43,10 @@ const RecordingList = () => {
     const sections = [
         {
             title: "Not yet recorded",
-            data: dataNotRecorded.length > 0 ? dataNotRecorded : [emptyDharugData()]
+            data: dataNotRecorded.length > 0 ? dataNotRecorded : [emptyTiwiData()]
         }, {
             title: "With recordings",
-            data: dataRecorded.length > 0 ? dataRecorded : [emptyDharugData()]
+            data: dataRecorded.length > 0 ? dataRecorded : [emptyTiwiData()]
         }];
 
     return (
@@ -62,7 +62,7 @@ const RecordingList = () => {
                             <ThemedText style={{ marginBottom: 30 }}>No sentences recorded yet</ThemedText>
                         )
                     ) : (
-                        <SentenceCard dharug={item} finished={false} />
+                        <SentenceCard tiwi={item} finished={false} />
                     )
                 }
                 renderSectionHeader={({ section: { title } }) => (
@@ -74,23 +74,23 @@ const RecordingList = () => {
     )
 }
 
-const SentenceCard: React.FC<{ dharug: DataType, finished: boolean }> = ({ dharug }) => {
+const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi }) => {
     const color = useColor();
     const goToSentence = () => {
         router.push({
             pathname: '/(addRecording)',
             params: {
-                sentenceID: dharug.id,
+                sentenceID: tiwi.id,
             },
         });
     }
 
     return (
         <View style={[styles.sentenceCard__container, { backgroundColor: color.accent }]}>
-            <ThemedText type='defaultSemiBold'>{dharug.Tiwi ? 'Dharug: ' : 'Dharug Gloss: '}</ThemedText>
-            <ThemedText>{dharug.Tiwi || dharug['Gloss (tiwi)']}</ThemedText>
-            <ThemedText type='defaultSemiBold'>{dharug.English ? 'English: ' : 'English Gloss: '}</ThemedText>
-            <ThemedText>{dharug.English || dharug['Gloss (english)']}</ThemedText>
+            <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
+            <ThemedText>{tiwi.Tiwi || tiwi['Gloss (tiwi)']}</ThemedText>
+            <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>
+            <ThemedText>{tiwi.English || tiwi['Gloss (english)']}</ThemedText>
             <View style={[styles.button__container, { backgroundColor: color.tint }]}>
                 <Pressable onPress={() => goToSentence()}>
                     <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Add Recording</ThemedText>

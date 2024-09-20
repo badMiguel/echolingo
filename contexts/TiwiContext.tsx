@@ -16,7 +16,7 @@ export type DataType = {
     completed: boolean;
 };
 
-export const emptyDharugData = () => {
+export const emptyTiwiData = () => {
     return {
         id: 0,
         English: null,
@@ -31,14 +31,14 @@ export const emptyDharugData = () => {
 }
 
 
-const DharugContext = createContext<DataType | undefined>(undefined);
-const SetDharugContext = createContext<Dispatch<SetStateAction<DataType>> | undefined>(undefined);
-const DharugListContext = createContext<DataType[] | undefined>(undefined);
+const TiwiContext = createContext<DataType | undefined>(undefined);
+const SetTiwiContext = createContext<Dispatch<SetStateAction<DataType>> | undefined>(undefined);
+const TiwiListContext = createContext<DataType[] | undefined>(undefined);
 const UpdateDataContext = createContext<() => void>(() => { });
 
-export const DharugProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [currentDharug, setCurrentDharug] = useState<DataType>(emptyDharugData);
-    const [dharugData, setDharugData] = useState<Promise<any>>();
+export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const [currentTiwi, setCurrentTiwi] = useState<DataType>(emptyTiwiData);
+    const [tiwiData, setTiwiData] = useState<Promise<any>>();
     const [filteredList, setFilteredList] = useState<DataType[] | undefined>(undefined);
 
     const { course } = useCourseContext();
@@ -48,59 +48,59 @@ export const DharugProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     useEffect(() => {
         const getData = async () => {
             const data = await loadJson()
-            setDharugData(data);
+            setTiwiData(data);
         }
         getData();
     }, []);
 
     useEffect(() => {
-        if (Array.isArray(dharugData)) {
+        if (Array.isArray(tiwiData)) {
             const selectedCourse = courseData.filter(item => item.courseName === course)
-            let dharugList: DataType[] = dharugData;
+            let tiwiList: DataType[] = tiwiData;
             if (selectedCourse.length > 0) {
-                dharugList = dharugData.filter(item =>
+                tiwiList = tiwiData.filter(item =>
                     selectedCourse.some(course => course.topic.includes(item.Topic)) &&
                     !item.completed
                 );
             }
-            setFilteredList(dharugList);
+            setFilteredList(tiwiList);
         }
-    }, [dharugData, course]);
+    }, [tiwiData, course]);
 
     const updateData = async () => {
         const data = await loadJson();
         if (data) {
-            setDharugData(data);
+            setTiwiData(data);
         }
     }
 
     return (
-        <DharugListContext.Provider value={filteredList}>
-            <DharugContext.Provider value={currentDharug}>
-                <SetDharugContext.Provider value={setCurrentDharug}>
+        <TiwiListContext.Provider value={filteredList}>
+            <TiwiContext.Provider value={currentTiwi}>
+                <SetTiwiContext.Provider value={setCurrentTiwi}>
                     <UpdateDataContext.Provider value={updateData}>
                         {children}
                     </UpdateDataContext.Provider>
-                </SetDharugContext.Provider>
-            </DharugContext.Provider>
-        </DharugListContext.Provider>
+                </SetTiwiContext.Provider>
+            </TiwiContext.Provider>
+        </TiwiListContext.Provider>
     );
 }
 
-export function useDharugContext() {
-    return useContext(DharugContext);
+export function useTiwiContext() {
+    return useContext(TiwiContext);
 }
 
-export function useSetDharugContext() {
-    const context = useContext(SetDharugContext);
+export function useSetTiwiContext() {
+    const context = useContext(SetTiwiContext);
     if (!context) {
-        throw new Error('useSetDharugContext must be used within a DharugProvider');
+        throw new Error('useSetTiwiContext must be used within a TiwiProvider');
     }
     return context;
 }
 
-export const useDharugListContext = () => {
-    return useContext(DharugListContext);
+export const useTiwiListContext = () => {
+    return useContext(TiwiListContext);
 }
 
 export const useUpdateData = () => {

@@ -2,7 +2,7 @@ import { Tabs, useLocalSearchParams } from "expo-router";
 import { TabBarIcon, UserIcon, ClipboardListIcon } from "@/components/navigation/TabBarIcon";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { CourseProvider } from "@/contexts/CourseContext";
-import { DharugProvider } from "@/contexts/TiwiContext";
+import { TiwiProvider } from "@/contexts/TiwiContext";
 
 export default function RootLayout() {
     const bgColor = useThemeColor({}, 'background');
@@ -15,7 +15,7 @@ export default function RootLayout() {
 
     return (
         <CourseProvider>
-            <DharugProvider>
+            <TiwiProvider>
                 <Tabs
                     screenOptions={{
                         headerStyle: {
@@ -113,7 +113,7 @@ export default function RootLayout() {
                     />
                 </Tabs>
 
-            </DharugProvider>
+            </TiwiProvider>
         </CourseProvider >
     );
 }

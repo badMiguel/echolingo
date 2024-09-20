@@ -15,7 +15,7 @@ export default function Index() {
         const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
         const fileInfo = await FileSystem.getInfoAsync(fileUri);
 
-        // dharug_list does not exist on user device
+        // tiwi_list does not exist on user device
         if (!fileInfo.exists) {
             const copyStatus = await copyJsonData();
 
@@ -52,12 +52,12 @@ export default function Index() {
     )
 }
 
-// save the dharug data to user's local storage
+// save the tiwi data to user's local storage
 // allows to make changes on json to add recordings
 // cant edit json directly when bundled with app
 async function copyJsonData() {
     try {
-        // for production. get dharug json from build data 
+        // for production. get tiwi json from build data 
         // const data = Asset.fromModule(require('@/data/json/tiwi_list.json'));
         // await data.downloadAsync();
         // const sourceUri = data.localUri;
@@ -72,7 +72,7 @@ async function copyJsonData() {
         //         throw new Error('sourceUri is null');
         //     }
         // } catch (err) {
-        //     console.error('Failed to copy dharug data', err);
+        //     console.error('Failed to copy tiwi data', err);
         //     return false
         // }
         await FileSystem.writeAsStringAsync(targetUri, JSON.stringify(data));

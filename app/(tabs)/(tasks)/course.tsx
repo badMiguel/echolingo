@@ -2,7 +2,7 @@ import { router, useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useCourseContext } from '@/contexts/CourseContext';
-import { DataType, useDharugListContext, useSetDharugContext } from '@/contexts/TiwiContext';
+import { DataType, useTiwiListContext, useSetTiwiContext } from '@/contexts/TiwiContext';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/components/ThemedText';
 
@@ -18,7 +18,7 @@ const useColor = () => {
 export default function Course() {
     const navigation = useNavigation();
     const { course } = useCourseContext();
-    const dharugList = useDharugListContext();
+    const tiwiList = useTiwiListContext();
     const color = useColor();
 
     // change header title dynamically
@@ -32,13 +32,13 @@ export default function Course() {
 
     return (
         <View style={[{ backgroundColor: color.bgColor }]}>
-            {dharugList ? (
+            {tiwiList ? (
                 <>
                     <FlatList
                         style={styles.flatlist}
-                        data={dharugList}
+                        data={tiwiList}
                         renderItem={({ item }) =>
-                            <SentenceCard dharug={item} />
+                            <SentenceCard tiwi={item} />
                         }
                         keyExtractor={item => item.id.toString()}
                     />
@@ -51,12 +51,12 @@ export default function Course() {
     );
 }
 
-const SentenceCard: React.FC<{ dharug: DataType }> = ({ dharug }) => {
-    const setCurrentID = useSetDharugContext();
+const SentenceCard: React.FC<{ tiwi: DataType }> = ({ tiwi }) => {
+    const setCurrentID = useSetTiwiContext();
     const color = useColor();
 
     const goToSentence = () => {
-        setCurrentID(dharug);
+        setCurrentID(tiwi);
 
         router.push({
             pathname: '/sentence'
@@ -65,10 +65,10 @@ const SentenceCard: React.FC<{ dharug: DataType }> = ({ dharug }) => {
 
     return (
         <View style={[styles.sentenceCard__container, { backgroundColor: color.accent }]}>
-            <ThemedText type='defaultSemiBold'>{dharug.Tiwi ? 'Dharug: ' : 'Dharug Gloss: '}</ThemedText>
-            <ThemedText>{dharug.Tiwi || dharug['Gloss (tiwi)']}</ThemedText>
-            <ThemedText type='defaultSemiBold'>{dharug.English ? 'English: ' : 'English Gloss: '}</ThemedText>
-            <ThemedText>{dharug.English || dharug['Gloss (english)']}</ThemedText>
+            <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
+            <ThemedText>{tiwi.Tiwi || tiwi['Gloss (tiwi)']}</ThemedText>
+            <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>
+            <ThemedText>{tiwi.English || tiwi['Gloss (english)']}</ThemedText>
             <View style={[styles.button__container, { backgroundColor: color.tint }]}>
                 <Pressable onPress={() => goToSentence()}>
                     <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Study</ThemedText>

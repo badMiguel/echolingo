@@ -124,7 +124,7 @@ async function saveJsonFile(id: number, updatedData: DataDetail, updateData: () 
 
         const tiwi = jsonData.find(item => item.id === id);
         if (!tiwi) {
-            console.error('Dharug data is undefined')
+            console.error('Tiwi data is undefined')
             return { status: false };
         }
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { DataType, useDharugContext } from '@/contexts/TiwiContext';
+import { DataType, useTiwiContext } from '@/contexts/TiwiContext';
 import { useNavigation } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -20,7 +20,7 @@ const useColor = () => {
 
 export default function Sentence() {
     const navigation = useNavigation();
-    const current = useDharugContext();
+    const current = useTiwiContext();
     const color = useColor();
     const { course } = useCourseContext();
 
@@ -56,14 +56,14 @@ const Question: React.FC<{ current: DataType }> = ({ current }) => {
         <View style={styles.questionView}>
             {current.Tiwi &&
                 <View>
-                    <ThemedText type="defaultSemiBold">Dharug:</ThemedText>
+                    <ThemedText type="defaultSemiBold">Tiwi:</ThemedText>
                     <ThemedText>{current.Tiwi}</ThemedText>
                 </View>
             }
 
             {current['Gloss (tiwi)'] &&
                 <View>
-                    <ThemedText type="defaultSemiBold">Dharug (Gloss):</ThemedText>
+                    <ThemedText type="defaultSemiBold">Tiwi (Gloss):</ThemedText>
                     <ThemedText>{current['Gloss (tiwi)']}</ThemedText>
                 </View>
             }
