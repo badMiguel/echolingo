@@ -1,4 +1,3 @@
-import { DharugProvider } from "@/contexts/DharugContext";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Stack } from "expo-router";
 

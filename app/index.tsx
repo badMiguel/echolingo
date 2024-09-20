@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Button, StyleSheet } from 'react-native'
 import React, { createContext, } from 'react'
 import { router } from 'expo-router';
 import { useThemeColor } from '@/hooks/useThemeColor';

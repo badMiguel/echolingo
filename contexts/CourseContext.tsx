@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
+import React, { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
 
 export const CourseContext = createContext<{ course: string }>({ course: 'unknown' });
 export const SetCourseContext = createContext<Dispatch<SetStateAction<string>> | undefined>(undefined);

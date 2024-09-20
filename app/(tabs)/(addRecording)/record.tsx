@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Button, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import useRecording from "@/hooks/recording/useRecording";
 import AudioPlayback from "@/components/audio/playback";
 import useCRUD from "@/hooks/recording/useCRUD";

@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Button, StyleSheet, Pressable } from "react-native";
+import { Text, View, StyleSheet, Pressable } from "react-native";
 import * as DocumentPicker from 'expo-document-picker'
-import useCRUD, { SaveRecReturn } from "@/hooks/recording/useCRUD";
+import useCRUD from "@/hooks/recording/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
-
-type OpenDocumentPickerProp = {
-    saveRecording: (uri: string, id: number) => Promise<SaveRecReturn>
-    currentID: number,
-}
 
 export default function Upload() {
     const bgColor = useThemeColor({}, 'background');
@@ -30,7 +25,7 @@ export default function Upload() {
     const id = Array.isArray(current) ? parseInt(current[0]) : parseInt(current);
 
     const useDocumentPicker = async () => {
-        const uploadedUri = await openDocumentPicker({ saveRecording: saveRecording, currentID: id });
+        const uploadedUri = await openDocumentPicker();
         setUri(uploadedUri);
         setUploaded(true);
         setIsSuccess(false);
@@ -125,7 +120,7 @@ export default function Upload() {
     );
 }
 
-async function openDocumentPicker({ saveRecording, currentID }: OpenDocumentPickerProp) {
+async function openDocumentPicker() {
     try {
         const result = await DocumentPicker.getDocumentAsync({
             type: '*/*',

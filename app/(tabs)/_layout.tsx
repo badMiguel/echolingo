@@ -12,7 +12,6 @@ export default function RootLayout() {
 
     const params = useLocalSearchParams();
     const userType = Array.isArray(params.userType) ? params.userType[0] : params.userType;
-    const userName = Array.isArray(params.userName) ? params.userName[0] : params.userName;
 
     return (
         <CourseProvider>
@@ -47,7 +46,7 @@ export default function RootLayout() {
                             headerShown: false,
                             tabBarActiveTintColor: tabFocusColor,
                             tabBarInactiveTintColor: tabUnfocusedColor,
-                            tabBarIcon: ({ color, focused }) => (
+                            tabBarIcon: ({ focused }) => (
                                 <ClipboardListIcon color={focused ? tabFocusColor : tabUnfocusedColor} />
                             ),
                             href: userType === 'teacher' ? null : "/(tasks)"
@@ -60,7 +59,7 @@ export default function RootLayout() {
                             headerShown: false,
                             tabBarActiveTintColor: tabFocusColor,
                             tabBarInactiveTintColor: tabUnfocusedColor,
-                            tabBarIcon: ({ color, focused }) => (
+                            tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
                                     name={focused ? 'list' : 'list-sharp'}
                                     color={focused ? tabFocusColor : tabUnfocusedColor} />
@@ -76,7 +75,7 @@ export default function RootLayout() {
                             headerShown: false,
                             tabBarActiveTintColor: tabFocusColor,
                             tabBarInactiveTintColor: tabUnfocusedColor,
-                            tabBarIcon: ({ color, focused }) => (
+                            tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
                                     name={focused ? 'add' : 'add-sharp'}
                                     color={focused ? tabFocusColor : tabUnfocusedColor} />
@@ -92,7 +91,7 @@ export default function RootLayout() {
                             headerShown: false,
                             tabBarActiveTintColor: tabFocusColor,
                             tabBarInactiveTintColor: tabUnfocusedColor,
-                            tabBarIcon: ({ color, focused }) => (
+                            tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
                                     name={focused ? 'checkmark' : 'checkmark-outline'} 
                                     color={focused ? tabFocusColor : tabUnfocusedColor} />
@@ -107,7 +106,7 @@ export default function RootLayout() {
                             title: "Profile",
                             tabBarActiveTintColor: tabFocusColor,
                             tabBarInactiveTintColor: tabUnfocusedColor,
-                            tabBarIcon: ({ color, focused }) => (
+                            tabBarIcon: ({ focused }) => (
                                 <UserIcon color={focused ? tabFocusColor : tabUnfocusedColor} />
                             )
                         }}

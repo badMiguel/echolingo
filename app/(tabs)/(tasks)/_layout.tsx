@@ -1,7 +1,4 @@
-import { StyleSheet } from 'react-native'
 import { Stack } from 'expo-router'
-import { CourseProvider } from '@/contexts/CourseContext'
-import { DharugProvider } from '@/contexts/DharugContext'
 import { useThemeColor } from '@/hooks/useThemeColor'
 
 const TasksLayout = () => {

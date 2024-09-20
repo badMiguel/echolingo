@@ -1,4 +1,4 @@
-import { Button, Pressable, SectionList, StyleSheet, Text, View } from 'react-native'
+import { Pressable, SectionList, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { DataType, emptyDharugData, useDharugListContext } from '@/contexts/DharugContext'
 import { router } from 'expo-router'
@@ -74,7 +74,7 @@ const RecordingList = () => {
     )
 }
 
-const SentenceCard: React.FC<{ dharug: DataType, finished: boolean }> = ({ dharug, finished }) => {
+const SentenceCard: React.FC<{ dharug: DataType, finished: boolean }> = ({ dharug }) => {
     const color = useColor();
     const goToSentence = () => {
         router.push({

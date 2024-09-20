@@ -44,7 +44,7 @@ const useColor = () => {
     }
 };
 
-export default function AudioPlayback({ uri, disabled }: { uri: URI, disabled?: boolean }) {
+export default function AudioPlayback({ uri }: { uri: URI, disabled?: boolean }) {
     const { startSound, pausePlaySound, status, progress, duration } = useAudio();
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);
@@ -86,7 +86,7 @@ export default function AudioPlayback({ uri, disabled }: { uri: URI, disabled?: 
 }
 
 const PlayButton: React.FC<PlayButtonProps> = ({
-    uri, startSound, pausePlaySound, status, playing, setPlaying, onGoing, setOnGoing }) => {
+    uri, startSound, pausePlaySound, playing, setPlaying, onGoing, setOnGoing }) => {
 
     const color = useColor();
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { DataType, useDharugContext } from '@/contexts/DharugContext';
-import { router, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
@@ -32,10 +32,6 @@ export default function Sentence() {
             })
         }
     }, [navigation])
-
-    const goBack = () => {
-        router.back();
-    }
 
     return (
         <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>

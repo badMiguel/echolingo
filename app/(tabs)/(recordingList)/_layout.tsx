@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -28,6 +27,3 @@ function recordingListLayout() {
 }
 
 export default recordingListLayout;
-
-const styles = StyleSheet.create({
-})

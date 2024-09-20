@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import { ExpoRoot, router, useLocalSearchParams, useNavigation } from 'expo-router'
+import React, { useEffect, useState } from 'react'
+import { Pressable, StyleSheet, TextInput, View } from 'react-native'
+import { router, useLocalSearchParams } from 'expo-router'
 
 import { DataType, useDharugListContext } from '@/contexts/DharugContext';
 import useCRUD from '@/hooks/recording/useCRUD';
