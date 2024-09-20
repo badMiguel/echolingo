@@ -84,8 +84,8 @@ export default function useCRUD() {
                 id: newID,
                 English: english ? english : null,
                 "Gloss (english)": gEnglish ? gEnglish : null,
-                "Dharug(Gloss)": gDharug ? gDharug : null,
-                Dharug: dharug ? dharug : null,
+                "Gloss (tiwi)": gDharug ? gDharug : null,
+                Tiwi: dharug ? dharug : null,
                 Topic: topic ? topic : null,
                 "Image Name (optional)": null,
                 recording: null,
@@ -128,8 +128,8 @@ async function saveJsonFile(id: number, updatedData: DataDetail, updateData: () 
             return { status: false };
         }
 
-        if (updatedData.dharug) { dharug.Dharug = updatedData.dharug }
-        if (updatedData.gDharug) { dharug['Dharug(Gloss)'] = updatedData.gDharug }
+        if (updatedData.dharug) { dharug.Tiwi = updatedData.dharug }
+        if (updatedData.gDharug) { dharug['Gloss (tiwi)'] = updatedData.gDharug }
         if (updatedData.english) { dharug.English = updatedData.english }
         if (updatedData.gEnglish) { dharug['Gloss (english)'] = updatedData.gEnglish }
         if (updatedData.topic) { dharug.Topic = updatedData.topic }

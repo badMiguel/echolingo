@@ -33,7 +33,6 @@ export default function Tasks() {
         return {
             courseNum: 0,
             courseName: '',
-            img_link: '',
             completed: is_finished,
         }
     }

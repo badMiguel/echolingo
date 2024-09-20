@@ -81,8 +81,8 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
 
     useEffect(() => {
         if (current) {
-            current.Dharug && setDharug(current.Dharug);
-            current['Dharug(Gloss)'] && setDharugGloss(current['Dharug(Gloss)']);
+            current.Tiwi && setDharug(current.Tiwi);
+            current['Gloss (tiwi)'] && setDharugGloss(current['Gloss (tiwi)']);
             current.English && setEnglish(current.English);
             current['Gloss (english)'] && setEnglishGloss(current['Gloss (english)']);
             current.Topic && setEnglishGloss(current.Topic);

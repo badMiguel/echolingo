@@ -58,7 +58,7 @@ export default function Index() {
 async function copyJsonData() {
     try {
         // for production. get dharug json from build data 
-        // const data = Asset.fromModule(require('@/data/json/dharug_list.json'));
+        // const data = Asset.fromModule(require('@/data/json/tiwi_list.json'));
         // await data.downloadAsync();
         // const sourceUri = data.localUri;
         const targetUri = FileSystem.documentDirectory + 'tiwi_list.json';

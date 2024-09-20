@@ -87,8 +87,8 @@ const SentenceCard: React.FC<{ dharug: DataType, finished: boolean }> = ({ dharu
 
     return (
         <View style={[styles.sentenceCard__container, { backgroundColor: color.accent }]}>
-            <ThemedText type='defaultSemiBold'>{dharug.Dharug ? 'Dharug: ' : 'Dharug Gloss: '}</ThemedText>
-            <ThemedText>{dharug.Dharug || dharug['Dharug(Gloss)']}</ThemedText>
+            <ThemedText type='defaultSemiBold'>{dharug.Tiwi ? 'Dharug: ' : 'Dharug Gloss: '}</ThemedText>
+            <ThemedText>{dharug.Tiwi || dharug['Gloss (tiwi)']}</ThemedText>
             <ThemedText type='defaultSemiBold'>{dharug.English ? 'English: ' : 'English Gloss: '}</ThemedText>
             <ThemedText>{dharug.English || dharug['Gloss (english)']}</ThemedText>
             <View style={[styles.button__container, { backgroundColor: color.tint }]}>

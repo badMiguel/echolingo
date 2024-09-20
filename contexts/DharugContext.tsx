@@ -8,8 +8,8 @@ export type DataType = {
     id: number;
     English: string | null;
     "Gloss (english)": string | null;
-    "Dharug(Gloss)": string | null;
-    Dharug: string | null;
+    "Gloss (tiwi)": string | null;
+    Tiwi: string | null;
     Topic: string | null;
     "Image Name (optional)": string | null;
     recording: string | null;
@@ -21,8 +21,8 @@ export const emptyDharugData = () => {
         id: 0,
         English: null,
         "Gloss (english)": null,
-        "Dharug(Gloss)": null,
-        Dharug: null,
+        "Gloss (tiwi)": null,
+        Tiwi: null,
         Topic: null,
         "Image Name (optional)": null,
         recording: null,

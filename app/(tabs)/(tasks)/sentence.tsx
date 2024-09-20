@@ -54,17 +54,17 @@ export default function Sentence() {
 const Question: React.FC<{ current: DataType }> = ({ current }) => {
     return (
         <View style={styles.questionView}>
-            {current.Dharug &&
+            {current.Tiwi &&
                 <View>
                     <ThemedText type="defaultSemiBold">Dharug:</ThemedText>
-                    <ThemedText>{current.Dharug}</ThemedText>
+                    <ThemedText>{current.Tiwi}</ThemedText>
                 </View>
             }
 
-            {current['Dharug(Gloss)'] &&
+            {current['Gloss (tiwi)'] &&
                 <View>
                     <ThemedText type="defaultSemiBold">Dharug (Gloss):</ThemedText>
-                    <ThemedText>{current['Dharug(Gloss)']}</ThemedText>
+                    <ThemedText>{current['Gloss (tiwi)']}</ThemedText>
                 </View>
             }
 
