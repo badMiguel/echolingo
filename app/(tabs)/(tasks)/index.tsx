@@ -8,7 +8,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
 type CategoryCardProps = {
-    categoryNum: number,
     categoryName: string,
     categoryImgSrc: any,
 };
@@ -76,7 +75,7 @@ export default function Tasks() {
     )
 }
 
-function CategoryCard({ categoryNum, categoryName, categoryImgSrc }: CategoryCardProps) {
+function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
     const color = colors();
     const setCategory = useSetCategoryContext();
 
