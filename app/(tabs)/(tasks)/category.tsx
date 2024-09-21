@@ -1,10 +1,11 @@
 import { router, useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useCategoryContext } from '@/contexts/CategoryContext';
 import { DataType, useTiwiListContext, useSetTiwiContext } from '@/contexts/TiwiContext';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/components/ThemedText';
+import SearchBar from '@/components/search/search';
 
 const useColor = () => {
     return {
@@ -32,17 +33,16 @@ export default function Category() {
 
     return (
         <View style={[{ backgroundColor: color.bgColor }]}>
+            <SearchBar />
             {tiwiList ? (
-                <>
-                    <FlatList
-                        style={styles.flatlist}
-                        data={tiwiList}
-                        renderItem={({ item }) =>
-                            <SentenceCard tiwi={item} />
-                        }
-                        keyExtractor={item => item.id.toString()}
-                    />
-                </>
+                <FlatList
+                    style={styles.flatlist}
+                    data={tiwiList}
+                    renderItem={({ item }) =>
+                        <SentenceCard tiwi={item} />
+                    }
+                    keyExtractor={item => item.id.toString()}
+                />
             ) : (
                 <Text>No sentences made yet for this category</Text>
             )}
