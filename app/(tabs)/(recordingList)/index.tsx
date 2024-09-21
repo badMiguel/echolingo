@@ -47,7 +47,8 @@ const RecordingList = () => {
         }, {
             title: "With recordings",
             data: dataRecorded.length > 0 ? dataRecorded : [emptyTiwiData()]
-        }];
+        }
+    ];
 
     return (
         <View style={{ backgroundColor: color.bgColor }}>
@@ -78,7 +79,7 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
     const color = useColor();
     const goToSentence = () => {
         router.push({
-            pathname: '/(addRecording)',
+            pathname: tiwi.recording ? '/viewRecording' : '/(addRecording)',
             params: {
                 sentenceID: tiwi.id,
             },
@@ -93,7 +94,7 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
             <ThemedText>{tiwi.English || tiwi['Gloss (english)']}</ThemedText>
             <View style={[styles.button__container, { backgroundColor: color.tint }]}>
                 <Pressable onPress={() => goToSentence()}>
-                    <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Add Recording</ThemedText>
+                    <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi.recording ? "View" : "Add Recording"}</ThemedText>
                 </Pressable>
             </View>
         </View>

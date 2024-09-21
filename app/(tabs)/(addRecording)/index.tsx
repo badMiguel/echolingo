@@ -85,7 +85,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
             current['Gloss (tiwi)'] && setTiwiGloss(current['Gloss (tiwi)']);
             current.English && setEnglish(current.English);
             current['Gloss (english)'] && setEnglishGloss(current['Gloss (english)']);
-            current.Topic && setEnglishGloss(current.Topic);
+            current.Topic && setTopic(current.Topic);
         } else {
             clearForm();
         }

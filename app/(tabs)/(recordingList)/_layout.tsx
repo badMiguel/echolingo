@@ -22,6 +22,13 @@ function recordingListLayout() {
                     title: 'Recording Database',
                 }}
             />
+            <Stack.Screen
+                name='viewRecording'
+                options={{
+                    headerShown: true,
+                    title: 'Recording Database',
+                }}
+            />
         </Stack>
     );
 }

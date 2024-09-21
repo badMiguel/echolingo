@@ -38,24 +38,24 @@ export default function Tasks() {
 
     const sections = [
         {
-            title: "Unfinished Categorys",
+            title: "Unfinished Categories",
             data: unfinished.length > 0 ? unfinished : [empty(false)],
         },
         {
-            title: "Finished Categorys",
+            title: "Finished Categories",
             data: finished.length > 0 ? finished : [empty(true)],
         },
     ]
 
     return (
-        <View style={{ backgroundColor: color.bgColor }}>
+        <View style={{ flex: 1, backgroundColor: color.bgColor }}>
             <SectionList
                 sections={sections}
                 keyExtractor={(item) => item.categoryName}
                 renderItem={({ item }) =>
                     item.categoryName === '' ? (
                         !item.completed ? (
-                            <ThemedText type='default' style={[styles.emptySection, { color: color.textColor }]}>Congratulations! You have finished categorys currently available.</ThemedText>
+                            <ThemedText type='default' style={[styles.emptySection, { color: color.textColor }]}>Congratulations! You have finished categories currently available.</ThemedText>
                         ) : (
                             <ThemedText type='default' style={[styles.emptySection, { color: color.textColor }]}>You currently have not finished any category yet.</ThemedText>
                         )

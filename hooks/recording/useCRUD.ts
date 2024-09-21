@@ -82,10 +82,10 @@ export default function useCRUD() {
             const newID = jsonData.length + 1;
             const newData: DataType = {
                 id: newID,
-                English: english ? english : null,
+                English: english ? english : "",
                 "Gloss (english)": gEnglish ? gEnglish : null,
                 "Gloss (tiwi)": gTiwi ? gTiwi : null,
-                Tiwi: tiwi ? tiwi : null,
+                Tiwi: tiwi ? tiwi : "",
                 Topic: topic ? topic : null,
                 "Image Name (optional)": null,
                 recording: null,
