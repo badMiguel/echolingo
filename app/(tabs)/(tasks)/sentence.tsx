@@ -5,7 +5,7 @@ import { useNavigation } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
-import { useCourseContext } from "@/contexts/CourseContext";
+import { useCategoryContext } from "@/contexts/CategoryContext";
 import * as FileSystem from 'expo-file-system';
 import { Record } from "../(addRecording)/record";
 
@@ -22,13 +22,13 @@ export default function Sentence() {
     const navigation = useNavigation();
     const current = useTiwiContext();
     const color = useColor();
-    const { course } = useCourseContext();
+    const { category } = useCategoryContext();
 
     // change header title dynamically
     useEffect(() => {
-        if (course !== 'unknown') {
+        if (category !== 'unknown') {
             navigation.setOptions({
-                title: course
+                title: category
             })
         }
     }, [navigation])
@@ -37,7 +37,7 @@ export default function Sentence() {
         <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>
             {!current ? (
                 <View>
-                    <ThemedText>Congratulations! You have completed this course.</ThemedText>
+                    <ThemedText>Congratulations! You have completed this category.</ThemedText>
                 </View>
             ) : (
                 <>

@@ -1,7 +1,7 @@
 import { Tabs, useLocalSearchParams } from "expo-router";
 import { TabBarIcon, UserIcon, ClipboardListIcon } from "@/components/navigation/TabBarIcon";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { CourseProvider } from "@/contexts/CourseContext";
+import { CategoryProvider } from "@/contexts/CategoryContext";
 import { TiwiProvider } from "@/contexts/TiwiContext";
 
 export default function RootLayout() {
@@ -14,7 +14,7 @@ export default function RootLayout() {
     const userType = Array.isArray(params.userType) ? params.userType[0] : params.userType;
 
     return (
-        <CourseProvider>
+        <CategoryProvider>
             <TiwiProvider>
                 <Tabs
                     screenOptions={{
@@ -114,6 +114,6 @@ export default function RootLayout() {
                 </Tabs>
 
             </TiwiProvider>
-        </CourseProvider >
+        </CategoryProvider >
     );
 }

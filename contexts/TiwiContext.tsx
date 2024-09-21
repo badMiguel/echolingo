@@ -1,7 +1,7 @@
 import React, { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
-import { useCourseContext } from "@/contexts/CourseContext";
-import courseData from '@/data/json/course_data.json'
+import { useCategoryContext } from "@/contexts/CategoryContext";
+import categoryData from '@/data/json/category_data.json'
 import useData from "@/hooks/recording/useData";
 
 export type DataType = {
@@ -41,7 +41,7 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [tiwiData, setTiwiData] = useState<Promise<any>>();
     const [filteredList, setFilteredList] = useState<DataType[] | undefined>(undefined);
 
-    const { course } = useCourseContext();
+    const { category } = useCategoryContext();
     const { loadJson } = useData();
 
     // todo add error handling
@@ -55,17 +55,17 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     useEffect(() => {
         if (Array.isArray(tiwiData)) {
-            const selectedCourse = courseData.filter(item => item.courseName === course)
+            const selectedCategory = categoryData.filter(item => item.categoryName === category)
             let tiwiList: DataType[] = tiwiData;
-            if (selectedCourse.length > 0) {
+            if (selectedCategory.length > 0) {
                 tiwiList = tiwiData.filter(item =>
-                    selectedCourse.some(course => course.topic.includes(item.Topic)) &&
+                    selectedCategory.some(category => category.topic.includes(item.Topic)) &&
                     !item.completed
                 );
             }
             setFilteredList(tiwiList);
         }
-    }, [tiwiData, course]);
+    }, [tiwiData, category]);
 
     const updateData = async () => {
         const data = await loadJson();

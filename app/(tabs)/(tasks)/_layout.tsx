@@ -21,15 +21,15 @@ const TasksLayout = () => {
                 }}
             />
             <Stack.Screen
-                name='course'
+                name='category'
                 options={{
-                    title: 'Course',
+                    title: 'Category',
                 }}
             />
             <Stack.Screen
                 name='sentence'
                 options={{
-                    title: 'Course',
+                    title: 'Category',
                 }}
             />
         </Stack>

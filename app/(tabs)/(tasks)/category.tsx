@@ -1,7 +1,7 @@
 import { router, useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
-import { useCourseContext } from '@/contexts/CourseContext';
+import { useCategoryContext } from '@/contexts/CategoryContext';
 import { DataType, useTiwiListContext, useSetTiwiContext } from '@/contexts/TiwiContext';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/components/ThemedText';
@@ -15,17 +15,17 @@ const useColor = () => {
     };
 };
 
-export default function Course() {
+export default function Category() {
     const navigation = useNavigation();
-    const { course } = useCourseContext();
+    const { category } = useCategoryContext();
     const tiwiList = useTiwiListContext();
     const color = useColor();
 
     // change header title dynamically
     useEffect(() => {
-        if (course !== 'unknown') {
+        if (category !== 'unknown') {
             navigation.setOptions({
-                title: course
+                title: category
             })
         }
     }, [navigation])
@@ -44,7 +44,7 @@ export default function Course() {
                     />
                 </>
             ) : (
-                <Text>No sentences made yet for this course</Text>
+                <Text>No sentences made yet for this category</Text>
             )}
 
         </View>

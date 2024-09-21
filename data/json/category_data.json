@@ -1,15 +1,15 @@
 [
     {
-        "courseNum": 1,
-        "courseName": "Feelings and Behaviours",
+        "categoryNum": 1,
+        "categoryName": "Feelings and Behaviours",
         "completed": false,
         "topic": [
             "feelings_and_behaviours"
         ]
     },
     {
-        "courseNum": 2,
-        "courseName": "Greetings and Checking In",
+        "categoryNum": 2,
+        "categoryName": "Greetings and Checking In",
         "completed": false,
         "topic": [
             "greetings_and_checking_in"
