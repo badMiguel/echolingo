@@ -25,6 +25,7 @@ const colors = () => {
 export default function Tasks() {
     const color = colors();
 
+    // todo optimisation
     const unfinished = categoryData.filter(item => !item.completed);
     const finished = categoryData.filter(item => item.completed);
 

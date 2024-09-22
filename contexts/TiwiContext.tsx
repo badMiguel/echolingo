@@ -54,7 +54,9 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     useEffect(() => {
+        // todo error handlign
         if (Array.isArray(tiwiData)) {
+            // todo optimisation
             const selectedCategory = categoryData.filter(item => item.categoryName === category)
             let tiwiList: DataType[] = tiwiData;
             if (selectedCategory.length > 0) {
@@ -69,6 +71,7 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const updateData = async () => {
         const data = await loadJson();
+        // todo error handling
         if (data) {
             setTiwiData(data);
         }
