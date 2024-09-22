@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
 
-import { DataType, useTiwiListContext } from '@/contexts/TiwiContext';
+import { Entry, useTiwiListContext } from '@/contexts/TiwiContext';
 import useCRUD from '@/hooks/recording/useCRUD';
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
 type AddDetailProp = {
-    current: DataType | undefined;
+    currentID: number | undefined;
+    current: Entry | undefined;
     changeCurrent: (currentID: number) => void;
 };
 
@@ -23,7 +24,7 @@ const useColor = () => {
 
 export default function Add() {
     const [currentID, setCurrentID] = useState<number>();
-    const [current, setCurrent] = useState<DataType | undefined>();
+    const [current, setCurrent] = useState<Entry | undefined>();
 
     const { sentenceID } = useLocalSearchParams();
     const data = useTiwiListContext();
@@ -31,10 +32,10 @@ export default function Add() {
 
     useEffect(() => {
         if (data) {  // todo error handling
-            const id: number = Array.isArray(sentenceID) ? parseInt(sentenceID[0]) : parseInt(sentenceID);
-            const item: DataType | undefined = data.find(item => item.id === id);
+            const id: string = Array.isArray(sentenceID) ? sentenceID[0] : sentenceID;
+            const item: Entry | undefined = data[id];
 
-            setCurrentID(id)
+            setCurrentID(parseInt(id))
             setCurrent(item)
         }
     }, [sentenceID, data]);
@@ -44,7 +45,7 @@ export default function Add() {
 
     return (
         <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>
-            <AddDetails current={current} changeCurrent={updateCurrent} />
+            <AddDetails currentID={currentID} current={current} changeCurrent={updateCurrent} />
             {currentID ? (
                 <>
                     <AddRecording currentID={currentID} />
@@ -66,7 +67,7 @@ export default function Add() {
     )
 }
 
-const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
+const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent }) => {
     const [tiwi, setTiwi] = useState<string | undefined>();
     const [tiwiGloss, setTiwiGloss] = useState<string | undefined>();
     const [english, setEnglish] = useState<string | undefined>();
@@ -128,7 +129,10 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                 currentID && changeCurrent(currentID);
                 router.setParams({ sentenceID: currentID });
             } else {
-                await saveDetails(current.id, { tiwi: tiwi, gTiwi: tiwiGloss, english: english, gEnglish: englishGloss, topic: topic });
+                // todo error handling
+                if (currentID) {
+                    await saveDetails(currentID, { tiwi: tiwi, gTiwi: tiwiGloss, english: english, gEnglish: englishGloss, topic: topic });
+                }
             }
         } catch (err) {
             console.error('Failed to create new data', err);
@@ -231,7 +235,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ current, changeCurrent }) => {
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}
                 >
-                    {current?.id ? 'Update' : 'Add'}
+                    {currentID ? 'Update' : 'Add'}
                 </ThemedText>
             </Pressable>
             <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => clearForm()}>

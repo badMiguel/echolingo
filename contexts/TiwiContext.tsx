@@ -7,11 +7,12 @@ import useData from "@/hooks/recording/useData";
 // converted json from list of objects to key value pair, where key is the id
 // for faster lookups
 export type Entry = {
-    English: string | null;
+    // based on the data given, assumed that english, tiwi, and topic is not null
+    English: string;
+    Tiwi: string;
+    Topic: string;
     "Gloss (english)": string | null;
     "Gloss (tiwi)": string | null;
-    Tiwi: string | null;
-    Topic: string // | null;
     "Image Name (optional)": string | null;
     recording: string | null;
     completed: boolean;
@@ -23,11 +24,11 @@ export type DataType = {
 
 export const emptyTiwiData = () => {
     return {
-        English: null,
+        English: "",
+        Tiwi: "",
+        Topic: "",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        Tiwi: null,
-        Topic: "",
         "Image Name (optional)": null,
         recording: null,
         completed: false,
