@@ -36,37 +36,29 @@ class Trie {
 
     prefixOf(phrase: string): number[] {
         const potential: number[] = [];
-        let noTrie: boolean = false;
         let node: TrieNode = this.root;
 
         for (const char of phrase) {
             if (!node.children.has(char)) {
-                noTrie = true;
-                break;
+                return literalSearch();
             }
 
             if (node.id !== 0) {
                 potential.push(node.id);
             }
 
-            try {
+            if (typeof node === "object") {
                 node = node.children.get(char)!;
-            } catch {
+            } else {
                 break;
             }
         }
 
-        if (noTrie) {
-            return literalSearch();
-        } else {
-            this.checkChild(potential, node);
-            return potential;
-        }
-
+        this.checkChild(potential, node);
+        return potential;
     }
 
-    private checkChild(potential: number[], node: TrieNode): number[] {
-        return []; // change this
+    private checkChild(potential: number[], node: TrieNode) {
     }
 }
 
