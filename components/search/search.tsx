@@ -1,5 +1,7 @@
 import { DataType } from "@/contexts/TiwiContext";
-import { View } from "react-native";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { useState } from "react";
+import { StyleSheet, TextInput, View } from "react-native";
 
 type TrieNode = {
     children: Map<string, TrieNode>;
@@ -110,8 +112,28 @@ export class Trie {
 
 
 export default function SearchBar() {
+    const textColor = useThemeColor({}, "text");
+    const tint = useThemeColor({}, "tint");
+
+    const [searchTerm, setSearchTerm] = useState<string>("");
+
     return (
         <View>
+            <TextInput
+                autoCorrect={false}
+                value={searchTerm}
+                onChangeText={(text) => setSearchTerm(text)}
+                style={[styles.searchBar, {}]}
+                placeholder={"Search here..."}
+                placeholderTextColor={tint}
+                cursorColor={textColor}
+            />
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    searchBar: {
+        borderBottomWidth: 0.2,
+    },
+})
