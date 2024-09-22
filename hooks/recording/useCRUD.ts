@@ -81,15 +81,16 @@ export default function useCRUD() {
             }
             const newID = jsonData.length + 1;
             const newData: DataType = {
-                id: newID,
-                English: english ? english : "",
-                "Gloss (english)": gEnglish ? gEnglish : null,
-                "Gloss (tiwi)": gTiwi ? gTiwi : null,
-                Tiwi: tiwi ? tiwi : "",
-                Topic: topic ? topic : null,
-                "Image Name (optional)": null,
-                recording: null,
-                completed: false,
+                newID: {
+                    English: english ? english : "",
+                    "Gloss (english)": gEnglish ? gEnglish : null,
+                    "Gloss (tiwi)": gTiwi ? gTiwi : null,
+                    Tiwi: tiwi ? tiwi : "",
+                    Topic: topic ? topic : "",
+                    "Image Name (optional)": null,
+                    recording: null,
+                    completed: false,
+                }
             }
             jsonData.push(newData);
 
@@ -115,14 +116,14 @@ async function saveJsonFile(id: number, updatedData: DataDetail, updateData: () 
     const { loadJson } = useData();
     try {
         const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
-        let jsonData: DataType[] = await loadJson();
+        let jsonData: DataType = await loadJson();
 
         if (!jsonData) {
             console.error('Json data does not exists')
             return { status: false };
         }
 
-        const tiwi = jsonData.find(item => item.id === id);
+        const tiwi = jsonData[id];
         if (!tiwi) {
             console.error('Tiwi data is undefined')
             return { status: false };

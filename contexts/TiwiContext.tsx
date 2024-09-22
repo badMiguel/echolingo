@@ -22,7 +22,7 @@ export type DataType = {
     [key: string]: Entry
 }
 
-export const emptyTiwiData = () => {
+export const emptyTiwiData = (complete?: boolean) => {
     return {
         English: "",
         Tiwi: "",
@@ -31,7 +31,7 @@ export const emptyTiwiData = () => {
         "Gloss (tiwi)": null,
         "Image Name (optional)": null,
         recording: null,
-        completed: false,
+        completed: complete ? true : false,
     }
 }
 
@@ -43,7 +43,7 @@ const UpdateDataContext = createContext<() => void>(() => { });
 
 export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [currentTiwi, setCurrentTiwi] = useState<Entry>(emptyTiwiData);
-    const [tiwiData, setTiwiData] = useState<DataType>({ "0": emptyTiwiData()});
+    const [tiwiData, setTiwiData] = useState<DataType>({ "0": emptyTiwiData() });
     const [filteredList, setFilteredList] = useState<DataType | undefined>(undefined);
 
     const { category } = useCategoryContext();
@@ -55,13 +55,14 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const data = await loadJson()
             setTiwiData(data);
         }
+
         getData();
     }, []);
 
     useEffect(() => {
         // todo error handling and optimisation
-        const selectedCategory = categoryData.filter(item => item.categoryName === category)
-        let tiwiList: DataType = {}
+        const selectedCategory = categoryData.filter(item => item.categoryName === category);
+        let tiwiList: DataType = {};
 
         if (selectedCategory.length > 0) {
             const filterKeys = Object.keys(tiwiData).filter(key =>
@@ -72,6 +73,8 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             for (const key of filterKeys) {
                 tiwiList[key] = tiwiData[key];
             }
+        } else {
+            tiwiList = tiwiData;
         }
 
         setFilteredList(tiwiList);

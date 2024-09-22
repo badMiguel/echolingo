@@ -1,6 +1,6 @@
 import { Pressable, SectionList, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { DataType, Entry, emptyTiwiData, useTiwiListContext } from '@/contexts/TiwiContext'
+import { DataType, emptyTiwiData, useTiwiListContext } from '@/contexts/TiwiContext'
 import { router } from 'expo-router'
 import { ThemedText } from '@/components/ThemedText'
 import { useThemeColor } from '@/hooks/useThemeColor'

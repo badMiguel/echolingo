@@ -1,12 +1,12 @@
 import AudioPlayback from "@/components/audio/playback";
-import { DataType, emptyTiwiData, useTiwiListContext } from "@/contexts/TiwiContext";
+import { Entry, emptyTiwiData, useTiwiListContext } from "@/contexts/TiwiContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 import * as FileSystem from "expo-file-system";
 
 export default function ViewRecording() {
-    const [tiwi, setTiwi] = useState<DataType>({"0": emptyTiwiData()});
+    const [tiwi, setTiwi] = useState<Entry>(emptyTiwiData());
     const [uri, setUri] = useState<string>();
     const [id, setId] = useState<string>("");
 
@@ -14,9 +14,10 @@ export default function ViewRecording() {
     const data = useTiwiListContext();
 
     useEffect(() => {
+        // todo error handling
         if (data) {
             const id = Array.isArray(sentenceID) ? sentenceID[0] : sentenceID;
-            const tiwiData = data.find(item => item.id === parseInt(id));
+            const tiwiData = data[id];
 
             setId(id);
 
