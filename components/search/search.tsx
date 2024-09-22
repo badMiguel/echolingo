@@ -51,7 +51,7 @@ export class Trie {
             }
 
             if (potential.length > 11) {
-                return potential;
+                return potential
             }
 
             if (typeof node === "object") {
@@ -74,7 +74,7 @@ export class Trie {
             potential.push(node.id);
         }
 
-        for (const child in node.children) {
+        for (const child of node.children.keys()) {
             this.checkChild(potential, prefix + child, node.children.get(child)!);
         }
     }
@@ -84,7 +84,7 @@ export class Trie {
         const filtered: string[] = [];
         const searchTerms = searchTerm.split(" ");
 
-        for (const key in Object.keys(data)) {
+        for (const key of Object.keys(data)) {
             const entry = data[key]
 
             // only checks if there is at least one match then push to potential

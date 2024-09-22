@@ -37,7 +37,7 @@ describe("trie x literal search", () => {
         expect(result1).toEqual([]);
 
         const result2 = trie.prefixOf("around", data);
-        expect(result2).toContain(["173"]);
+        expect(result2).toEqual(["173"]);
     });
 });
 
