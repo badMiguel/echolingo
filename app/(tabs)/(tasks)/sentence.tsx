@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { DataType, useTiwiContext } from '@/contexts/TiwiContext';
+import { Entry, useTiwiContext } from '@/contexts/TiwiContext';
 import { useNavigation } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -51,7 +51,7 @@ export default function Sentence() {
     );
 }
 
-const Question: React.FC<{ current: DataType }> = ({ current }) => {
+const Question: React.FC<{ current: Entry }> = ({ current }) => {
     return (
         <View style={styles.questionView}>
             {current.Tiwi &&
