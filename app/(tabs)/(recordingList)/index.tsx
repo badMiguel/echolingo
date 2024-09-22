@@ -21,6 +21,7 @@ const RecordingList = () => {
     const color = useColor();
 
     useEffect(() => {
+        // todo error handling and optimisation
         if (data) {
             const recorded = data.filter(item => item.recording);
             const notRecorded = data.filter(item => !item.recording);
@@ -31,6 +32,7 @@ const RecordingList = () => {
     }, []);
 
     useEffect(() => {
+        // todo error handling and optimisation
         if (data) {
             const recorded = data.filter(item => item.recording);
             const notRecorded = data.filter(item => !item.recording);
