@@ -76,6 +76,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
 
     const [tiwiError, setTiwiError] = useState<boolean>(false);
     const [englishError, setEnglishError] = useState<boolean>(false);
+    const [topicError, setTopicError] = useState<boolean>(false);
 
     const { saveDetails, addDetails } = useCRUD();
     const color = useColor();
@@ -105,13 +106,18 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
     // todo add validation and error handling
     const updateDetails = async () => {
         let error: boolean = false;
-        if (!(tiwi || tiwiGloss)) {
+        if (!tiwi) {
             setTiwiError(true)
             error = true;
         }
 
-        if (!(english || englishGloss)) {
+        if (!english) {
             setEnglishError(true)
+            error = true;
+        }
+
+        if (!topic) {
+            setTopicError(true)
             error = true;
         }
 
@@ -152,7 +158,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     }}
                     style={[styles.formItem, { borderColor: tiwiError ? 'red' : 'black' }]}
                     placeholder={tiwiError
-                        ? 'Should add at least either Tiwi or Tiwi gloss'
+                        ? 'Should add Tiwi data'
                         : 'Enter tiwi'
                     }
                     placeholderTextColor={tiwiError ? '#ff474c' : color.tint}
@@ -170,11 +176,8 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                         setTiwiError(false);
                     }}
                     style={styles.formItem}
-                    placeholder={tiwiError
-                        ? 'Should add at least either Tiwi or Tiwi gloss'
-                        : 'Enter tiwi gloss'
-                    }
-                    placeholderTextColor={tiwiError ? '#ff474c' : color.tint}
+                    placeholder={'Enter tiwi gloss'}
+                    placeholderTextColor={color.tint}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -190,7 +193,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     }}
                     style={[styles.formItem, { borderColor: tiwiError ? 'red' : 'black' }]}
                     placeholder={englishError
-                        ? 'Should add at least either English or English gloss'
+                        ? 'Should add English data'
                         : 'Enter English'
                     }
                     placeholderTextColor={englishError ? '#ff474c' : color.tint}
@@ -207,12 +210,9 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                         setEnglishGloss(text)
                         setEnglishError(false);
                     }}
-                    style={[styles.formItem, { borderColor: englishError ? 'red' : 'black' }]}
-                    placeholder={englishError
-                        ? 'Should add at least either English or English gloss'
-                        : 'Enter English gloss'
-                    }
-                    placeholderTextColor={englishError ? '#ff474c' : color.tint}
+                    style={[styles.formItem,]}
+                    placeholder={'Enter English gloss'}
+                    placeholderTextColor={color.tint}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -223,9 +223,12 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={topic}
                     onChangeText={(text) => setTopic(text)}
-                    style={styles.formItem}
-                    placeholder='Topic (optional)'
-                    placeholderTextColor={color.tint}
+                    style={[styles.formItem, { borderColor: topicError ? 'red' : 'black' }]}
+                    placeholder={topicError
+                        ? 'Should add Topic'
+                        : 'Enter Topic'
+                    }
+                    placeholderTextColor={topicError ? '#ff474c' : color.tint}
                     cursorColor={color.textColor}
                 />
             </View>

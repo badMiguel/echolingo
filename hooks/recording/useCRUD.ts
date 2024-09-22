@@ -1,5 +1,5 @@
 import * as FileSystem from 'expo-file-system';
-import { DataType, useUpdateData } from '@/contexts/TiwiContext';
+import { DataType, Entry, useUpdateData } from '@/contexts/TiwiContext';
 import useData from './useData';
 
 export type SaveRecReturn = {
@@ -74,25 +74,24 @@ export default function useCRUD() {
         const { loadJson } = useData();
         try {
             const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
-            let jsonData: DataType[] = await loadJson();
+            let jsonData: DataType = await loadJson();
 
             if (!jsonData) {
                 throw new Error('Json data does not exists')
             }
-            const newID = jsonData.length + 1;
-            const newData: DataType = {
-                newID: {
-                    English: english ? english : "",
-                    "Gloss (english)": gEnglish ? gEnglish : null,
-                    "Gloss (tiwi)": gTiwi ? gTiwi : null,
-                    Tiwi: tiwi ? tiwi : "",
-                    Topic: topic ? topic : "",
-                    "Image Name (optional)": null,
-                    recording: null,
-                    completed: false,
-                }
+            const newID = Object.keys(jsonData).length + 1;
+            const newData: Entry = {
+                English: english ? english : "",
+                "Gloss (english)": gEnglish ? gEnglish : null,
+                "Gloss (tiwi)": gTiwi ? gTiwi : null,
+                Tiwi: tiwi ? tiwi : "",
+                Topic: topic ? topic : "",
+                "Image Name (optional)": null,
+                recording: null,
+                completed: false,
             }
-            jsonData.push(newData);
+
+            jsonData[newID] = newData;
 
             // write update json data
             FileSystem.writeAsStringAsync(fileUri, JSON.stringify(jsonData));
