@@ -1,6 +1,6 @@
 import { Pressable, SectionList, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { DataType, emptyTiwiData, useTiwiListContext } from '@/contexts/TiwiContext'
+import { DataType, Entry, emptyTiwiData, useTiwiListContext } from '@/contexts/TiwiContext'
 import { router } from 'expo-router'
 import { ThemedText } from '@/components/ThemedText'
 import { useThemeColor } from '@/hooks/useThemeColor'
@@ -14,7 +14,23 @@ const useColor = () => {
     }
 }
 
-const RecordingList = () => {
+function filterRecorded(data: DataType): { recorded: DataType[], notRecorded: DataType[] } {
+    let recorded: DataType[] = [];
+    let notRecorded: DataType[] = [];
+    const recordedKey = new Set(Object.keys(data).filter(key => data[key]["recording"]));
+
+    for (const key in data) {
+        if (recordedKey.has(key)) {
+            recorded.push({ [key]: data[key] });
+        } else {
+            notRecorded.push({ [key]: data[key] });
+        }
+    }
+
+    return { recorded, notRecorded };
+}
+
+export default function RecordingList() {
     const [dataRecorded, setDataRecorded] = useState<DataType[]>([]);
     const [dataNotRecorded, setDataNotRecorded] = useState<DataType[]>([]);
     const data = useTiwiListContext();
@@ -23,8 +39,7 @@ const RecordingList = () => {
     useEffect(() => {
         // todo error handling and optimisation
         if (data) {
-            const recorded = data.filter(item => item.recording);
-            const notRecorded = data.filter(item => !item.recording);
+            const { recorded, notRecorded } = filterRecorded(data);
 
             setDataRecorded(recorded);
             setDataNotRecorded(notRecorded);
@@ -34,8 +49,7 @@ const RecordingList = () => {
     useEffect(() => {
         // todo error handling and optimisation
         if (data) {
-            const recorded = data.filter(item => item.recording);
-            const notRecorded = data.filter(item => !item.recording);
+            const { recorded, notRecorded } = filterRecorded(data);
 
             setDataRecorded(recorded);
             setDataNotRecorded(notRecorded);
@@ -45,10 +59,10 @@ const RecordingList = () => {
     const sections = [
         {
             title: "Not yet recorded",
-            data: dataNotRecorded.length > 0 ? dataNotRecorded : [emptyTiwiData()]
+            data: dataNotRecorded.length > 0 ? dataNotRecorded : [{ "0": emptyTiwiData() }]
         }, {
             title: "With recordings",
-            data: dataRecorded.length > 0 ? dataRecorded : [emptyTiwiData()]
+            data: dataRecorded.length > 0 ? dataRecorded : [{ "0": emptyTiwiData() }]
         }
     ];
 
@@ -56,9 +70,9 @@ const RecordingList = () => {
         <View style={{ backgroundColor: color.bgColor }}>
             <SectionList
                 sections={sections}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => Object.keys(item)[0]}
                 renderItem={({ item }) =>
-                    item.id === 0 ? (
+                    Object.keys(item)[0] === "0" ? (
                         item.completed ? (
                             <ThemedText style={{}}>All sentences have been recorded</ThemedText>
                         ) : (
@@ -78,12 +92,13 @@ const RecordingList = () => {
 }
 
 const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi }) => {
+    const id: string = Object.keys(tiwi)[0]
     const color = useColor();
     const goToSentence = () => {
         router.push({
             pathname: tiwi.recording ? '/viewRecording' : '/(addRecording)',
             params: {
-                sentenceID: tiwi.id,
+                sentenceID: id
             },
         });
     }
@@ -91,9 +106,9 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
     return (
         <View style={[styles.sentenceCard__container, { backgroundColor: color.accent }]}>
             <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
-            <ThemedText>{tiwi.Tiwi || tiwi['Gloss (tiwi)']}</ThemedText>
+            <ThemedText>{tiwi[id].Tiwi}</ThemedText>
             <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>
-            <ThemedText>{tiwi.English || tiwi['Gloss (english)']}</ThemedText>
+            <ThemedText>{tiwi[id].English}</ThemedText>
             <View style={[styles.button__container, { backgroundColor: color.tint }]}>
                 <Pressable onPress={() => goToSentence()}>
                     <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi.recording ? "View" : "Add Recording"}</ThemedText>
@@ -102,8 +117,6 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
         </View>
     );
 }
-
-export default RecordingList
 
 const styles = StyleSheet.create({
     sectionlist: {

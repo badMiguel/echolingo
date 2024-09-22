@@ -1,26 +1,12 @@
 import AudioPlayback from "@/components/audio/playback";
-import { DataType, useTiwiListContext } from "@/contexts/TiwiContext";
+import { DataType, emptyTiwiData, useTiwiListContext } from "@/contexts/TiwiContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 import * as FileSystem from "expo-file-system";
 
-const empty = (): DataType => {
-    return {
-        id: 0,
-        English: null,
-        "Gloss (english)": null,
-        "Gloss (tiwi)": null,
-        Tiwi: null,
-        Topic: null,
-        "Image Name (optional)": null,
-        recording: null,
-        completed: false
-    }
-}
-
 export default function ViewRecording() {
-    const [tiwi, setTiwi] = useState<DataType>(empty);
+    const [tiwi, setTiwi] = useState<DataType>({"0": emptyTiwiData()});
     const [uri, setUri] = useState<string>();
     const [id, setId] = useState<string>("");
 
