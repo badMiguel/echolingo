@@ -13,7 +13,7 @@ export type Entry = {
     Topic: string;
     "Gloss (english)": string | null;
     "Gloss (tiwi)": string | null;
-    "Image Name (optional)": string | null;
+    "Image name (optional)": string | null;
     recording: string | null;
     completed: boolean;
 };
@@ -29,9 +29,9 @@ export const emptyTiwiData = (complete?: boolean) => {
         Topic: "",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Image Name (optional)": null,
+        "Image name (optional)": null,
         recording: null,
-        completed: complete ? true : false,
+        completed: complete ? true: false,
     }
 }
 

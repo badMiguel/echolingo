@@ -86,7 +86,7 @@ export default function useCRUD() {
                 "Gloss (tiwi)": gTiwi ? gTiwi : null,
                 Tiwi: tiwi ? tiwi : "",
                 Topic: topic ? topic : "",
-                "Image Name (optional)": null,
+                "Image name (optional)": null,
                 recording: null,
                 completed: false,
             }

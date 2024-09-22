@@ -14,7 +14,7 @@ function createTrieNode(): TrieNode {
 }
 
 // for auto-completion on search
-class Trie {
+export class Trie {
     root: TrieNode;
 
     constructor() {
@@ -24,7 +24,7 @@ class Trie {
     insert(phrase: string, id: string) {
         let node = this.root;
 
-        for (const char of phrase) {
+        for (const char of phrase.toLowerCase()) {
             if (!node.children.has(char)) {
                 node.children.set(char, createTrieNode());
             }
@@ -40,7 +40,7 @@ class Trie {
         let prefix: string = ""
         let node: TrieNode = this.root;
 
-        for (const char of searchTerm) {
+        for (const char of searchTerm.toLowerCase()) {
             if (!node.children.has(char)) {
                 return this.literalSearch(searchTerm, data);
             }
@@ -80,7 +80,7 @@ class Trie {
     }
 
     // fallback when no results from trie. perform exhaustive search
-    private literalSearch(searchTerm: string, data: DataType): string[] {
+    literalSearch(searchTerm: string, data: DataType): string[] {
         const filtered: string[] = [];
         const searchTerms = searchTerm.split(" ");
 
