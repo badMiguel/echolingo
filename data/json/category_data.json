@@ -1,0 +1,18 @@
+[
+    {
+        "categoryNum": 1,
+        "categoryName": "Feelings and Behaviours",
+        "completed": false,
+        "topic": [
+            "feelings_and_behaviours"
+        ]
+    },
+    {
+        "categoryNum": 2,
+        "categoryName": "Greetings and Checking In",
+        "completed": false,
+        "topic": [
+            "greetings_and_checking_in"
+        ]
+    }
+]
