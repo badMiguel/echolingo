@@ -38,7 +38,7 @@ export default function RootLayout() {
                                 <TabBarIcon
                                     name={focused ? 'home' : 'home-outline'}
                                     color={focused ? tabFocusColor : tabUnfocusedColor}
-                                    size={35} />
+                                    size={30} />
                             ),
                         }}
                     />
@@ -52,7 +52,7 @@ export default function RootLayout() {
                             tabBarIcon: ({ focused }) => (
                                 <ClipboardListIcon
                                     color={focused ? tabFocusColor : tabUnfocusedColor}
-                                    size={35} />
+                                    size={30} />
                             ),
                             href: userType === 'teacher' ? null : "/(tasks)"
                         }}
@@ -68,7 +68,7 @@ export default function RootLayout() {
                                 <TabBarIcon
                                     name={focused ? 'list' : 'list-sharp'}
                                     color={focused ? tabFocusColor : tabUnfocusedColor}
-                                    size={35} />
+                                    size={30} />
                             ),
                             href: userType !== 'teacher' ? null : "/(recordingList)"
                         }}
@@ -85,7 +85,7 @@ export default function RootLayout() {
                                 <TabBarIcon
                                     name={focused ? 'add' : 'add-sharp'}
                                     color={focused ? tabFocusColor : tabUnfocusedColor}
-                                    size={35} />
+                                    size={30} />
                             ),
                             href: userType !== 'teacher' ? null : "/(addRecording)"
                         }}
@@ -102,7 +102,7 @@ export default function RootLayout() {
                                 <TabBarIcon
                                     name={focused ? 'checkmark' : 'checkmark-outline'}
                                     color={focused ? tabFocusColor : tabUnfocusedColor}
-                                    size={35} />
+                                    size={30} />
                             ),
                             href: userType !== 'student' ? null : "/(challenges)"
                         }}
@@ -116,7 +116,7 @@ export default function RootLayout() {
                             tabBarIcon: ({ focused }) => (
                                 <UserIcon
                                     color={focused ? tabFocusColor : tabUnfocusedColor}
-                                    size={35} />
+                                    size={30} />
                             )
                         }}
                     />
