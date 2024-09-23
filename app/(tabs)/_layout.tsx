@@ -107,7 +107,6 @@ export default function RootLayout() {
                             href: userType !== 'student' ? null : "/(challenges)"
                         }}
                     />
-
                     <Tabs.Screen
                         name="profile"
                         options={{
