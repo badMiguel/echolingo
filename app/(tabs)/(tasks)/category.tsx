@@ -5,7 +5,6 @@ import { useCategoryContext } from '@/contexts/CategoryContext';
 import { DataType, useTiwiListContext, useSetTiwiContext, Entry } from '@/contexts/TiwiContext';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/components/ThemedText';
-import SearchBar from '@/components/search/search';
 
 const useColor = () => {
     return {
@@ -33,7 +32,6 @@ export default function Category() {
 
     return (
         <View style={[{ backgroundColor: color.bgColor }]}>
-            <SearchBar />
             {tiwiList ? (
                 <FlatList
                     style={styles.flatlist}
@@ -92,14 +90,15 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
         borderRadius: 10,
+        gap: 10,
     },
 
     button__container: {
         marginTop: 5,
-        paddingTop: 1,
-        paddingBottom: 1,
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingTop:5,
+        paddingBottom: 5,
+        paddingLeft: 30,
+        paddingRight: 30,
         borderRadius: 10,
         alignSelf: 'center',
     },

@@ -7,16 +7,17 @@ import { Feather, FontAwesome5 } from "@expo/vector-icons";
 
 interface CustomIcon {
     color?: string
+    size: number
 }
 
 export function TabBarIcon({ style, ...rest }: IconProps<ComponentProps<typeof Ionicons>['name']>) {
     return <Ionicons size={28} style={[{ marginBottom: -3 }, style]} {...rest} />;
 }
 
-export const ClipboardListIcon: React.FC<CustomIcon> = ({ color }): React.JSX.Element => {
-    return <FontAwesome5 name='clipboard-list' size={24} color={color} />;
+export const ClipboardListIcon: React.FC<CustomIcon> = ({ color, size }): React.JSX.Element => {
+    return <FontAwesome5 name='clipboard-list' size={size} color={color} />;
 }
 
-export const UserIcon: React.FC<CustomIcon> = ({ color }): React.JSX.Element => {
-    return <Feather name='user' size={24} color={color} />;
+export const UserIcon: React.FC<CustomIcon> = ({ color, size }): React.JSX.Element => {
+    return <Feather name='user' size={size} color={color} />;
 }
