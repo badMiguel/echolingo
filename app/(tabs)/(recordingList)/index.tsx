@@ -10,7 +10,7 @@ const useColor = () => {
         bgColor: useThemeColor({}, 'background'),
         textColor: useThemeColor({}, 'text'),
         accent: useThemeColor({}, 'accent'),
-        tint: useThemeColor({}, 'tint'),
+        primary: useThemeColor({}, 'primary'),
     }
 }
 
@@ -104,12 +104,12 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
     }
 
     return (
-        <View style={[styles.sentenceCard__container, { backgroundColor: color.accent }]}>
+        <View style={[styles.sentenceCard__container, { backgroundColor: color.primary }]}>
             <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
             <ThemedText>{tiwi[id].Tiwi}</ThemedText>
             <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>
             <ThemedText>{tiwi[id].English}</ThemedText>
-            <View style={[styles.button__container, { backgroundColor: color.tint }]}>
+            <View style={[styles.button__container, { backgroundColor: color.accent }]}>
                 <Pressable onPress={() => goToSentence()}>
                     <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi.recording ? "View" : "Add Recording"}</ThemedText>
                 </Pressable>

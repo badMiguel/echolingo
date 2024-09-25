@@ -13,7 +13,6 @@ const useColor = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
         textColor: useThemeColor({}, 'text'),
-        tint: useThemeColor({}, 'tint'),
         accent: useThemeColor({}, 'accent'),
     };
 };

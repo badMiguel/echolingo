@@ -8,7 +8,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 export default function Home() {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
-    const tint = useThemeColor({}, 'tint');
+    const accent = useThemeColor({}, 'accent');
 
     const params = useLocalSearchParams();
     const userName: string = Array.isArray(params.userName) ? params.userName[0] : params.userName;
@@ -29,8 +29,8 @@ export default function Home() {
         <View style={[styles.mainView, { backgroundColor: bgColor }]}>
             <ThemedText style={{ color: textColor }} type='title'>Good {greetings()}</ThemedText>
             <ThemedText style={{ color: textColor }} type='subtitle'>Hello, {userName}</ThemedText>
-            <Button title='Go back to user type' color={tint} onPress={() => router.navigate('..')} />
-            {/* <Button title='Challenges' color={tint} onPress={() => router.push('/(tabs)/(challenges)')} /> */}
+            <Button title='Go back to user type' color={accent} onPress={() => router.navigate('..')} />
+            {/* <Button title='Challenges' color={accent} onPress={() => router.push('/(tabs)/(challenges)')} /> */}
         </View>
     );
 }

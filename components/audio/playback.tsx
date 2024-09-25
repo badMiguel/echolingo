@@ -40,7 +40,7 @@ const useColor = () => {
         textColor: useThemeColor({}, 'text'),
         tint: useThemeColor({}, 'tint'),
         accent: useThemeColor({}, 'accent'),
-        tabIconColor: useThemeColor({}, 'tabIconDefault'),
+        primary: useThemeColor({}, 'primary'),
     }
 };
 
@@ -59,7 +59,7 @@ export default function AudioPlayback({ uri }: { uri: URI, disabled?: boolean })
 
 
     return (
-        <View style={[styles.mainView, { backgroundColor: color.accent }]}>
+        <View style={[styles.mainView, { backgroundColor: color.primary }]}>
             <AudioSlider
                 uri={uri}
                 progress={progress}
@@ -112,7 +112,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({
             }
             disabled={uri ? undefined : true}
         >
-            <TabBarIcon color={uri ? color.tint : color.tabIconColor} size={50} name={playing ? "pause-circle-sharp" : "play-circle-sharp"} />
+            <TabBarIcon color={uri ? color.accent : color.tint} size={50} name={playing ? "pause-circle-sharp" : "play-circle-sharp"} />
         </Pressable>
     )
 }
@@ -136,7 +136,7 @@ const ForwardBackward: React.FC<ForwardBackwardProp> = ({ f_or_b, uri, startSoun
             onPress={() => changePosition()}
             disabled={uri ? undefined : true}
         >
-            <TabBarIcon color={uri ? color.tint : color.tabIconColor} size={30} name={f_or_b === 'f' ? 'play-skip-forward' : 'play-skip-back'} />
+            <TabBarIcon color={uri ? color.accent : color.tint} size={30} name={f_or_b === 'f' ? 'play-skip-forward' : 'play-skip-back'} />
         </Pressable>
     );
 }
@@ -165,9 +165,9 @@ const AudioSlider: React.FC<SliderProp> = ({ uri, startSound, progress, duration
             maximumValue={duration}
             value={position}
             onSlidingComplete={(val) => changePosition(val)}
-            minimumTrackTintColor={color.tint}
-            maximumTrackTintColor={color.tabIconColor}
-            thumbTintColor={color.tint}
+            minimumTrackTintColor={color.accent}
+            maximumTrackTintColor={color.tint}
+            thumbTintColor={color.accent}
             disabled={uri ? false : true}
         />
     );

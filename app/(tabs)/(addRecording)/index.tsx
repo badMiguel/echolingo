@@ -17,7 +17,6 @@ const useColor = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
         textColor: useThemeColor({}, 'text'),
-        tint: useThemeColor({}, 'tint'),
         accent: useThemeColor({}, 'accent'),
     }
 }
@@ -51,7 +50,7 @@ export default function Add() {
                     <AddRecording currentID={currentID} />
                     {sentenceID && (
                         <Pressable
-                            style={[styles.button, { backgroundColor: color.tint }]}
+                            style={[styles.button, { backgroundColor: color.accent }]}
                             onPress={() => router.navigate('/(recordingList)')}
                         >
                             <ThemedText
@@ -161,7 +160,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                         ? 'Should add Tiwi data'
                         : 'Enter tiwi'
                     }
-                    placeholderTextColor={tiwiError ? '#ff474c' : color.tint}
+                    placeholderTextColor={tiwiError ? '#ff474c' : color.accent}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -177,7 +176,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     }}
                     style={styles.formItem}
                     placeholder={'Enter tiwi gloss'}
-                    placeholderTextColor={color.tint}
+                    placeholderTextColor={color.accent}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -196,7 +195,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                         ? 'Should add English data'
                         : 'Enter English'
                     }
-                    placeholderTextColor={englishError ? '#ff474c' : color.tint}
+                    placeholderTextColor={englishError ? '#ff474c' : color.accent}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -212,7 +211,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     }}
                     style={[styles.formItem,]}
                     placeholder={'Enter English gloss'}
-                    placeholderTextColor={color.tint}
+                    placeholderTextColor={color.accent}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -228,12 +227,12 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                         ? 'Should add Topic'
                         : 'Enter Topic'
                     }
-                    placeholderTextColor={topicError ? '#ff474c' : color.tint}
+                    placeholderTextColor={topicError ? '#ff474c' : color.accent}
                     cursorColor={color.textColor}
                 />
             </View>
 
-            <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => updateDetails()}>
+            <Pressable style={[styles.button, { backgroundColor: color.accent }]} onPress={() => updateDetails()}>
                 <ThemedText
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}
@@ -241,7 +240,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     {currentID ? 'Update' : 'Add'}
                 </ThemedText>
             </Pressable>
-            <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => clearForm()}>
+            <Pressable style={[styles.button, { backgroundColor: color.accent }]} onPress={() => clearForm()}>
                 <ThemedText
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}
@@ -273,13 +272,13 @@ function AddRecording({ currentID }: { currentID: number | undefined }) {
 
     return (
         <View>
-            <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => record()}>
+            <Pressable style={[styles.button, { backgroundColor: color.accent }]} onPress={() => record()}>
                 <ThemedText
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}
                 >Record Now</ThemedText>
             </Pressable>
-            <Pressable style={[styles.button, { backgroundColor: color.tint }]} onPress={() => upload()}>
+            <Pressable style={[styles.button, { backgroundColor: color.accent }]} onPress={() => upload()}>
                 <ThemedText
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}

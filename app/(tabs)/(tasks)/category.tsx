@@ -1,8 +1,8 @@
 import { router, useNavigation } from 'expo-router';
 import React, { useEffect } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useCategoryContext } from '@/contexts/CategoryContext';
-import { DataType, useTiwiListContext, useSetTiwiContext, Entry } from '@/contexts/TiwiContext';
+import { useTiwiListContext, useSetTiwiContext, Entry } from '@/contexts/TiwiContext';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/components/ThemedText';
 
@@ -10,8 +10,8 @@ const useColor = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
         textColor: useThemeColor({}, 'text'),
-        tint: useThemeColor({}, 'tint'),
         accent: useThemeColor({}, 'accent'),
+        primary: useThemeColor({}, 'primary'),
     };
 };
 
@@ -62,12 +62,12 @@ const SentenceCard: React.FC<{ tiwi: Entry }> = ({ tiwi }) => {
     }
 
     return (
-        <View style={[styles.sentenceCard__container, { backgroundColor: color.accent }]}>
+        <View style={[styles.sentenceCard__container, { backgroundColor: color.primary }]}>
             <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
             <ThemedText>{tiwi.Tiwi || tiwi['Gloss (tiwi)']}</ThemedText>
             <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>
             <ThemedText>{tiwi.English || tiwi['Gloss (english)']}</ThemedText>
-            <View style={[styles.button__container, { backgroundColor: color.tint }]}>
+            <View style={[styles.button__container, { backgroundColor: color.accent }]}>
                 <Pressable onPress={() => goToSentence()}>
                     <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Study</ThemedText>
                 </Pressable>

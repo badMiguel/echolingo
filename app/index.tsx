@@ -9,7 +9,7 @@ export const UserTypeContext = createContext('');
 
 export default function Index() {
     const bgColor = useThemeColor({}, 'background');
-    const buttonColor = useThemeColor({}, 'tint');
+    const buttonColor = useThemeColor({}, 'accent');
 
     const copyData = async () => {
         const fileUri = FileSystem.documentDirectory + 'tiwi_list.json';
