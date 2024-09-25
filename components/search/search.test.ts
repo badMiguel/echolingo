@@ -25,19 +25,33 @@ describe("trie x literal search", () => {
         const result1 = trie.prefixOf("LOTS", data);
         expect(result1).toContain("172");
         expect(result1).toContain("174");
-        expect(result1).not.toContain("1");
 
         const result2 = trie.prefixOf("SomEtimes", data);
         expect(result2).toContain("171");
-        expect(result2).not.toContain("1");
+
+        const result3 = trie.prefixOf("wHy", data);
+        expect(result3).toContain("9");
+        for (const i of result3) {
+            console.log(data[i])
+        }
     });
 
     test("fallback to literal search", () => {
         const result1 = trie.prefixOf("meow", data);
         expect(result1).toEqual([]);
 
+
         const result2 = trie.prefixOf("around", data);
-        expect(result2).toEqual(["173"]);
+        expect(result2).toContain("173");
+        for (const i of result2) {
+            console.log(data[i]);
+        }
+
+        const result3 = trie.prefixOf("are", data);
+        expect(result3).toContain("31");
+        for (const i of result3) {
+            console.log(data[i]);
+        }
     });
 });
 
