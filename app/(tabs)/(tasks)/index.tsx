@@ -15,17 +15,15 @@ type CategoryCardProps = {
 const colors = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
-        buttonColor: useThemeColor({}, 'accent'),
+        primary: useThemeColor({}, 'primary'),
+        primary_tint: useThemeColor({}, 'primary_tint'),
         textColor: useThemeColor({}, 'text'),
         accent: useThemeColor({}, 'accent'),
-        primary: useThemeColor({}, 'primary'),
     }
 }
 
 export default function Tasks() {
     const color = colors();
-
-    // todo optimisation
     const unfinished = categoryData.filter(item => !item.completed);
     const finished = categoryData.filter(item => item.completed);
 
@@ -88,8 +86,8 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
     };
 
     return (
-        <View style={[styles.categoryCard, { backgroundColor: color.accent }]}>
-            <View style={[styles.categoryCard__label__container, { backgroundColor: color.primary }]}>
+        <View style={[styles.categoryCard, { backgroundColor: color.primary_tint }]}>
+            <View style={[styles.categoryCard__label__container, { backgroundColor: color.primary_tint }]}>
                 <View style={styles.categoryCard__label}>
                     <ThemedText type='subtitle'>{categoryName}</ThemedText>
                 </View>
@@ -98,7 +96,7 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
                         onPress={() => goToCategory(categoryName)}
                         style={[
                             styles.button,
-                            { backgroundColor: color.accent }
+                            { backgroundColor: color.primary }
                         ]}>
                         <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Start Now</ThemedText>
                     </Pressable>

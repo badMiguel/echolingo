@@ -39,7 +39,7 @@ export default function RecordView() {
 export function Record({ fromStudent, passShow, passIsSuccess }:
     { fromStudent?: boolean, passShow?: (show: boolean) => void, passIsSuccess?: (success: boolean) => void }) {
     const bgColor = useThemeColor({}, 'background');
-    const accent = useThemeColor({}, 'accent');
+    const primary = useThemeColor({}, 'primary');
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -103,12 +103,12 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
                     disabled={!tempUri || isLoading || isSuccess ? true : undefined}
                     style={[
                         styles.button,
-                        { backgroundColor: !tempUri || isLoading || isSuccess ? accent : accent }
+                        { backgroundColor: !tempUri || isLoading || isSuccess ? primary : primary }
                     ]}
                 >
                     <ThemedText type='defaultSemiBold' style={[
                         styles.button__text,
-                        { color: !tempUri || isLoading || isSuccess ? accent : bgColor }
+                        { color: !tempUri || isLoading || isSuccess ? primary : bgColor }
                     ]}>
                         {isLoading ? "Loading" : "Save"}
                     </ThemedText>
@@ -119,12 +119,12 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
                 disabled={isLoading ? true : undefined}
                 style={[
                     styles.button,
-                    { backgroundColor: isLoading ? accent : accent }
+                    { backgroundColor: isLoading ? primary : primary }
                 ]}
             >
                 <ThemedText type='defaultSemiBold' style={[
                     styles.button__text,
-                    { color: isLoading ? accent : bgColor }
+                    { color: isLoading ? primary : bgColor }
                 ]}>
                     {recording ? "Stop Recording"
                         : haveRecording ? "Record Another"
