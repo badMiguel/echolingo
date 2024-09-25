@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
+import { Picker } from '@react-native-picker/picker';
 
 import { Entry, useTiwiListContext } from '@/contexts/TiwiContext';
 import useCRUD from '@/hooks/recording/useCRUD';
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { Picker } from '@react-native-picker/picker';
+import categoryData from '@/data/json/category_data.json';
+import { Dropdown } from 'react-native-element-dropdown';
 
 type AddDetailProp = {
     currentID: number | undefined;
@@ -78,8 +80,17 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
     const [englishError, setEnglishError] = useState<boolean>(false);
     const [topicError, setTopicError] = useState<boolean>(false);
 
+    const [topicList, setTopicList] = useState<string[]>([]);
     const { saveDetails, addDetails } = useCRUD();
     const color = useColor();
+
+    useEffect(() => {
+        const topic: string[] = [];
+        for (const t of categoryData) {
+            topic.push(t.categoryName)
+        }
+        setTopicList(topic);
+    }, [])
 
     useEffect(() => {
         if (current) {
@@ -101,6 +112,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
         setTopic(undefined);
         setEnglishError(false);
         setTiwiError(false);
+        setTopicError(false);
     }
 
     // todo add validation and error handling
@@ -219,26 +231,17 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
 
             <View style={styles.formItem__container}>
                 <ThemedText type='defaultSemiBold'>Topic</ThemedText>
-                <Picker
-                    selectedValue={topic}
-                    onValueChange={(val, idx) => setTopic(val)}
-                    style={[]}
-                >
-                    <Picker.Item label='test' value='test' />
-                </Picker>
-                <TextInput
-                    // todo make choices for topic rather than typing
-                    // then add interface to add new topics
-                    autoCorrect={false}  // might be frustrating if yes for uncommon language
+                <Dropdown
+                    // todo add interface to add new topic
+                    data={categoryData}
+                    labelField="categoryName"
+                    valueField="topic"
                     value={topic}
-                    onChangeText={(text) => setTopic(text)}
-                    style={[styles.formItem, { borderColor: topicError ? 'red' : 'black' }]}
-                    placeholder={topicError
-                        ? 'Should add Topic'
-                        : 'Enter Topic'
-                    }
-                    placeholderTextColor={topicError ? '#ff474c' : color.primary}
-                    cursorColor={color.textColor}
+                    onChange={item => setTopic(item.topic)}
+                    placeholder='Select Topic'
+                    placeholderStyle={{ color: topicError ? '#ff474c' : color.primary , fontSize: 20}}
+                    style={[styles.formItem, {}]}
+                    selectedTextStyle={{fontSize: 20}}
                 />
             </View>
 
