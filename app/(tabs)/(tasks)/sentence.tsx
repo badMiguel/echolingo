@@ -23,7 +23,6 @@ export default function Sentence() {
     const color = useColor();
     const { category } = useCategoryContext();
 
-    // change header title dynamically
     useEffect(() => {
         if (category !== 'unknown') {
             navigation.setOptions({

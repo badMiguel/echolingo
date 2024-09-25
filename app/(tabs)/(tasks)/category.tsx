@@ -21,7 +21,6 @@ export default function Category() {
     const tiwiList = useTiwiListContext();
     const color = useColor();
 
-    // change header title dynamically
     useEffect(() => {
         if (category !== 'unknown') {
             navigation.setOptions({
@@ -57,7 +56,7 @@ const SentenceCard: React.FC<{ tiwi: Entry }> = ({ tiwi }) => {
         setCurrentID(tiwi);
 
         router.push({
-            pathname: '/sentence'
+            pathname: '/sentence',
         });
     }
 

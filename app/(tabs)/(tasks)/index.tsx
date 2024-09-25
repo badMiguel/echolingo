@@ -25,7 +25,6 @@ const colors = () => {
 export default function Tasks() {
     const color = colors();
 
-    // todo optimisation
     const unfinished = categoryData.filter(item => !item.completed);
     const finished = categoryData.filter(item => item.completed);
 
@@ -71,7 +70,7 @@ export default function Tasks() {
                     <ThemedText type='subtitle' style={[styles.tasks__header, { color: color.textColor }]}>{title}</ThemedText>
                 )}
                 style={styles.tasks}
-            />34wesxzc543rt
+            />
         </View>
     )
 }

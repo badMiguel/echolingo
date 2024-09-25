@@ -6,6 +6,12 @@ import useData from "@/hooks/recording/useData";
 
 // converted json from list of objects to key value pair, where key is the id
 // for faster lookups
+
+export type Submission = {
+    recordingUri: string;
+    submittedAt: string;
+};
+
 export type Entry = {
     // based on the data given, assumed that english, tiwi, and topic is not null
     English: string;
@@ -16,11 +22,13 @@ export type Entry = {
     "Image name (optional)": string | null;
     recording: string | null;
     completed: boolean;
+    submissions?: Submission[];
 };
 
 export type DataType = {
     [key: string]: Entry
 }
+
 
 export const emptyTiwiData = (complete?: boolean) => {
     return {
@@ -32,6 +40,8 @@ export const emptyTiwiData = (complete?: boolean) => {
         "Image name (optional)": null,
         recording: null,
         completed: complete ? true: false,
+        // submissions
+        submissions: [] as Submission[]
     }
 }
 

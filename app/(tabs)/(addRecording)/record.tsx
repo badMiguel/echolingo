@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Alert } from "react-native";
 import useRecording from "@/hooks/recording/useRecording";
 import AudioPlayback from "@/components/audio/playback";
 import useCRUD from "@/hooks/recording/useCRUD";
@@ -35,6 +35,12 @@ export default function RecordView() {
         </View>
     );
 }
+
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore, collection, addDoc } from "firebase/firestore"; 
+import { storage, data_base } from '@/app/firebaseConfig'; 
+import { useTiwiListContext } from '@/contexts/TiwiContext';
+import { Button } from 'react-native-paper';
 
 export function Record({ fromStudent, passShow, passIsSuccess }:
     { fromStudent?: boolean, passShow?: (show: boolean) => void, passIsSuccess?: (success: boolean) => void }) {
@@ -93,6 +99,49 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
             setShow(false);
         }, 3000)
     }
+    
+
+    const submit = async () => {
+        if (!tempUri) {
+            Alert.alert("Error", "No recording available to submit.");
+            return;
+        }
+    
+        try {
+            console.log("Submitting recording with URI:", tempUri);
+    
+            // upl recording to firebase 
+            const storageRef = ref(storage, `submissions/${currentID}/${Date.now()}.mp3`);
+            const response = await fetch(tempUri);
+            const blob = await response.blob();
+            console.log("Uploading recording...");
+            await uploadBytes(storageRef, blob);
+    
+            // download URL of the uploaded recording
+            const downloadUrl = await getDownloadURL(storageRef);
+            console.log("Recording uploaded successfully, download URL:", downloadUrl);
+    
+            // save submission 
+            await addDoc(collection(data_base, 'submissions'), {
+                sentenceId: currentID,
+                category: 'casual_study',
+                recordingUrl: downloadUrl,
+                submittedAt: new Date(),
+            });
+    
+            // setIsSuccess(true);
+            // setShow(true);
+    
+            // setTimeout(() => {
+            //     setShow(false);
+            // }, 3000);
+    
+            console.log("Submission successfully saved.");
+        } catch (error) {
+            console.error("Error submitting recording:", error);
+            Alert.alert("Error", "There was an error submitting the recording.");
+        }
+    };
 
     return (
         <View>
@@ -131,6 +180,32 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
                             : "Start Recording"}
                 </ThemedText>
             </Pressable>
+
+            {fromStudent &&
+                <Button
+                    mode="contained"  
+                    onPress={submit}
+                    disabled={!haveRecording}  
+                    style={[
+                        styles.submitButton,
+                        { backgroundColor: haveRecording ? accent : '#ddd' }  
+                    ]}
+                    contentStyle={{ paddingVertical: 10 }}  
+                    labelStyle={{ color: haveRecording ? bgColor : '#aaa' }} 
+                >
+                    <ThemedText
+                        type="defaultSemiBold"
+                        style={[
+                            styles.button__text,
+                            {
+                                color: haveRecording ? bgColor : '#aaa', 
+                            },
+                        ]}
+                    >
+                        Submit
+                    </ThemedText>
+                </Button>            
+            }
         </View >
     );
 }
@@ -178,5 +253,16 @@ const styles = StyleSheet.create({
         paddingTop: 2,
         paddingBottom: 2,
         borderRadius: 10,
+    },
+
+    submitButton: {
+        // position: 'absolute',
+        // bottom: -130,
+        // right: 0,
+        borderRadius: 10,
+        // paddingVertical: 10,
+        // paddingHorizontal: 20,
+        alignItems: 'center',
+        marginVertical: 10, 
     },
 });

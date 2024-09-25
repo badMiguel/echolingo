@@ -94,6 +94,9 @@ export default function RecordingList() {
 const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi }) => {
     const id: string = Object.keys(tiwi)[0]
     const color = useColor();
+    const hasSubmissions = tiwi[id].submissions && tiwi[id].submissions.length > 0;
+    console.log(hasSubmissions);
+
     const goToSentence = () => {
         router.push({
             pathname: tiwi.recording ? '/viewRecording' : '/(addRecording)',
@@ -103,15 +106,40 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
         });
     }
 
+    const goToSubmissions = () => {
+        router.push({
+            pathname: '/submissions',
+            params: {
+                sentenceID: id,
+            },
+        });
+    };
+
     return (
         <View style={[styles.sentenceCard__container, { backgroundColor: color.primary }]}>
             <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
             <ThemedText>{tiwi[id].Tiwi}</ThemedText>
             <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>
             <ThemedText>{tiwi[id].English}</ThemedText>
+
             <View style={[styles.button__container, { backgroundColor: color.accent }]}>
                 <Pressable onPress={() => goToSentence()}>
                     <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi.recording ? "View" : "Add Recording"}</ThemedText>
+                </Pressable>
+            </View>
+
+            
+            <View style={[styles.button__container, { backgroundColor: hasSubmissions ? color.accent : '#ddd' }]}>
+                <Pressable
+                    onPress={goToSubmissions}
+                    disabled={!hasSubmissions}
+                >
+                
+                    <ThemedText
+                        type='defaultSemiBold'
+                        style={{ color: hasSubmissions ? color.bgColor : '#aaa' }}>
+                        Submissions
+                    </ThemedText>
                 </Pressable>
             </View>
         </View>
