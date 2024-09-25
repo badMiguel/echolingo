@@ -1,9 +1,10 @@
-import { Pressable, SectionList, StyleSheet, View } from 'react-native'
+import { PlatformColor, Pressable, SectionList, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { DataType, emptyTiwiData, useTiwiListContext } from '@/contexts/TiwiContext'
 import { router } from 'expo-router'
 import { ThemedText } from '@/components/ThemedText'
 import { useThemeColor } from '@/hooks/useThemeColor'
+import SearchBar from '@/components/search/search'
 
 const useColor = () => {
     return {
@@ -35,6 +36,7 @@ function filterRecorded(data: DataType): { recorded: DataType[], notRecorded: Da
 export default function RecordingList() {
     const [dataRecorded, setDataRecorded] = useState<DataType[]>([]);
     const [dataNotRecorded, setDataNotRecorded] = useState<DataType[]>([]);
+    const [searchResults, setSearchResults] = useState<DataType | undefined>();
     const data = useTiwiListContext();
     const color = useColor();
 
@@ -50,13 +52,18 @@ export default function RecordingList() {
 
     useEffect(() => {
         // todo error handling and optimisation
-        if (data) {
+        if (searchResults) {
+            const { recorded, notRecorded } = filterRecorded(searchResults);
+
+            setDataRecorded(recorded);
+            setDataNotRecorded(notRecorded);
+        } else if (data) {
             const { recorded, notRecorded } = filterRecorded(data);
 
             setDataRecorded(recorded);
             setDataNotRecorded(notRecorded);
         }
-    }, [data]);
+    }, [data, searchResults]);
 
     const sections = [
         {
@@ -68,8 +75,20 @@ export default function RecordingList() {
         }
     ];
 
+    const handleSearchResults = (searchList: string[]) => {
+        // todo error handling
+        if (data) {
+            const newItems: DataType = {}
+            for (const i of searchList) {
+                newItems[i] = data[i];
+            }
+            setSearchResults(newItems);
+        }
+    }
+
     return (
         <View style={{ backgroundColor: color.bgColor }}>
+            <SearchBar searchResults={handleSearchResults} />
             <SectionList
                 sections={sections}
                 keyExtractor={(item) => Object.keys(item)[0]}

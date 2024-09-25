@@ -1,5 +1,5 @@
 import { DataType } from "@/contexts/TiwiContext";
-import { Trie } from "./search";
+import { Trie } from "./trie";
 import jsonData from "@/data/json/tiwi_list.json";
 
 describe("trie x literal search", () => {
