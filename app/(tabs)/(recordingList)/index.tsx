@@ -1,4 +1,4 @@
-import { PlatformColor, Pressable, SectionList, StyleSheet, View } from 'react-native'
+import { Pressable, SectionList, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { DataType, emptyTiwiData, useTiwiListContext } from '@/contexts/TiwiContext'
 import { router } from 'expo-router'

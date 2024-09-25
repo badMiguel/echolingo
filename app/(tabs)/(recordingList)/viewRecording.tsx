@@ -2,7 +2,7 @@ import AudioPlayback from "@/components/audio/playback";
 import { Entry, emptyTiwiData, useTiwiListContext } from "@/contexts/TiwiContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import * as FileSystem from "expo-file-system";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";

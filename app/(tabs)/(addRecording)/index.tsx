@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
-import { Picker } from '@react-native-picker/picker';
 
 import { Entry, useTiwiListContext } from '@/contexts/TiwiContext';
 import useCRUD from '@/hooks/recording/useCRUD';
@@ -80,17 +79,8 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
     const [englishError, setEnglishError] = useState<boolean>(false);
     const [topicError, setTopicError] = useState<boolean>(false);
 
-    const [topicList, setTopicList] = useState<string[]>([]);
     const { saveDetails, addDetails } = useCRUD();
     const color = useColor();
-
-    useEffect(() => {
-        const topic: string[] = [];
-        for (const t of categoryData) {
-            topic.push(t.categoryName)
-        }
-        setTopicList(topic);
-    }, [])
 
     useEffect(() => {
         if (current) {
