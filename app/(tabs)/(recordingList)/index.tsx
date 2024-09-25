@@ -17,6 +17,8 @@ const useColor = () => {
 function filterRecorded(data: DataType): { recorded: DataType[], notRecorded: DataType[] } {
     let recorded: DataType[] = [];
     let notRecorded: DataType[] = [];
+
+    // todo optimise
     const recordedKey = new Set(Object.keys(data).filter(key => data[key]["recording"]));
 
     for (const key in data) {
@@ -96,7 +98,7 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
     const color = useColor();
     const goToSentence = () => {
         router.push({
-            pathname: tiwi.recording ? '/viewRecording' : '/(addRecording)',
+            pathname: tiwi[id].recording ? '/viewRecording' : '/(addRecording)',
             params: {
                 sentenceID: id
             },
@@ -111,7 +113,7 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
             <ThemedText>{tiwi[id].English}</ThemedText>
             <View style={[styles.button__container, { backgroundColor: color.primary }]}>
                 <Pressable onPress={() => goToSentence()}>
-                    <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi.recording ? "View" : "Add Recording"}</ThemedText>
+                    <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi[id].recording ? "View" : "Add Recording"}</ThemedText>
                 </Pressable>
             </View>
         </View>
