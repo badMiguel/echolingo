@@ -6,6 +6,7 @@ import { Entry, useTiwiListContext } from '@/contexts/TiwiContext';
 import useCRUD from '@/hooks/recording/useCRUD';
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Picker } from '@react-native-picker/picker';
 
 type AddDetailProp = {
     currentID: number | undefined;
@@ -218,7 +219,16 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
 
             <View style={styles.formItem__container}>
                 <ThemedText type='defaultSemiBold'>Topic</ThemedText>
+                <Picker
+                    selectedValue={topic}
+                    onValueChange={(val, idx) => setTopic(val)}
+                    style={[]}
+                >
+                    <Picker.Item label='test' value='test' />
+                </Picker>
                 <TextInput
+                    // todo make choices for topic rather than typing
+                    // then add interface to add new topics
                     autoCorrect={false}  // might be frustrating if yes for uncommon language
                     value={topic}
                     onChangeText={(text) => setTopic(text)}
@@ -298,6 +308,7 @@ const styles = StyleSheet.create({
 
     formItem: {
         borderBottomWidth: 0.2,
+        fontSize: 20,
     },
 
     formItem__container: {

@@ -110,7 +110,6 @@ export class Trie {
     }
 }
 
-
 export default function SearchBar() {
     const textColor = useThemeColor({}, "text");
     const tint = useThemeColor({}, "tint");
