@@ -16,7 +16,7 @@ type PlayButtonProps = {
     setPlaying: React.Dispatch<SetStateAction<boolean>>;
     onGoing: boolean;
     setOnGoing: React.Dispatch<SetStateAction<boolean>>;
-}
+};
 
 type ForwardBackwardProp = {
     f_or_b: string;
@@ -24,7 +24,7 @@ type ForwardBackwardProp = {
     startSound: (uri: string, startPos: number | undefined) => Promise<void>;
     progress: number;
     duration: number;
-}
+};
 
 type SliderProp = {
     uri: URI;
@@ -32,20 +32,20 @@ type SliderProp = {
     progress: number;
     duration: number;
     setPlaying: React.Dispatch<SetStateAction<boolean>>;
-}
+};
 
 const useColor = () => {
     return {
-        bgColor: useThemeColor({}, 'background'),
-        textColor: useThemeColor({}, 'text'),
-        primary: useThemeColor({}, 'primary'),
-        primary_tint: useThemeColor({}, 'primary_tint'),
-        secondary: useThemeColor({}, 'secondary'),
-        seconday_tint: useThemeColor({}, 'secondary_tint'),
-    }
+        bgColor: useThemeColor({}, "background"),
+        textColor: useThemeColor({}, "text"),
+        primary: useThemeColor({}, "primary"),
+        primary_tint: useThemeColor({}, "primary_tint"),
+        secondary: useThemeColor({}, "secondary"),
+        seconday_tint: useThemeColor({}, "secondary_tint"),
+    };
 };
 
-export default function AudioPlayback({ uri }: { uri: URI, disabled?: boolean }) {
+export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean }) {
     const { startSound, pausePlaySound, status, progress, duration } = useAudio();
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);
@@ -56,8 +56,7 @@ export default function AudioPlayback({ uri }: { uri: URI, disabled?: boolean })
             setOnGoing(false);
             setPlaying(false);
         }
-    }, [status])
-
+    }, [status]);
 
     return (
         <View style={[styles.mainView, { backgroundColor: color.primary_tint }]}>
@@ -69,7 +68,13 @@ export default function AudioPlayback({ uri }: { uri: URI, disabled?: boolean })
                 setPlaying={setPlaying}
             />
             <View style={styles.playControls}>
-                <ForwardBackward f_or_b="b" uri={uri} startSound={startSound} progress={progress} duration={duration} />
+                <ForwardBackward
+                    f_or_b="b"
+                    uri={uri}
+                    startSound={startSound}
+                    progress={progress}
+                    duration={duration}
+                />
                 <PlayButton
                     uri={uri}
                     startSound={startSound}
@@ -80,67 +85,87 @@ export default function AudioPlayback({ uri }: { uri: URI, disabled?: boolean })
                     onGoing={onGoing}
                     setOnGoing={setOnGoing}
                 />
-                <ForwardBackward f_or_b="f" uri={uri} startSound={startSound} progress={progress} duration={duration} />
+                <ForwardBackward
+                    f_or_b="f"
+                    uri={uri}
+                    startSound={startSound}
+                    progress={progress}
+                    duration={duration}
+                />
             </View>
         </View>
     );
 }
 
 const PlayButton: React.FC<PlayButtonProps> = ({
-    uri, startSound, pausePlaySound, playing, setPlaying, onGoing, setOnGoing }) => {
-
+    uri,
+    startSound,
+    pausePlaySound,
+    playing,
+    setPlaying,
+    onGoing,
+    setOnGoing,
+}) => {
     const color = useColor();
 
     const startButton = () => {
-        if (typeof uri === 'string') {
+        if (typeof uri === "string") {
             startSound(uri, undefined);
         }
 
         setOnGoing(true);
-        setPlaying(true)
-    }
+        setPlaying(true);
+    };
 
     const pausePlayButton = () => {
         pausePlaySound(playing);
         setPlaying(!playing);
-    }
+    };
 
     return (
         <Pressable
-            onPress={onGoing
-                ? () => pausePlayButton()
-                : () => startButton()
-            }
+            onPress={onGoing ? () => pausePlayButton() : () => startButton()}
             disabled={uri ? undefined : true}
         >
-            <TabBarIcon color={uri ? color.primary : color.secondary} size={50} name={playing ? "pause-circle-sharp" : "play-circle-sharp"} />
+            <TabBarIcon
+                color={uri ? color.primary : color.secondary}
+                size={50}
+                name={playing ? "pause-circle-sharp" : "play-circle-sharp"}
+            />
         </Pressable>
-    )
-}
+    );
+};
 
-const ForwardBackward: React.FC<ForwardBackwardProp> = ({ f_or_b, uri, startSound, progress, duration }) => {
+const ForwardBackward: React.FC<ForwardBackwardProp> = ({
+    f_or_b,
+    uri,
+    startSound,
+    progress,
+    duration,
+}) => {
     const color = useColor();
     const changePosition = () => {
         if (typeof uri === "string") {
-            if (f_or_b === 'f') {
-                const moveTo = duration < 5000 ? duration : progress + 5000
+            if (f_or_b === "f") {
+                const moveTo = duration < 5000 ? duration : progress + 5000;
                 startSound(uri, moveTo);
             } else {
-                const moveTo = progress < 5000 ? 0 : progress - 5000
+                const moveTo = progress < 5000 ? 0 : progress - 5000;
                 startSound(uri, moveTo);
             }
         }
-    }
+    };
 
     return (
-        <Pressable
-            onPress={() => changePosition()}
-            disabled={uri ? undefined : true}
-        >
-            <TabBarIcon color={uri ? color.primary : color.secondary} size={30} name={f_or_b === 'f' ? 'play-skip-forward' : 'play-skip-back'} />
+        <Pressable onPress={() => changePosition()} disabled={uri ? undefined : true}>
+            <TabBarIcon
+                color={uri ? color.primary : color.secondary}
+                size={30}
+                name={f_or_b === "f" ? "play-skip-forward" : "play-skip-back"}
+            />
         </Pressable>
     );
-}
+};
 
 const AudioSlider: React.FC<SliderProp> = ({ uri, startSound, progress, duration, setPlaying }) => {
     const [position, setPosition] = useState<number>();
@@ -151,9 +176,9 @@ const AudioSlider: React.FC<SliderProp> = ({ uri, startSound, progress, duration
     }, [progress]);
 
     const changePosition = (val: number) => {
-        setPosition(val)
+        setPosition(val);
 
-        if (typeof uri === 'string') {
+        if (typeof uri === "string") {
             setPlaying(true);
             startSound(uri, val);
         }
@@ -172,7 +197,7 @@ const AudioSlider: React.FC<SliderProp> = ({ uri, startSound, progress, duration
             disabled={uri ? false : true}
         />
     );
-}
+};
 
 const styles = StyleSheet.create({
     mainView: {
@@ -195,5 +220,4 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
     },
-})
-
+});

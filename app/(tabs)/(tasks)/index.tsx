@@ -1,39 +1,39 @@
-import { Image, Pressable, SectionList, StyleSheet, View } from 'react-native'
-import categoryData from '@/data/json/category_data.json';
-import React from 'react'
-import images from '@/constants/images';
-import { router } from 'expo-router';
-import { useSetCategoryContext } from '@/contexts/CategoryContext';
-import { ThemedText } from '@/components/ThemedText';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { Image, Pressable, SectionList, StyleSheet, View } from "react-native";
+import categoryData from "@/data/json/category_data.json";
+import React from "react";
+import images from "@/constants/images";
+import { router } from "expo-router";
+import { useSetCategoryContext } from "@/contexts/CategoryContext";
+import { ThemedText } from "@/components/ThemedText";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 type CategoryCardProps = {
-    categoryName: string,
-    categoryImgSrc: any,
+    categoryName: string;
+    categoryImgSrc: any;
 };
 
 const colors = () => {
     return {
-        bgColor: useThemeColor({}, 'background'),
-        primary: useThemeColor({}, 'primary'),
-        primary_tint: useThemeColor({}, 'primary_tint'),
-        textColor: useThemeColor({}, 'text'),
-        accent: useThemeColor({}, 'accent'),
-    }
-}
+        bgColor: useThemeColor({}, "background"),
+        primary: useThemeColor({}, "primary"),
+        primary_tint: useThemeColor({}, "primary_tint"),
+        textColor: useThemeColor({}, "text"),
+        accent: useThemeColor({}, "accent"),
+    };
+};
 
 export default function Tasks() {
     const color = colors();
-    const unfinished = categoryData.filter(item => !item.completed);
-    const finished = categoryData.filter(item => item.completed);
+    const unfinished = categoryData.filter((item) => !item.completed);
+    const finished = categoryData.filter((item) => item.completed);
 
     const empty = (is_finished: boolean) => {
         return {
             categoryNum: 0,
-            categoryName: '',
+            categoryName: "",
             completed: is_finished,
-        }
-    }
+        };
+    };
 
     const sections = [
         {
@@ -44,7 +44,7 @@ export default function Tasks() {
             title: "Finished Categories",
             data: finished.length > 0 ? finished : [empty(true)],
         },
-    ]
+    ];
 
     return (
         <View style={{ flex: 1, backgroundColor: color.bgColor }}>
@@ -52,11 +52,21 @@ export default function Tasks() {
                 sections={sections}
                 keyExtractor={(item) => item.categoryName}
                 renderItem={({ item }) =>
-                    item.categoryName === '' ? (
+                    item.categoryName === "" ? (
                         !item.completed ? (
-                            <ThemedText type='default' style={[styles.emptySection, { color: color.textColor }]}>Congratulations! You have finished categories currently available.</ThemedText>
+                            <ThemedText
+                                type="default"
+                                style={[styles.emptySection, { color: color.textColor }]}
+                            >
+                                Congratulations! You have finished categories currently available.
+                            </ThemedText>
                         ) : (
-                            <ThemedText type='default' style={[styles.emptySection, { color: color.textColor }]}>You currently have not finished any category yet.</ThemedText>
+                            <ThemedText
+                                type="default"
+                                style={[styles.emptySection, { color: color.textColor }]}
+                            >
+                                You currently have not finished any category yet.
+                            </ThemedText>
                         )
                     ) : (
                         <CategoryCard
@@ -66,12 +76,17 @@ export default function Tasks() {
                     )
                 }
                 renderSectionHeader={({ section: { title } }) => (
-                    <ThemedText type='subtitle' style={[styles.tasks__header, { color: color.textColor }]}>{title}</ThemedText>
+                    <ThemedText
+                        type="subtitle"
+                        style={[styles.tasks__header, { color: color.textColor }]}
+                    >
+                        {title}
+                    </ThemedText>
                 )}
                 style={styles.tasks}
             />
         </View>
-    )
+    );
 }
 
 function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
@@ -81,31 +96,34 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
     const goToCategory = (categoryName: string) => {
         setCategory(categoryName);
         router.push({
-            pathname: '/category',
-        })
+            pathname: "/category",
+        });
     };
 
     return (
         <View style={[styles.categoryCard, { backgroundColor: color.primary_tint }]}>
-            <View style={[styles.categoryCard__label__container, { backgroundColor: color.primary_tint }]}>
+            <View
+                style={[
+                    styles.categoryCard__label__container,
+                    { backgroundColor: color.primary_tint },
+                ]}
+            >
                 <View style={styles.categoryCard__label}>
-                    <ThemedText type='subtitle'>{categoryName}</ThemedText>
+                    <ThemedText type="subtitle">{categoryName}</ThemedText>
                 </View>
                 <View style={styles.button__container}>
                     <Pressable
                         onPress={() => goToCategory(categoryName)}
-                        style={[
-                            styles.button,
-                            { backgroundColor: color.primary }
-                        ]}>
-                        <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Start Now</ThemedText>
+                        style={[styles.button, { backgroundColor: color.primary }]}
+                    >
+                        <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
+                            Start Now
+                        </ThemedText>
                     </Pressable>
                 </View>
             </View>
             <View style={styles.categoryCard__imageContainer}>
-                <Image
-                    style={styles.categoryCard__image}
-                    source={categoryImgSrc} />
+                <Image style={styles.categoryCard__image} source={categoryImgSrc} />
             </View>
         </View>
     );
@@ -113,9 +131,9 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
 
 const styles = StyleSheet.create({
     tasks: {
-        flexDirection: 'column',
+        flexDirection: "column",
         paddingRight: 20,
-        paddingLeft: 20
+        paddingLeft: 20,
     },
 
     tasks__header: {
@@ -128,10 +146,10 @@ const styles = StyleSheet.create({
     },
 
     categoryCard: {
-        flexDirection: 'row',
+        flexDirection: "row",
         maxHeight: 170,
         borderRadius: 10,
-        overflow: 'hidden',
+        overflow: "hidden",
         marginBottom: 20,
     },
 
@@ -145,22 +163,22 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         paddingTop: 10,
         paddingBottom: 10,
-        justifyContent: 'space-around',
+        justifyContent: "space-around",
     },
 
     categoryCard__imageContainer: {
         flex: 1.7,
-        overflow: 'hidden',
+        overflow: "hidden",
     },
 
     categoryCard__image: {
-        height: '100%',
-        width: '100%',
-        resizeMode: 'cover',
+        height: "100%",
+        width: "100%",
+        resizeMode: "cover",
     },
 
     button: {
-        alignSelf: 'flex-start',
+        alignSelf: "flex-start",
         paddingLeft: 20,
         paddingRight: 20,
         paddingBottom: 5,
@@ -171,8 +189,8 @@ const styles = StyleSheet.create({
 
     button__container: {
         flex: 1,
-        alignSelf: 'center',
-        justifyContent: 'flex-end',
+        alignSelf: "center",
+        justifyContent: "flex-end",
         margin: 10,
-    }
-})
+    },
+});

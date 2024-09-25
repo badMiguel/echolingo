@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Pressable } from "react-native";
-import * as DocumentPicker from 'expo-document-picker'
+import * as DocumentPicker from "expo-document-picker";
 import useCRUD from "@/hooks/recording/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
@@ -8,10 +8,10 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 
 export default function Upload() {
-    const bgColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
-    const primary = useThemeColor({}, 'primary');
-    const primary_tint = useThemeColor({}, 'primary_tint');
+    const bgColor = useThemeColor({}, "background");
+    const textColor = useThemeColor({}, "text");
+    const primary = useThemeColor({}, "primary");
+    const primary_tint = useThemeColor({}, "primary_tint");
 
     const [uri, setUri] = useState<string | undefined>();
     const [uploaded, setUploaded] = useState<boolean>(false);
@@ -37,12 +37,14 @@ export default function Upload() {
 
             setSaving(true);
             const start = performance.now();
-            if (uri) { status = await saveRecording(uri, id) }
+            if (uri) {
+                status = await saveRecording(uri, id);
+            }
             const end = performance.now();
 
             if (!status?.status) {
                 setSaving(false);
-                throw new Error('Failed to save uploaded recording');
+                throw new Error("Failed to save uploaded recording");
             }
 
             setUri(status.filePath);
@@ -50,7 +52,7 @@ export default function Upload() {
             // delay to avoid spam upload
             const uploadTime = end - start;
             if (uploadTime < 3000) {
-                await new Promise(resolve => setTimeout(resolve, 3000 - uploadTime));
+                await new Promise((resolve) => setTimeout(resolve, 3000 - uploadTime));
             }
 
             setSaving(false);
@@ -60,9 +62,8 @@ export default function Upload() {
             setTimeout(() => {
                 setShow(false);
             }, 3000);
-
         } catch (err) {
-            console.error('Upload Failed', err)
+            console.error("Upload Failed", err);
 
             setShow(true);
             setTimeout(() => {
@@ -70,7 +71,6 @@ export default function Upload() {
             }, 3000);
         }
     };
-
 
     useEffect(() => {
         useDocumentPicker();
@@ -83,37 +83,39 @@ export default function Upload() {
                 <Pressable
                     style={[
                         styles.button,
-                        { backgroundColor: isSuccess || saving ? primary_tint : primary }
+                        { backgroundColor: isSuccess || saving ? primary_tint : primary },
                     ]}
                     onPress={() => saveUpload()}
                     disabled={isSuccess ? true : saving ? true : false}
                 >
                     <ThemedText
-                        type='defaultSemiBold'
+                        type="defaultSemiBold"
                         style={{ color: isSuccess || saving ? primary : bgColor }}
-                    >{saving ? 'Saving ...' : 'Save'}</ThemedText>
+                    >
+                        {saving ? "Saving ..." : "Save"}
+                    </ThemedText>
                 </Pressable>
                 <Pressable
-                    style={[
-                        styles.button,
-                        { backgroundColor: saving ? primary_tint : primary }
-                    ]}
+                    style={[styles.button, { backgroundColor: saving ? primary_tint : primary }]}
                     onPress={() => useDocumentPicker()}
                     disabled={saving ? true : false}
                 >
                     <ThemedText
-                        type='defaultSemiBold'
+                        type="defaultSemiBold"
                         style={{ color: saving ? primary : bgColor }}
-                    >{isSuccess ? 'Upload Another From Device' : 'Upload From Device'}</ThemedText>
+                    >
+                        {isSuccess ? "Upload Another From Device" : "Upload From Device"}
+                    </ThemedText>
                 </Pressable>
             </View>
-            <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
+            <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]}>
                 <Text
-                    style={[styles.notif__text, { backgroundColor: primary_tint, color: textColor }]}>
-                    {isSuccess
-                        ? 'Recording successfully saved'
-                        : 'Failed to save recording'
-                    }
+                    style={[
+                        styles.notif__text,
+                        { backgroundColor: primary_tint, color: textColor },
+                    ]}
+                >
+                    {isSuccess ? "Recording successfully saved" : "Failed to save recording"}
                 </Text>
             </View>
         </View>
@@ -123,15 +125,17 @@ export default function Upload() {
 async function openDocumentPicker() {
     try {
         const result = await DocumentPicker.getDocumentAsync({
-            type: '*/*',
+            type: "*/*",
             copyToCacheDirectory: true,
         });
 
-        if (result.canceled) { throw new Error('Canceled by user'); }
+        if (result.canceled) {
+            throw new Error("Canceled by user");
+        }
 
         return result.assets[0].uri;
     } catch (err) {
-        console.error('Failed opening document picker', err);
+        console.error("Failed opening document picker", err);
     }
 }
 
@@ -140,35 +144,35 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 30,
         paddingRight: 30,
-        justifyContent: 'center',
+        justifyContent: "center",
     },
 
     content: {
         flex: 2,
-        justifyContent: 'center'
+        justifyContent: "center",
     },
 
     notif__view: {
-        justifyContent: 'flex-end',
+        justifyContent: "flex-end",
         marginBottom: 20,
     },
 
     notif__text: {
         fontSize: 18,
-        alignSelf: 'flex-start',
-        textAlign: 'center',
+        alignSelf: "flex-start",
+        textAlign: "center",
         paddingTop: 7,
         paddingBottom: 7,
         paddingLeft: 15,
         paddingRight: 15,
-        borderRadius: 5
+        borderRadius: 5,
     },
 
     button: {
         marginBottom: 10,
         paddingTop: 10,
         paddingBottom: 10,
-        alignItems: 'center',
+        alignItems: "center",
         borderRadius: 10,
     },
 });

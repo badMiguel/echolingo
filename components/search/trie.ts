@@ -3,13 +3,13 @@ import { DataType } from "@/contexts/TiwiContext";
 type TrieNode = {
     children: Map<string, TrieNode>;
     id: string[];
-}
+};
 
 function createTrieNode(): TrieNode {
     return {
         children: new Map(),
-        id: []
-    }
+        id: [],
+    };
 }
 
 // for auto-completion on search
@@ -36,7 +36,7 @@ export class Trie {
 
     prefixOf(searchTerm: string, data: DataType): string[] {
         const potential: string[] = [];
-        let prefix: string = ""
+        let prefix: string = "";
         let node: TrieNode = this.root;
 
         for (const char of searchTerm.toLowerCase()) {
@@ -86,14 +86,14 @@ export class Trie {
         const searchTerms = searchTerm.toLowerCase().split(" ");
 
         for (const key of Object.keys(data)) {
-            const entry = data[key]
+            const entry = data[key];
 
             // only checks if there is at least one match then push to potential
             const hasMatch = (field: string | null): boolean => {
                 if (!field) return false;
                 const fieldWords = field.toLowerCase().split(" ");
-                return fieldWords.some(word => searchTerms.includes(word));
-            }
+                return fieldWords.some((word) => searchTerms.includes(word));
+            };
 
             if (
                 hasMatch(entry.English) ||
@@ -101,7 +101,7 @@ export class Trie {
                 hasMatch(entry["Gloss (english)"]) ||
                 hasMatch(entry["Gloss (tiwi)"])
             ) {
-                filtered.push(key)
+                filtered.push(key);
             }
         }
 

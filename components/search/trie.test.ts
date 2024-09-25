@@ -10,13 +10,13 @@ describe("trie x literal search", () => {
         trie = new Trie();
 
         for (const item in data) {
-            trie.insert(data[item].English, item)
-            trie.insert(data[item].Tiwi, item)
+            trie.insert(data[item].English, item);
+            trie.insert(data[item].Tiwi, item);
             if (data[item]["Gloss (tiwi)"]) {
-                trie.insert(data[item]["Gloss (tiwi)"]!, item)
+                trie.insert(data[item]["Gloss (tiwi)"]!, item);
             }
             if (data[item]["Gloss (english)"]) {
-                trie.insert(data[item]["Gloss (english)"]!, item)
+                trie.insert(data[item]["Gloss (english)"]!, item);
             }
         }
     });
@@ -32,14 +32,13 @@ describe("trie x literal search", () => {
         const result3 = trie.prefixOf("wHy", data);
         expect(result3).toContain("9");
         for (const i of result3) {
-            console.log(data[i])
+            console.log(data[i]);
         }
     });
 
     test("fallback to literal search", () => {
         const result1 = trie.prefixOf("meow", data);
         expect(result1).toEqual([]);
-
 
         const result2 = trie.prefixOf("around", data);
         expect(result2).toContain("173");
@@ -54,4 +53,3 @@ describe("trie x literal search", () => {
         }
     });
 });
-

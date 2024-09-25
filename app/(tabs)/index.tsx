@@ -1,14 +1,13 @@
-import { Button, StyleSheet, View } from 'react-native'
-import React from 'react'
-import { router, useLocalSearchParams } from 'expo-router';
-import { ThemedText } from '@/components/ThemedText';
-import { useThemeColor } from '@/hooks/useThemeColor';
-
+import { Button, StyleSheet, View } from "react-native";
+import React from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { ThemedText } from "@/components/ThemedText";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Home() {
-    const bgColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
-    const accent = useThemeColor({}, 'primary');
+    const bgColor = useThemeColor({}, "background");
+    const textColor = useThemeColor({}, "text");
+    const accent = useThemeColor({}, "primary");
 
     const params = useLocalSearchParams();
     const userName: string = Array.isArray(params.userName) ? params.userName[0] : params.userName;
@@ -17,19 +16,27 @@ export default function Home() {
 
     const greetings = (): string => {
         if (hours < 12) {
-            return 'Morning';
+            return "Morning";
         } else if (hours < 18) {
-            return 'Afternoon';
+            return "Afternoon";
         } else {
-            return 'Evening';
+            return "Evening";
         }
-    }
+    };
 
     return (
         <View style={[styles.mainView, { backgroundColor: bgColor }]}>
-            <ThemedText style={{ color: textColor }} type='title'>Good {greetings()}</ThemedText>
-            <ThemedText style={{ color: textColor }} type='subtitle'>Hello, {userName}</ThemedText>
-            <Button title='Go back to user type' color={accent} onPress={() => router.navigate('..')} />
+            <ThemedText style={{ color: textColor }} type="title">
+                Good {greetings()}
+            </ThemedText>
+            <ThemedText style={{ color: textColor }} type="subtitle">
+                Hello, {userName}
+            </ThemedText>
+            <Button
+                title="Go back to user type"
+                color={accent}
+                onPress={() => router.navigate("..")}
+            />
         </View>
     );
 }
@@ -37,8 +44,8 @@ export default function Home() {
 const styles = StyleSheet.create({
     mainView: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         gap: 20,
-    }
+    },
 });

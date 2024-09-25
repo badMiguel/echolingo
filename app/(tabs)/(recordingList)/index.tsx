@@ -1,26 +1,26 @@
-import { Pressable, SectionList, StyleSheet, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { DataType, emptyTiwiData, useTiwiListContext } from '@/contexts/TiwiContext'
-import { router } from 'expo-router'
-import { ThemedText } from '@/components/ThemedText'
-import { useThemeColor } from '@/hooks/useThemeColor'
-import SearchBar from '@/components/search/search'
+import { Pressable, SectionList, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { DataType, emptyTiwiData, useTiwiListContext } from "@/contexts/TiwiContext";
+import { router } from "expo-router";
+import { ThemedText } from "@/components/ThemedText";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import SearchBar from "@/components/search/search";
 
 const useColor = () => {
     return {
-        bgColor: useThemeColor({}, 'background'),
-        textColor: useThemeColor({}, 'text'),
-        primary: useThemeColor({}, 'primary'),
-        primary_tint: useThemeColor({}, 'primary_tint'),
-    }
-}
+        bgColor: useThemeColor({}, "background"),
+        textColor: useThemeColor({}, "text"),
+        primary: useThemeColor({}, "primary"),
+        primary_tint: useThemeColor({}, "primary_tint"),
+    };
+};
 
-function filterRecorded(data: DataType): { recorded: DataType[], notRecorded: DataType[] } {
+function filterRecorded(data: DataType): { recorded: DataType[]; notRecorded: DataType[] } {
     let recorded: DataType[] = [];
     let notRecorded: DataType[] = [];
 
     // todo optimise
-    const recordedKey = new Set(Object.keys(data).filter(key => data[key]["recording"]));
+    const recordedKey = new Set(Object.keys(data).filter((key) => data[key]["recording"]));
 
     for (const key in data) {
         if (recordedKey.has(key)) {
@@ -53,13 +53,15 @@ export default function RecordingList() {
     useEffect(() => {
         // todo error handling and optimisation
         if (searchResults) {
-            const newItems: DataType = {}
+            const newItems: DataType = {};
             if (data) {
                 for (const i of searchResults) {
                     newItems[i] = data[i];
                 }
             }
+
             const { recorded, notRecorded } = filterRecorded(newItems);
+
             setDataRecorded(recorded);
             setDataNotRecorded(notRecorded);
         } else if (data) {
@@ -73,16 +75,17 @@ export default function RecordingList() {
     const sections = [
         {
             title: "Not yet recorded",
-            data: dataNotRecorded.length > 0 ? dataNotRecorded : [{ "0": emptyTiwiData() }]
-        }, {
+            data: dataNotRecorded.length > 0 ? dataNotRecorded : [{ "0": emptyTiwiData() }],
+        },
+        {
             title: "With recordings",
-            data: dataRecorded.length > 0 ? dataRecorded : [{ "0": emptyTiwiData() }]
-        }
+            data: dataRecorded.length > 0 ? dataRecorded : [{ "0": emptyTiwiData() }],
+        },
     ];
 
     const handleSearchResults = (searchList: string[]) => {
         setSearchResults(searchList);
-    }
+    };
 
     return (
         <View style={{ flex: 1, backgroundColor: color.bgColor }}>
@@ -95,47 +98,55 @@ export default function RecordingList() {
                         item.completed ? (
                             <ThemedText style={{}}>All sentences have been recorded</ThemedText>
                         ) : (
-                            <ThemedText style={{ marginBottom: 30 }}>No sentences recorded yet</ThemedText>
+                            <ThemedText style={{ marginBottom: 30 }}>
+                                No sentences recorded yet
+                            </ThemedText>
                         )
                     ) : (
                         <SentenceCard tiwi={item} finished={false} />
                     )
                 }
                 renderSectionHeader={({ section: { title } }) => (
-                    <ThemedText type='subtitle' style={styles.sectionlist__header}>{title}</ThemedText>
+                    <ThemedText type="subtitle" style={styles.sectionlist__header}>
+                        {title}
+                    </ThemedText>
                 )}
                 style={styles.sectionlist}
             />
         </View>
-    )
+    );
 }
 
-const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi }) => {
-    const id: string = Object.keys(tiwi)[0]
+const SentenceCard: React.FC<{ tiwi: DataType; finished: boolean }> = ({ tiwi }) => {
+    const id: string = Object.keys(tiwi)[0];
     const color = useColor();
     const goToSentence = () => {
         router.push({
-            pathname: tiwi[id].recording ? '/viewRecording' : '/(addRecording)',
+            pathname: tiwi[id].recording ? "/viewRecording" : "/(addRecording)",
             params: {
-                sentenceID: id
+                sentenceID: id,
             },
         });
-    }
+    };
 
     return (
         <View style={[styles.sentenceCard__container, { backgroundColor: color.primary_tint }]}>
-            <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
+            <ThemedText type="defaultSemiBold">{tiwi.Tiwi ? "Tiwi: " : "Tiwi Gloss: "}</ThemedText>
             <ThemedText>{tiwi[id].Tiwi}</ThemedText>
-            <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>
+            <ThemedText type="defaultSemiBold">
+                {tiwi.English ? "English: " : "English Gloss: "}
+            </ThemedText>
             <ThemedText>{tiwi[id].English}</ThemedText>
             <View style={[styles.button__container, { backgroundColor: color.primary }]}>
                 <Pressable onPress={() => goToSentence()}>
-                    <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi[id].recording ? "View" : "Add Recording"}</ThemedText>
+                    <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
+                        {tiwi[id].recording ? "View" : "Add Recording"}
+                    </ThemedText>
                 </Pressable>
             </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     sectionlist: {
@@ -165,6 +176,6 @@ const styles = StyleSheet.create({
         paddingLeft: 30,
         paddingRight: 30,
         borderRadius: 10,
-        alignSelf: 'center',
+        alignSelf: "center",
     },
-})
+});

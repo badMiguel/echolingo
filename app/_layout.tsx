@@ -1,10 +1,10 @@
-import React from 'react'
-import { Stack } from 'expo-router'
-import { useThemeColor } from '@/hooks/useThemeColor'
+import React from "react";
+import { Stack } from "expo-router";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function RootLayout() {
-    const bgColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
+    const bgColor = useThemeColor({}, "background");
+    const textColor = useThemeColor({}, "text");
 
     return (
         <Stack
@@ -14,18 +14,18 @@ export default function RootLayout() {
             }}
         >
             <Stack.Screen
-                name='(tabs)'
+                name="(tabs)"
                 options={{
                     headerShown: false,
                 }}
             />
             <Stack.Screen
-                name='index'
+                name="index"
                 options={{
                     headerShown: true,
-                    title: 'Choose User Type',
+                    title: "Choose User Type",
                 }}
             />
         </Stack>
-    )
+    );
 }

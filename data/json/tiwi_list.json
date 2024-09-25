@@ -23,7 +23,7 @@
         "English": "How are you, my friend?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Awungana nginja mantani (male)\/ mantanga (female)?",
+        "Tiwi": "Awungana nginja mantani (male)/ mantanga (female)?",
         "Topic": "greetings_and_checking_in",
         "Image name (optional)": null,
         "recording": null,
@@ -60,7 +60,7 @@
         "completed": false
     },
     "7": {
-        "English": "What is this word\/story that you could do to help yourself?",
+        "English": "What is this word/story that you could do to help yourself?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kamini awarra naki ngirramini ngini nginja wiyi aminyuwani?",
@@ -70,7 +70,7 @@
         "completed": false
     },
     "8": {
-        "English": "What is this word\/story that you could do which will help you feel better?",
+        "English": "What is this word/story that you could do which will help you feel better?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kamini awarra ngirramini ngini wiyi aminyuwani?",
@@ -143,14 +143,14 @@
         "English": "Where is your hearing going?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Maka minyawunga ngimpangirri\/purrakuninga\/mikajanga?",
+        "Tiwi": "Maka minyawunga ngimpangirri/purrakuninga/mikajanga?",
         "Topic": "greetings_and_checking_in",
         "Image name (optional)": null,
         "recording": null,
         "completed": false
     },
     "16": {
-        "English": "Where is your head\/thinking going (not concentrating)?",
+        "English": "Where is your head/thinking going (not concentrating)?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Maka nginja punyipunyi kawunaga arimi",
@@ -160,7 +160,7 @@
         "completed": false
     },
     "17": {
-        "English": "She has good ears\/is a good listener",
+        "English": "She has good ears/is a good listener",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Mikajanga pumpuka (female)",
@@ -170,7 +170,7 @@
         "completed": false
     },
     "18": {
-        "English": "He has good ears\/is a good listener",
+        "English": "He has good ears/is a good listener",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Mikajanga pupuni (male)",
@@ -183,7 +183,7 @@
         "English": "She has good ears",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Mikajanga\/Purrakuninga (ears) pumpuka (female) wuni",
+        "Tiwi": "Mikajanga/Purrakuninga (ears) pumpuka (female) wuni",
         "Topic": "greetings_and_checking_in",
         "Image name (optional)": null,
         "recording": null,
@@ -193,7 +193,7 @@
         "English": "He has good ears",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Mikajanga\/Purrakuninga (ears) pupuni (male) wuni",
+        "Tiwi": "Mikajanga/Purrakuninga (ears) pupuni (male) wuni",
         "Topic": "greetings_and_checking_in",
         "Image name (optional)": null,
         "recording": null,
@@ -210,17 +210,17 @@
         "completed": false
     },
     "22": {
-        "English": "Let\u2019s talk about what is in your heart\/mind",
+        "English": "Let\u2019s talk about what is in your heart/mind",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Murrajiyarrapirri ngini apalamiya kangijila ruwuti\/punyipunyi",
+        "Tiwi": "Murrajiyarrapirri ngini apalamiya kangijila ruwuti/punyipunyi",
         "Topic": "greetings_and_checking_in",
         "Image name (optional)": null,
         "recording": null,
         "completed": false
     },
     "23": {
-        "English": "You and I walking together\/side by side",
+        "English": "You and I walking together/side by side",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Muwiyati murrangurlimayi",
@@ -230,7 +230,7 @@
         "completed": false
     },
     "24": {
-        "English": "Listen\/hear",
+        "English": "Listen/hear",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ngaripirtangaya",
@@ -240,7 +240,7 @@
         "completed": false
     },
     "25": {
-        "English": "Leaving worries\/bad stories behind. Go forward, follow the good road.",
+        "English": "Leaving worries/bad stories behind. Go forward, follow the good road.",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ngawurramwariyi ngini kutakamini jirti ngirramini ngintirikimani. Ngapapurukaga angi pupuka jarrumwaka.",
@@ -280,7 +280,7 @@
         "completed": false
     },
     "29": {
-        "English": "Who are you related to?\/Who is your family?",
+        "English": "Who are you related to?/Who is your family?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Nginja kuwapi ngirimipi?",
@@ -360,7 +360,7 @@
         "completed": false
     },
     "37": {
-        "English": "I listen to a story without getting involved\/ I observe their story",
+        "English": "I listen to a story without getting involved/ I observe their story",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ngiya ngiripirtangaya ngini nginja ngimpirimirra",
@@ -420,7 +420,7 @@
         "completed": false
     },
     "43": {
-        "English": "Why are you feeling sad\/unhappy?",
+        "English": "Why are you feeling sad/unhappy?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Pilikama nginja mirliga?",
@@ -550,7 +550,7 @@
         "completed": false
     },
     "56": {
-        "English": "Feeling or thinking she is good\/proud\/\u201cflash\u201d",
+        "English": "Feeling or thinking she is good/proud/\u201cflash\u201d",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ampangirrajamiya (female)",
@@ -560,7 +560,7 @@
         "completed": false
     },
     "57": {
-        "English": "Frightened\/scared",
+        "English": "Frightened/scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ampirimakirri (female)",
@@ -570,7 +570,7 @@
         "completed": false
     },
     "58": {
-        "English": "Frightened\/scared",
+        "English": "Frightened/scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Arimakirri (male)",
@@ -580,7 +580,7 @@
         "completed": false
     },
     "59": {
-        "English": "Shame\/Shy (main meanings). Can also mean: \u201cSorry\u201d for others, Unhappy\/Worried",
+        "English": "Shame/Shy (main meanings). Can also mean: \u201cSorry\u201d for others, Unhappy/Worried",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Arliranga",
@@ -590,7 +590,7 @@
         "completed": false
     },
     "60": {
-        "English": "Feeling or thinking he is good\/proud\/\u201cflash\u201d",
+        "English": "Feeling or thinking he is good/proud/\u201cflash\u201d",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Arrungiramiya (male)",
@@ -600,7 +600,7 @@
         "completed": false
     },
     "61": {
-        "English": "Stressing. Can also mean: Confused\/paranoid\/not coping",
+        "English": "Stressing. Can also mean: Confused/paranoid/not coping",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Awuntingirraga",
@@ -643,7 +643,7 @@
         "English": "She got a shock",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Jikitarriji\/jipakilimigi angatawa yiminga (female)",
+        "Tiwi": "Jikitarriji/jipakilimigi angatawa yiminga (female)",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
@@ -660,7 +660,7 @@
         "completed": false
     },
     "67": {
-        "English": "\u201cNo good\u201d. Can also mean: Annoyed\/sick",
+        "English": "\u201cNo good\u201d. Can also mean: Annoyed/sick",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Jirti",
@@ -670,7 +670,7 @@
         "completed": false
     },
     "68": {
-        "English": "Feeling \u201cno good\u201d in your body. Can also mean: Not feeling yourself\/Sad inside",
+        "English": "Feeling \u201cno good\u201d in your body. Can also mean: Not feeling yourself/Sad inside",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Jirti yilipiga",
@@ -730,7 +730,7 @@
         "completed": false
     },
     "74": {
-        "English": "She ran away from her bad story (problems\/worries)",
+        "English": "She ran away from her bad story (problems/worries)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kali jimakirringimi pili jirti ngirramini (female)",
@@ -760,7 +760,7 @@
         "completed": false
     },
     "77": {
-        "English": "He ran away from his bad story (problems\/worries)",
+        "English": "He ran away from his bad story (problems/worries)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kali yimakirringimi pili jirti ngirramini (male)",
@@ -770,7 +770,7 @@
         "completed": false
     },
     "78": {
-        "English": "People who have worries\/\u201cstressing\u201d\/not coping",
+        "English": "People who have worries/\u201cstressing\u201d/not coping",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kapi awuntingirraga",
@@ -780,7 +780,7 @@
         "completed": false
     },
     "79": {
-        "English": "Our friends who have worries\/\u201cstressing\u201d\/not coping",
+        "English": "Our friends who have worries/\u201cstressing\u201d/not coping",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kapi ngawa mamanta awuntingirraga",
@@ -790,7 +790,7 @@
         "completed": false
     },
     "80": {
-        "English": "People who have worries\/\u201cstressing\u201d\/not coping",
+        "English": "People who have worries/\u201cstressing\u201d/not coping",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kapi wuta awuntingirraga",
@@ -840,7 +840,7 @@
         "completed": false
     },
     "85": {
-        "English": "Nobody loves me\/cares for me",
+        "English": "Nobody loves me/cares for me",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Karrikuwapi wurtimarti ngiya",
@@ -850,17 +850,17 @@
         "completed": false
     },
     "86": {
-        "English": "Happy, Relaxed\/calm, Proud",
+        "English": "Happy, Relaxed/calm, Proud",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Kukunari\/Miringayi",
+        "Tiwi": "Kukunari/Miringayi",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
         "completed": false
     },
     "87": {
-        "English": "Somebody is talking, but it is all in my head\/I can hear people talking inside my head (auditory hallucinations)",
+        "English": "Somebody is talking, but it is all in my head/I can hear people talking inside my head (auditory hallucinations)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kutakuwapi nimarra wujingimi kapi ngiya punyipunyi",
@@ -870,7 +870,7 @@
         "completed": false
     },
     "88": {
-        "English": "He has lost touch with reality\/his mind is somewhere else",
+        "English": "He has lost touch with reality/his mind is somewhere else",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kutamaka ngarra punyipunyi arimuwu (male)",
@@ -880,7 +880,7 @@
         "completed": false
     },
     "89": {
-        "English": "She has lost touch with reality\/her mind is somewhere else",
+        "English": "She has lost touch with reality/her mind is somewhere else",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kutamaka nyirra punyipunyi ampirimuwu (female)",
@@ -890,7 +890,7 @@
         "completed": false
     },
     "90": {
-        "English": "They lose touch with reality\/their mind is somewhere else",
+        "English": "They lose touch with reality/their mind is somewhere else",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Kutamaka wuta punyipunyi arimuwu (group)",
@@ -900,7 +900,7 @@
         "completed": false
     },
     "91": {
-        "English": "\u201cCheeky drugs\u201d\/\u201dhot drugs\u201d\/Synthetic drugs (e.g. Synthetic marijuana, ice, methamphetamine)",
+        "English": "\u201cCheeky drugs\u201d/\u201dhot drugs\u201d/Synthetic drugs (e.g. Synthetic marijuana, ice, methamphetamine)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Majaripika",
@@ -923,7 +923,7 @@
         "English": "Scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Mankirringini\/ arimakirri (male)",
+        "Tiwi": "Mankirringini/ arimakirri (male)",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
@@ -933,7 +933,7 @@
         "English": "Scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Mankirrika \/ ampirimakirri (female)",
+        "Tiwi": "Mankirrika / ampirimakirri (female)",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
@@ -943,7 +943,7 @@
         "English": "Scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Mankirringimpi \/ wurumakirri (group)",
+        "Tiwi": "Mankirringimpi / wurumakirri (group)",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
@@ -963,7 +963,7 @@
         "English": "Feeling good",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Mijuwalini\/pupuni (male)",
+        "Tiwi": "Mijuwalini/pupuni (male)",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
@@ -973,7 +973,7 @@
         "English": "Feeling good",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Mijuwalinga\/pupuka (female)",
+        "Tiwi": "Mijuwalinga/pupuka (female)",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
@@ -983,7 +983,7 @@
         "English": "Feeling good",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Mijuwaluwi\/Papuranjuwi (group)",
+        "Tiwi": "Mijuwaluwi/Papuranjuwi (group)",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
@@ -1000,7 +1000,7 @@
         "completed": false
     },
     "101": {
-        "English": "Beer\/\u201cGrog\u201d\/Alcohol. Also means: Saltwater",
+        "English": "Beer/\u201cGrog\u201d/Alcohol. Also means: Saltwater",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Mirripaka",
@@ -1010,7 +1010,7 @@
         "completed": false
     },
     "102": {
-        "English": "Don\u2019t get angry\/aggressive",
+        "English": "Don\u2019t get angry/aggressive",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ngajiti ngawujakirimitiyarri",
@@ -1030,7 +1030,7 @@
         "completed": false
     },
     "104": {
-        "English": "He is deadly\/smart\/clever",
+        "English": "He is deadly/smart/clever",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ngarra arungurramiya (male)",
@@ -1060,7 +1060,7 @@
         "completed": false
     },
     "107": {
-        "English": "Teaching people\/reminding ourselves of the right story, to keep on track (positive thinking)",
+        "English": "Teaching people/reminding ourselves of the right story, to keep on track (positive thinking)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ngawa ngintimatapiliga nginingawula ngirramini",
@@ -1110,7 +1110,7 @@
         "completed": false
     },
     "112": {
-        "English": "I am on my own\/alone",
+        "English": "I am on my own/alone",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Ngiya wangantamiya",
@@ -1200,7 +1200,7 @@
         "completed": false
     },
     "121": {
-        "English": "Feeling anxious\/uneasy. Heart beating fast, a problem\/bad news is coming",
+        "English": "Feeling anxious/uneasy. Heart beating fast, a problem/bad news is coming",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Palipali ampirimi angilawa yiminga",
@@ -1420,7 +1420,7 @@
         "completed": false
     },
     "143": {
-        "English": "Pain in the head\/headache",
+        "English": "Pain in the head/headache",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Pungintaga jana",
@@ -1430,7 +1430,7 @@
         "completed": false
     },
     "144": {
-        "English": "I slept well last night\/good sleep",
+        "English": "I slept well last night/good sleep",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Pupuni ngirimajirripi japini",
@@ -1440,7 +1440,7 @@
         "completed": false
     },
     "145": {
-        "English": "Feel \u201csorry\u201d for that family\/we feel \u201csorry\u201d for them (grief)",
+        "English": "Feel \u201csorry\u201d for that family/we feel \u201csorry\u201d for them (grief)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Putuputuwu ngawuntakirayi ngawa mamanta",
@@ -1450,7 +1450,7 @@
         "completed": false
     },
     "146": {
-        "English": "We grieve for ourselves\/ Feeling \u201csorry\u201d for ourselves",
+        "English": "We grieve for ourselves/ Feeling \u201csorry\u201d for ourselves",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Putuputuwu ngawurrakirayamiya",
@@ -1530,7 +1530,7 @@
         "completed": false
     },
     "154": {
-        "English": "Seeing spirits\/seeing things that are not there (visual hallucinations)",
+        "English": "Seeing spirits/seeing things that are not there (visual hallucinations)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Wupakurluwunyi yimanka",
@@ -1540,7 +1540,7 @@
         "completed": false
     },
     "155": {
-        "English": "They are feeling or thinking they are good\/proud\/\u201cflash\u201d",
+        "English": "They are feeling or thinking they are good/proud/\u201cflash\u201d",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Wupangirrajamiya (group)",
@@ -1550,7 +1550,7 @@
         "completed": false
     },
     "156": {
-        "English": "\u201cGunja\u201d\/cannabis\/marijuana",
+        "English": "\u201cGunja\u201d/cannabis/marijuana",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Wupunga",
@@ -1560,7 +1560,7 @@
         "completed": false
     },
     "157": {
-        "English": "Frightened\/scared",
+        "English": "Frightened/scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Wurumakirri (group)",
@@ -1590,7 +1590,7 @@
         "completed": false
     },
     "160": {
-        "English": "Feeling anxious\/unsure",
+        "English": "Feeling anxious/unsure",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yartari",
@@ -1600,7 +1600,7 @@
         "completed": false
     },
     "161": {
-        "English": "Feeling anxious\/unsure with shortness of breath",
+        "English": "Feeling anxious/unsure with shortness of breath",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yartari ampirimarrimi angi nyitawa yiminga (female)",
@@ -1610,7 +1610,7 @@
         "completed": false
     },
     "162": {
-        "English": "Feeling anxious\/unsure with shortness of breath",
+        "English": "Feeling anxious/unsure with shortness of breath",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yartari arimarrimi angatawa yiminga (male)",
@@ -1620,7 +1620,7 @@
         "completed": false
     },
     "163": {
-        "English": "Feeling anxious\/unsure with head (thoughts) racing",
+        "English": "Feeling anxious/unsure with head (thoughts) racing",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yartari ngarimajigi nginingawula punyipunyi",
@@ -1630,7 +1630,7 @@
         "completed": false
     },
     "164": {
-        "English": "Feeling anxious\/unsure with heart beating fast",
+        "English": "Feeling anxious/unsure with heart beating fast",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yartari wurumarrimi angiwutawa yiminga",
@@ -1640,7 +1640,7 @@
         "completed": false
     },
     "165": {
-        "English": "Feeling anxious\/unsure and not thinking straight (confused)",
+        "English": "Feeling anxious/unsure and not thinking straight (confused)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yartari wurumajigi nginiwutawa punyipunyi",
@@ -1653,7 +1653,7 @@
         "English": "He got a shock",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
-        "Tiwi": "Yikitarriji\/yipakilimigi angatawa yiminga (male)",
+        "Tiwi": "Yikitarriji/yipakilimigi angatawa yiminga (male)",
         "Topic": "feelings_and_behaviours",
         "Image name (optional)": null,
         "recording": null,
@@ -1680,7 +1680,7 @@
         "completed": false
     },
     "169": {
-        "English": "Heartbeat\/Pulse. Can also mean: Totem, Craving for bush tucker",
+        "English": "Heartbeat/Pulse. Can also mean: Totem, Craving for bush tucker",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yiminga",
@@ -1710,7 +1710,7 @@
         "completed": false
     },
     "172": {
-        "English": "Lots of beer (Intoxicated\/drunk)",
+        "English": "Lots of beer (Intoxicated/drunk)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yingarti mirripaka",
@@ -1720,7 +1720,7 @@
         "completed": false
     },
     "173": {
-        "English": "There are lots of voices\/people talking around us",
+        "English": "There are lots of voices/people talking around us",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yingarti pujinga nimarra wujingimi kangawula",
@@ -1730,7 +1730,7 @@
         "completed": false
     },
     "174": {
-        "English": "Lots of \u201cgunja\u201d (Intoxicated\/\u201dstoned\u201d\/feeling the effects of cannabis)",
+        "English": "Lots of \u201cgunja\u201d (Intoxicated/\u201dstoned\u201d/feeling the effects of cannabis)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
         "Tiwi": "Yingarti wupunga",

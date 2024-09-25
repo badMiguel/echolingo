@@ -6,7 +6,7 @@ import { useTiwiListContext } from "@/contexts/TiwiContext";
 
 type SearchBarProps = {
     searchResults: (data: string[]) => void;
-}
+};
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const textColor = useThemeColor({}, "text");
@@ -21,18 +21,18 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
         const trie = new Trie();
 
         for (const item in data) {
-            trie.insert(data[item].English, item)
-            trie.insert(data[item].Tiwi, item)
+            trie.insert(data[item].English, item);
+            trie.insert(data[item].Tiwi, item);
             if (data[item]["Gloss (tiwi)"]) {
-                trie.insert(data[item]["Gloss (tiwi)"]!, item)
+                trie.insert(data[item]["Gloss (tiwi)"]!, item);
             }
             if (data[item]["Gloss (english)"]) {
-                trie.insert(data[item]["Gloss (english)"]!, item)
+                trie.insert(data[item]["Gloss (english)"]!, item);
             }
         }
 
         trieRef.current = trie;
-    }, [data])
+    }, [data]);
 
     const handleSearch = () => {
         // todo error handling
@@ -40,7 +40,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
             const results = trieRef.current?.prefixOf(searchTerm, data);
             searchResults(results ? results : []);
         }
-    }
+    };
 
     return (
         <TextInput
@@ -54,7 +54,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
             onSubmitEditing={() => handleSearch()}
         />
     );
-}
+};
 
 export default SearchBar;
 
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
         fontSize: 20,
         borderBottomWidth: 0.2,
     },
-})
+});

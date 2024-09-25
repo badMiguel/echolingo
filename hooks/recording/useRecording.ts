@@ -9,7 +9,7 @@ export default function useRecording() {
 
     async function startRecording() {
         try {
-            if (permissionResponse?.status !== 'granted') {
+            if (permissionResponse?.status !== "granted") {
                 await requestPermission();
             }
 
@@ -23,27 +23,22 @@ export default function useRecording() {
             );
 
             setRecording(recording);
-
         } catch (err) {
-            console.error('Failed to start recording', err);
+            console.error("Failed to start recording", err);
         }
     }
 
     async function stopRecording() {
         setRecording(undefined);
         await recording?.stopAndUnloadAsync();
-        await Audio.setAudioModeAsync(
-            {
-                allowsRecordingIOS: false,
-            }
-        );
+        await Audio.setAudioModeAsync({
+            allowsRecordingIOS: false,
+        });
 
         const uri = recording?.getURI();
         setUri(uri);
         setHaveRecording(true);
-
     }
 
-    return { startRecording, stopRecording, recording, uri, haveRecording};
-
+    return { startRecording, stopRecording, recording, uri, haveRecording };
 }

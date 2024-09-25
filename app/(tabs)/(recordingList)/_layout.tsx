@@ -1,10 +1,10 @@
-import React from 'react'
-import { Stack } from 'expo-router'
-import { useThemeColor } from '@/hooks/useThemeColor';
+import React from "react";
+import { Stack } from "expo-router";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 function recordingListLayout() {
-    const bgColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
+    const bgColor = useThemeColor({}, "background");
+    const textColor = useThemeColor({}, "text");
 
     return (
         <Stack
@@ -16,17 +16,17 @@ function recordingListLayout() {
             }}
         >
             <Stack.Screen
-                name='index'
+                name="index"
                 options={{
                     headerShown: true,
-                    title: 'Recording Database',
+                    title: "Recording Database",
                 }}
             />
             <Stack.Screen
-                name='viewRecording'
+                name="viewRecording"
                 options={{
                     headerShown: true,
-                    title: 'Recording Database',
+                    title: "Recording Database",
                 }}
             />
         </Stack>

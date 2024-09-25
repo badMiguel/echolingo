@@ -34,7 +34,7 @@ export default function ViewRecording() {
                 }
             }
         }
-    }, [])
+    }, []);
 
     return (
         <View style={[styles.mainView, { backgroundColor: bgColor }]}>
@@ -59,28 +59,40 @@ export default function ViewRecording() {
             <View style={styles.playbackButton__container}>
                 <AudioPlayback uri={uri} />
                 <View style={[styles.button__container, { backgroundColor: primary }]}>
-                    <Pressable onPress={() => router.push({
-                        pathname: "/(addRecording)",
-                        params: {
-                            sentenceID: id,
+                    <Pressable
+                        onPress={() =>
+                            router.push({
+                                pathname: "/(addRecording)",
+                                params: {
+                                    sentenceID: id,
+                                },
+                            })
                         }
-                    })}>
-                        <ThemedText type="defaultSemiBold" style={[{ color: bgColor }]}>Edit</ThemedText>
+                    >
+                        <ThemedText type="defaultSemiBold" style={[{ color: bgColor }]}>
+                            Edit
+                        </ThemedText>
                     </Pressable>
                 </View>
                 <View style={[styles.button__container, { backgroundColor: primary }]}>
-                    <Pressable onPress={() => router.navigate({
-                        pathname: "/(recordingList)",
-                        params: {
-                            sentenceID: id,
+                    <Pressable
+                        onPress={() =>
+                            router.navigate({
+                                pathname: "/(recordingList)",
+                                params: {
+                                    sentenceID: id,
+                                },
+                            })
                         }
-                    })}>
-                        <ThemedText type="defaultSemiBold" style={[{ color: bgColor }]}>Back</ThemedText>
+                    >
+                        <ThemedText type="defaultSemiBold" style={[{ color: bgColor }]}>
+                            Back
+                        </ThemedText>
                     </Pressable>
                 </View>
             </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -99,11 +111,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingTop: 10,
         paddingBottom: 10,
-        alignItems: 'center',
+        alignItems: "center",
         borderRadius: 10,
     },
 
     playbackButton__container: {
         marginTop: 50,
-    }
-})
+    },
+});
