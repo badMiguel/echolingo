@@ -87,7 +87,7 @@ export default function RecordingList() {
     }
 
     return (
-        <View style={{ backgroundColor: color.bgColor }}>
+        <View style={{ flex: 1, backgroundColor: color.bgColor }}>
             <SearchBar searchResults={handleSearchResults} />
             <SectionList
                 sections={sections}

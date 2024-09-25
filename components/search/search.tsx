@@ -43,18 +43,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     }
 
     return (
-        <View>
-            <TextInput
-                autoCorrect={false}
-                value={searchTerm}
-                onChangeText={(text) => setSearchTerm(text)}
-                style={[styles.searchBar, {}]}
-                placeholder={"Search here..."}
-                placeholderTextColor={primary}
-                cursorColor={textColor}
-                onSubmitEditing={() => handleSearch()}
-            />
-        </View>
+        <TextInput
+            autoCorrect={false}
+            value={searchTerm}
+            onChangeText={(text) => setSearchTerm(text)}
+            style={[styles.searchBar, {}]}
+            placeholder={"Search here..."}
+            placeholderTextColor={primary}
+            cursorColor={textColor}
+            onSubmitEditing={() => handleSearch()}
+        />
     );
 }
 
@@ -62,6 +60,10 @@ export default SearchBar;
 
 const styles = StyleSheet.create({
     searchBar: {
+        marginTop: 20,
+        marginLeft: 30,
+        marginRight: 30,
+        fontSize: 20,
         borderBottomWidth: 0.2,
     },
 })
