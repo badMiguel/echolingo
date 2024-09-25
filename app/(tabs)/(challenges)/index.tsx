@@ -5,7 +5,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 export default function Challenges() {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
-    const tint = useThemeColor({}, 'tint');
+    const accent = useThemeColor({}, 'accent');
 
     // Mock challenge data (you can replace this with dynamic data)
     const challenges = [
@@ -26,7 +26,7 @@ export default function Challenges() {
                         </Text>
                         <Button
                             title={challenge.status === 'claim' ? 'Claim...' : 'Start'}
-                            color={tint}
+                            color={accent}
                             onPress={() => console.log(`${challenge.title} pressed`)}
                         />
                     </View>

@@ -39,7 +39,6 @@ export default function RecordView() {
 export function Record({ fromStudent, passShow, passIsSuccess }:
     { fromStudent?: boolean, passShow?: (show: boolean) => void, passIsSuccess?: (success: boolean) => void }) {
     const bgColor = useThemeColor({}, 'background');
-    const tint = useThemeColor({}, 'tint');
     const accent = useThemeColor({}, 'accent');
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -104,12 +103,12 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
                     disabled={!tempUri || isLoading || isSuccess ? true : undefined}
                     style={[
                         styles.button,
-                        { backgroundColor: !tempUri || isLoading || isSuccess ? accent : tint }
+                        { backgroundColor: !tempUri || isLoading || isSuccess ? accent : accent }
                     ]}
                 >
                     <ThemedText type='defaultSemiBold' style={[
                         styles.button__text,
-                        { color: !tempUri || isLoading || isSuccess ? tint : bgColor }
+                        { color: !tempUri || isLoading || isSuccess ? accent : bgColor }
                     ]}>
                         {isLoading ? "Loading" : "Save"}
                     </ThemedText>
@@ -120,12 +119,12 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
                 disabled={isLoading ? true : undefined}
                 style={[
                     styles.button,
-                    { backgroundColor: isLoading ? accent : tint }
+                    { backgroundColor: isLoading ? accent : accent }
                 ]}
             >
                 <ThemedText type='defaultSemiBold' style={[
                     styles.button__text,
-                    { color: isLoading ? tint : bgColor }
+                    { color: isLoading ? accent : bgColor }
                 ]}>
                     {recording ? "Stop Recording"
                         : haveRecording ? "Record Another"

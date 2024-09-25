@@ -5,10 +5,8 @@ import { CategoryProvider } from "@/contexts/CategoryContext";
 import { TiwiProvider } from "@/contexts/TiwiContext";
 
 export default function RootLayout() {
-    const bgColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
-    const tabFocusColor = useThemeColor({}, 'tabIconSelected');
-    const tabUnfocusedColor = useThemeColor({}, 'tabIconDefault');
+    const tabFocusColor = useThemeColor({}, 'accent');
+    const tabUnfocusedColor = useThemeColor({}, 'tint');
 
     const params = useLocalSearchParams();
     const userType = Array.isArray(params.userType) ? params.userType[0] : params.userType;

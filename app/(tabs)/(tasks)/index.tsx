@@ -15,10 +15,10 @@ type CategoryCardProps = {
 const colors = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
-        buttonColor: useThemeColor({}, 'tint'),
+        buttonColor: useThemeColor({}, 'accent'),
         textColor: useThemeColor({}, 'text'),
         accent: useThemeColor({}, 'accent'),
-        tint: useThemeColor({}, 'tint'),
+        primary: useThemeColor({}, 'primary'),
     }
 }
 
@@ -89,7 +89,7 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
 
     return (
         <View style={[styles.categoryCard, { backgroundColor: color.accent }]}>
-            <View style={[styles.categoryCard__label__container, { backgroundColor: color.accent }]}>
+            <View style={[styles.categoryCard__label__container, { backgroundColor: color.primary }]}>
                 <View style={styles.categoryCard__label}>
                     <ThemedText type='subtitle'>{categoryName}</ThemedText>
                 </View>
@@ -98,7 +98,7 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
                         onPress={() => goToCategory(categoryName)}
                         style={[
                             styles.button,
-                            { backgroundColor: color.tint }
+                            { backgroundColor: color.accent }
                         ]}>
                         <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Start Now</ThemedText>
                     </Pressable>

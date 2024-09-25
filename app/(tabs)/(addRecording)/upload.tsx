@@ -11,7 +11,6 @@ export default function Upload() {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
     const accent = useThemeColor({}, 'accent');
-    const tint = useThemeColor({}, 'tint');
 
     const [uri, setUri] = useState<string | undefined>();
     const [uploaded, setUploaded] = useState<boolean>(false);
@@ -83,27 +82,27 @@ export default function Upload() {
                 <Pressable
                     style={[
                         styles.button,
-                        { backgroundColor: isSuccess || saving ? accent : tint }
+                        { backgroundColor: isSuccess || saving ? accent : accent }
                     ]}
                     onPress={() => saveUpload()}
                     disabled={isSuccess ? true : saving ? true : false}
                 >
                     <ThemedText
                         type='defaultSemiBold'
-                        style={{ color: isSuccess || saving ? tint : bgColor }}
+                        style={{ color: isSuccess || saving ? accent : bgColor }}
                     >{saving ? 'Saving ...' : 'Save'}</ThemedText>
                 </Pressable>
                 <Pressable
                     style={[
                         styles.button,
-                        { backgroundColor: saving ? accent : tint }
+                        { backgroundColor: saving ? accent : accent }
                     ]}
                     onPress={() => useDocumentPicker()}
                     disabled={saving ? true : false}
                 >
                     <ThemedText
                         type='defaultSemiBold'
-                        style={{ color: saving ? tint : bgColor }}
+                        style={{ color: saving ? accent : bgColor }}
                     >{isSuccess ? 'Upload Another From Device' : 'Upload From Device'}</ThemedText>
                 </Pressable>
             </View>
