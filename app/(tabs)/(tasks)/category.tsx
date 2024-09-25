@@ -1,10 +1,11 @@
 import { router, useNavigation } from 'expo-router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useCategoryContext } from '@/contexts/CategoryContext';
-import { useTiwiListContext, useSetTiwiContext, Entry } from '@/contexts/TiwiContext';
+import { useTiwiListContext, useSetTiwiContext, Entry, DataType } from '@/contexts/TiwiContext';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ThemedText } from '@/components/ThemedText';
+import SearchBar from '@/components/search/search';
 
 const useColor = () => {
     return {
@@ -21,6 +22,8 @@ export default function Category() {
     const tiwiList = useTiwiListContext();
     const color = useColor();
 
+    const [searchResults, setSearchResults] = useState<DataType | undefined>();
+
     // change header title dynamically
     useEffect(() => {
         if (category !== 'unknown') {
@@ -30,12 +33,25 @@ export default function Category() {
         }
     }, [navigation])
 
+    const handleSearch = (searchList: string[]) => {
+        // todo error handling
+        if (tiwiList) {
+            const newItems: DataType = {}
+            for (const i of searchList) {
+                newItems[i] = tiwiList[i];
+            }
+
+            setSearchResults(newItems);
+        }
+    }
+
     return (
-        <View style={[{ backgroundColor: color.bgColor }]}>
+        <View style={[{ flex: 1, backgroundColor: color.bgColor }]}>
+            <SearchBar searchResults={handleSearch} />
             {tiwiList ? (
                 <FlatList
                     style={styles.flatlist}
-                    data={Object.entries(tiwiList)}
+                    data={searchResults ? Object.entries(searchResults) : Object.entries(tiwiList)}
                     renderItem={({ item }) =>
                         <SentenceCard tiwi={item[1]} />
                     }
@@ -95,7 +111,7 @@ const styles = StyleSheet.create({
 
     button__container: {
         marginTop: 5,
-        paddingTop:5,
+        paddingTop: 5,
         paddingBottom: 5,
         paddingLeft: 30,
         paddingRight: 30,
