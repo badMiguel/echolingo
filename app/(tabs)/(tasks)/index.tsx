@@ -98,7 +98,7 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
                             styles.button,
                             { backgroundColor: color.primary }
                         ]}>
-                        <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Start Now</ThemedText>
+                        <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Start</ThemedText>
                     </Pressable>
                 </View>
             </View>
