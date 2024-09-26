@@ -19,9 +19,10 @@ export default function RootLayout() {
                 <Tabs
                     screenOptions={{
                         tabBarStyle: { height: 60 },
-                        tabBarShowLabel: false,
+                        tabBarShowLabel: true,
                         headerStyle: { backgroundColor: bgColor, shadowColor: "black" },
                         headerTintColor: textColor,
+                        tabBarLabelStyle: { fontSize: 12 },
                     }}
                 >
                     <Tabs.Screen
@@ -37,6 +38,7 @@ export default function RootLayout() {
                                     size={30}
                                 />
                             ),
+                            tabBarLabel: "Home", 
                         }}
                     />
                     <Tabs.Screen
@@ -52,6 +54,7 @@ export default function RootLayout() {
                                     size={30}
                                 />
                             ),
+                            tabBarLabel: "Tasks",
                             href: userType === "teacher" ? null : "/(tasks)",
                         }}
                     />
@@ -69,6 +72,7 @@ export default function RootLayout() {
                                     size={30}
                                 />
                             ),
+                            tabBarLabel: "Recordings",
                             href: userType !== "teacher" ? null : "/(recordingList)",
                         }}
                     />
@@ -87,6 +91,7 @@ export default function RootLayout() {
                                     size={30}
                                 />
                             ),
+                            tabBarLabel: "Add",
                             href: userType !== "teacher" ? null : "/(addRecording)",
                         }}
                     />
@@ -105,6 +110,7 @@ export default function RootLayout() {
                                     size={30}
                                 />
                             ),
+                            tabBarLabel: "Challenges",
                             href: userType !== "student" ? null : "/(challenges)",
                         }}
                     />
@@ -117,6 +123,7 @@ export default function RootLayout() {
                             tabBarIcon: ({ focused }) => (
                                 <UserIcon color={focused ? primary : primary_tint} size={30} />
                             ),
+                            tabBarLabel: "Profile",
                         }}
                     />
                 </Tabs>
