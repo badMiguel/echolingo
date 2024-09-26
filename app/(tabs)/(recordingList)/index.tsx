@@ -150,14 +150,14 @@ const SentenceCard: React.FC<{ tiwi: DataType; finished: boolean }> = ({ tiwi })
             </ThemedText>
             <ThemedText>{tiwi[id].English}</ThemedText>
 
-            <View style={[styles.button__container, { backgroundColor: color.accent }]}>
+            <View style={[styles.button__container, { backgroundColor: color.primary }]}>
                 <Pressable onPress={() => goToSentence()}>
                     <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi.recording ? "View" : "Add Recording"}</ThemedText>
                 </Pressable>
             </View>
 
             
-            <View style={[styles.button__container, { backgroundColor: hasSubmissions ? color.accent : '#ddd' }]}>
+            <View style={[styles.button__container, { backgroundColor: hasSubmissions ? color.primary : '#ddd' }]}>
                 <Pressable
                     onPress={goToSubmissions}
                     disabled={!hasSubmissions}
