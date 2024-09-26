@@ -6,47 +6,57 @@ import useCRUD from "@/hooks/recording/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
+import { addDoc, collection } from "firebase/firestore";
+import { data_base, storage } from "@/app/firebaseConfig";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Button } from "react-native-paper";
 
 export default function RecordView() {
-    const bgColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
-    const primary_tint = useThemeColor({}, 'primary_tint');
+    const bgColor = useThemeColor({}, "background");
+    const textColor = useThemeColor({}, "text");
+    const primary_tint = useThemeColor({}, "primary_tint");
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [show, setShow] = useState<boolean>(false);
 
-    const getShow = (show: boolean) => { setShow(show) }
-    const getIsSuccess = (success: boolean) => { setIsSuccess(success) }
+    const getShow = (show: boolean) => {
+        setShow(show);
+    };
+    const getIsSuccess = (success: boolean) => {
+        setIsSuccess(success);
+    };
 
     return (
         <View style={[styles.mainView, { backgroundColor: bgColor }]}>
             <View style={styles.record}>
                 <Record passShow={getShow} passIsSuccess={getIsSuccess} />
             </View>
-            <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
+            <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]}>
                 <Text
-                    style={[styles.notif__text, { backgroundColor: primary_tint, color: textColor }]}>
-                    {isSuccess
-                        ? 'Recording successfully saved'
-                        : 'Failed to save recording'
-                    }
+                    style={[
+                        styles.notif__text,
+                        { backgroundColor: primary_tint, color: textColor },
+                    ]}
+                >
+                    {isSuccess ? "Recording successfully saved" : "Failed to save recording"}
                 </Text>
             </View>
         </View>
     );
 }
 
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore, collection, addDoc } from "firebase/firestore"; 
-import { storage, data_base } from '@/app/firebaseConfig'; 
-import { useTiwiListContext } from '@/contexts/TiwiContext';
-import { Button } from 'react-native-paper';
-
-export function Record({ fromStudent, passShow, passIsSuccess }:
-    { fromStudent?: boolean, passShow?: (show: boolean) => void, passIsSuccess?: (success: boolean) => void }) {
-    const bgColor = useThemeColor({}, 'background');
-    const primary = useThemeColor({}, 'primary');
-    const primary_tint= useThemeColor({}, 'primary_tint');
+export function Record({
+    fromStudent,
+    passShow,
+    passIsSuccess,
+}: {
+    fromStudent?: boolean;
+    passShow?: (show: boolean) => void;
+    passIsSuccess?: (success: boolean) => void;
+}) {
+    const bgColor = useThemeColor({}, "background");
+    const primary = useThemeColor({}, "primary");
+    const primary_tint = useThemeColor({}, "primary_tint");
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -71,12 +81,14 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
     }, [isSuccess, show]);
 
     useEffect(() => {
-        if (!recording && isSuccess) { setIsSuccess(false) }
-    }, [recording])
+        if (!recording && isSuccess) {
+            setIsSuccess(false);
+        }
+    }, [recording]);
 
     const save = async () => {
         setIsSuccess(false);
-        if (typeof tempUri === 'string') {
+        if (typeof tempUri === "string") {
             setTempUri(undefined);
             setIsLoading(true);
 
@@ -87,11 +99,11 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
             // avoid upload spam
             const uploadTime = endTime - startTime;
             if (uploadTime < 3000 && status.status) {
-                await new Promise(resolve => setTimeout(resolve, 3000 - uploadTime));
+                await new Promise((resolve) => setTimeout(resolve, 3000 - uploadTime));
             }
 
             setIsLoading(false);
-            setTempUri(status.filePath);  // recording removed from original temp storage
+            setTempUri(status.filePath); // recording removed from original temp storage
             setIsSuccess(status.status);
         }
 
@@ -147,38 +159,43 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
     return (
         <View>
             <AudioPlayback uri={tempUri} />
-            {!fromStudent &&
+            {!fromStudent && (
                 <Pressable
                     onPress={() => save()}
                     disabled={!tempUri || isLoading || isSuccess ? true : undefined}
                     style={[
                         styles.button,
-                        { backgroundColor: !tempUri || isLoading || isSuccess ? primary_tint : primary }
+                        {
+                            backgroundColor:
+                                !tempUri || isLoading || isSuccess ? primary_tint : primary,
+                        },
                     ]}
                 >
-                    <ThemedText type='defaultSemiBold' style={[
-                        styles.button__text,
-                        { color: !tempUri || isLoading || isSuccess ? primary : bgColor }
-                    ]}>
+                    <ThemedText
+                        type="defaultSemiBold"
+                        style={[
+                            styles.button__text,
+                            { color: !tempUri || isLoading || isSuccess ? primary : bgColor },
+                        ]}
+                    >
                         {isLoading ? "Loading" : "Save"}
                     </ThemedText>
                 </Pressable>
-            }
+            )}
             <Pressable
                 onPress={recording ? stopRecording : startRecording}
                 disabled={isLoading ? true : undefined}
-                style={[
-                    styles.button,
-                    { backgroundColor: isLoading ? primary_tint : primary }
-                ]}
+                style={[styles.button, { backgroundColor: isLoading ? primary_tint : primary }]}
             >
-                <ThemedText type='defaultSemiBold' style={[
-                    styles.button__text,
-                    { color: isLoading ? primary : bgColor }
-                ]}>
-                    {recording ? "Stop Recording"
-                        : haveRecording ? "Record Another"
-                            : "Start Recording"}
+                <ThemedText
+                    type="defaultSemiBold"
+                    style={[styles.button__text, { color: isLoading ? primary : bgColor }]}
+                >
+                    {recording
+                        ? "Stop Recording"
+                        : haveRecording
+                          ? "Record Another"
+                          : "Start Recording"}
                 </ThemedText>
             </Pressable>
 
@@ -189,7 +206,7 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
                     disabled={!haveRecording}  
                     style={[
                         styles.submitButton,
-                        { backgroundColor: haveRecording ? accent : '#ddd' }  
+                        { backgroundColor: haveRecording ? '#2b3744' : '#ddd' }  
                     ]}
                     contentStyle={{ paddingVertical: 10 }}  
                     labelStyle={{ color: haveRecording ? bgColor : '#aaa' }} 
@@ -211,8 +228,6 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
     );
 }
 
-
-
 const styles = StyleSheet.create({
     mainView: {
         flex: 1,
@@ -222,17 +237,17 @@ const styles = StyleSheet.create({
 
     record: {
         flex: 2,
-        justifyContent: 'center'
+        justifyContent: "center",
     },
 
     notif__view: {
-        justifyContent: 'flex-end',
+        justifyContent: "flex-end",
         marginBottom: 20,
     },
 
     notif__text: {
-        alignSelf: 'flex-start',
-        textAlign: 'center',
+        alignSelf: "flex-start",
+        textAlign: "center",
         paddingTop: 7,
         paddingBottom: 7,
         paddingLeft: 15,
@@ -242,11 +257,11 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        alignItems: 'center',
+        alignItems: "center",
         borderRadius: 10,
         paddingTop: 10,
         paddingBottom: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
 
     button__text: {

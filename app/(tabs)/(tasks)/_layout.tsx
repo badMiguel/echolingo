@@ -1,9 +1,9 @@
-import { Stack } from 'expo-router'
-import { useThemeColor } from '@/hooks/useThemeColor'
+import { Stack } from "expo-router";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 const TasksLayout = () => {
-    const bgColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
+    const bgColor = useThemeColor({}, "background");
+    const textColor = useThemeColor({}, "text");
 
     return (
         <Stack
@@ -15,25 +15,25 @@ const TasksLayout = () => {
             }}
         >
             <Stack.Screen
-                name='index'
+                name="index"
                 options={{
-                    title: 'Tasks',
+                    title: "Tasks",
                 }}
             />
             <Stack.Screen
-                name='category'
+                name="category"
                 options={{
-                    title: 'Category',
+                    title: "Category",
                 }}
             />
             <Stack.Screen
-                name='sentence'
+                name="sentence"
                 options={{
-                    title: 'Category',
+                    title: "Category",
                 }}
             />
         </Stack>
-    )
-}
+    );
+};
 
-export default TasksLayout
+export default TasksLayout;

@@ -2,8 +2,8 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { Stack } from "expo-router";
 
 export default function ChallengeLayout() {
-    const bgColor = useThemeColor({}, 'background')
-    const textColor = useThemeColor({}, 'text')
+    const bgColor = useThemeColor({}, "background");
+    const textColor = useThemeColor({}, "text");
 
     return (
         <Stack
@@ -15,12 +15,12 @@ export default function ChallengeLayout() {
             }}
         >
             <Stack.Screen
-                name='index'
+                name="index"
                 options={{
                     headerShown: true,
-                    title: 'Recording Database',
+                    title: "Recording Database",
                 }}
             />
         </Stack>
-    )
+    );
 }

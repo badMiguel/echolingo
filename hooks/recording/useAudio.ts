@@ -19,23 +19,23 @@ export default function useAudio() {
             }
 
             if (startPos) {
-                initialStatus = { shouldPlay: true, positionMillis: startPos }
+                initialStatus = { shouldPlay: true, positionMillis: startPos };
             } else {
-                initialStatus = { shouldPlay: true }
+                initialStatus = { shouldPlay: true };
             }
 
             const { sound: playbackObject } = await Audio.Sound.createAsync(
                 { uri: uri },
                 initialStatus,
-                onPlaybackStatusUpdate,
+                onPlaybackStatusUpdate
             );
 
             setSound(playbackObject);
             await playbackObject.playAsync();
         } catch (err) {
-            console.error('Error playing sound', err);
+            console.error("Error playing sound", err);
         }
-    }
+    };
 
     const pausePlaySound = (playing: boolean) => {
         if (playing) {
@@ -43,7 +43,7 @@ export default function useAudio() {
         } else {
             sound?.playAsync();
         }
-    }
+    };
 
     const onPlaybackStatusUpdate = (status: any) => {
         if (status.didJustFinish) {
@@ -52,15 +52,15 @@ export default function useAudio() {
 
         setProgress(status.positionMillis);
         setDuration(status.durationMillis);
-    }
+    };
 
     useEffect(() => {
         return sound
             ? () => {
-                sound.unloadAsync();
-            }
+                  sound.unloadAsync();
+              }
             : undefined;
-    }, [sound])
+    }, [sound]);
 
     return { startSound, pausePlaySound, status, progress, duration };
 }

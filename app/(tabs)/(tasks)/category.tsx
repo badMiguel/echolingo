@@ -1,17 +1,18 @@
-import { router, useNavigation } from 'expo-router';
-import React, { useEffect } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
-import { useCategoryContext } from '@/contexts/CategoryContext';
-import { useTiwiListContext, useSetTiwiContext, Entry } from '@/contexts/TiwiContext';
-import { useThemeColor } from '@/hooks/useThemeColor';
-import { ThemedText } from '@/components/ThemedText';
+import { router, useNavigation } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { useCategoryContext } from "@/contexts/CategoryContext";
+import { useTiwiListContext, useSetTiwiContext, Entry, DataType } from "@/contexts/TiwiContext";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedText } from "@/components/ThemedText";
+import SearchBar from "@/components/search/search";
 
 const useColor = () => {
     return {
-        bgColor: useThemeColor({}, 'background'),
-        textColor: useThemeColor({}, 'text'),
-        primary: useThemeColor({}, 'primary'),
-        primary_tint: useThemeColor({}, 'primary_tint'),
+        bgColor: useThemeColor({}, "background"),
+        textColor: useThemeColor({}, "text"),
+        primary: useThemeColor({}, "primary"),
+        primary_tint: useThemeColor({}, "primary_tint"),
     };
 };
 
@@ -21,29 +22,42 @@ export default function Category() {
     const tiwiList = useTiwiListContext();
     const color = useColor();
 
+    const [searchResults, setSearchResults] = useState<DataType | undefined>();
+
+    // change header title dynamically
     useEffect(() => {
-        if (category !== 'unknown') {
+        if (category !== "unknown") {
             navigation.setOptions({
-                title: category
-            })
+                title: category,
+            });
         }
-    }, [navigation])
+    }, [navigation]);
+
+    const handleSearch = (searchList: string[]) => {
+        // todo error handling
+        if (tiwiList) {
+            const newItems: DataType = {};
+            for (const i of searchList) {
+                newItems[i] = tiwiList[i];
+            }
+
+            setSearchResults(newItems);
+        }
+    };
 
     return (
-        <View style={[{ backgroundColor: color.bgColor }]}>
+        <View style={[{ flex: 1, backgroundColor: color.bgColor }]}>
+            <SearchBar searchResults={handleSearch} />
             {tiwiList ? (
                 <FlatList
                     style={styles.flatlist}
-                    data={Object.entries(tiwiList)}
-                    renderItem={({ item }) =>
-                        <SentenceCard tiwi={item[1]} />
-                    }
-                    keyExtractor={item => item[0]}
+                    data={searchResults ? Object.entries(searchResults) : Object.entries(tiwiList)}
+                    renderItem={({ item }) => <SentenceCard tiwi={item[1]} />}
+                    keyExtractor={(item) => item[0]}
                 />
             ) : (
                 <Text>No sentences made yet for this category</Text>
             )}
-
         </View>
     );
 }
@@ -56,24 +70,28 @@ const SentenceCard: React.FC<{ tiwi: Entry }> = ({ tiwi }) => {
         setCurrentID(tiwi);
 
         router.push({
-            pathname: '/sentence',
+            pathname: "/sentence",
         });
-    }
+    };
 
     return (
         <View style={[styles.sentenceCard__container, { backgroundColor: color.primary_tint }]}>
-            <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
-            <ThemedText>{tiwi.Tiwi || tiwi['Gloss (tiwi)']}</ThemedText>
-            <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>
-            <ThemedText>{tiwi.English || tiwi['Gloss (english)']}</ThemedText>
+            <ThemedText type="defaultSemiBold">{tiwi.Tiwi ? "Tiwi: " : "Tiwi Gloss: "}</ThemedText>
+            <ThemedText>{tiwi.Tiwi || tiwi["Gloss (tiwi)"]}</ThemedText>
+            <ThemedText type="defaultSemiBold">
+                {tiwi.English ? "English: " : "English Gloss: "}
+            </ThemedText>
+            <ThemedText>{tiwi.English || tiwi["Gloss (english)"]}</ThemedText>
             <View style={[styles.button__container, { backgroundColor: color.primary }]}>
                 <Pressable onPress={() => goToSentence()}>
-                    <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>Study</ThemedText>
+                    <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
+                        Study
+                    </ThemedText>
                 </Pressable>
             </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     flatlist: {
@@ -94,11 +112,11 @@ const styles = StyleSheet.create({
 
     button__container: {
         marginTop: 5,
-        paddingTop:5,
+        paddingTop: 5,
         paddingBottom: 5,
         paddingLeft: 30,
         paddingRight: 30,
         borderRadius: 10,
-        alignSelf: 'center',
+        alignSelf: "center",
     },
-})
+});

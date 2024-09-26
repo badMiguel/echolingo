@@ -5,10 +5,10 @@ import { CategoryProvider } from "@/contexts/CategoryContext";
 import { TiwiProvider } from "@/contexts/TiwiContext";
 
 export default function RootLayout() {
-    const primary = useThemeColor({}, 'primary');
-    const primary_tint = useThemeColor({}, 'primary_tint');
-    const bgColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
+    const primary = useThemeColor({}, "primary");
+    const primary_tint = useThemeColor({}, "primary_tint");
+    const bgColor = useThemeColor({}, "background");
+    const textColor = useThemeColor({}, "text");
 
     const params = useLocalSearchParams();
     const userType = Array.isArray(params.userType) ? params.userType[0] : params.userType;
@@ -32,9 +32,10 @@ export default function RootLayout() {
                             tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
-                                    name={focused ? 'home' : 'home-outline'}
+                                    name={focused ? "home" : "home-outline"}
                                     color={focused ? primary : primary_tint}
-                                    size={30} />
+                                    size={30}
+                                />
                             ),
                         }}
                     />
@@ -48,9 +49,10 @@ export default function RootLayout() {
                             tabBarIcon: ({ focused }) => (
                                 <ClipboardListIcon
                                     color={focused ? primary : primary_tint}
-                                    size={30} />
+                                    size={30}
+                                />
                             ),
-                            href: userType === 'teacher' ? null : "/(tasks)"
+                            href: userType === "teacher" ? null : "/(tasks)",
                         }}
                     />
                     <Tabs.Screen
@@ -62,11 +64,12 @@ export default function RootLayout() {
                             tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
-                                    name={focused ? 'list' : 'list-sharp'}
+                                    name={focused ? "list" : "list-sharp"}
                                     color={focused ? primary : primary_tint}
-                                    size={30} />
+                                    size={30}
+                                />
                             ),
-                            href: userType !== 'teacher' ? null : "/(recordingList)"
+                            href: userType !== "teacher" ? null : "/(recordingList)",
                         }}
                     />
 
@@ -79,11 +82,12 @@ export default function RootLayout() {
                             tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
-                                    name={focused ? 'add' : 'add-sharp'}
+                                    name={focused ? "add" : "add-sharp"}
                                     color={focused ? primary : primary_tint}
-                                    size={30} />
+                                    size={30}
+                                />
                             ),
-                            href: userType !== 'teacher' ? null : "/(addRecording)"
+                            href: userType !== "teacher" ? null : "/(addRecording)",
                         }}
                     />
 
@@ -96,11 +100,12 @@ export default function RootLayout() {
                             tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
-                                    name={focused ? 'checkmark' : 'checkmark-outline'}
+                                    name={focused ? "checkmark" : "checkmark-outline"}
                                     color={focused ? primary : primary_tint}
-                                    size={30} />
+                                    size={30}
+                                />
                             ),
-                            href: userType !== 'student' ? null : "/(challenges)"
+                            href: userType !== "student" ? null : "/(challenges)",
                         }}
                     />
                     <Tabs.Screen
@@ -110,15 +115,12 @@ export default function RootLayout() {
                             tabBarActiveTintColor: primary,
                             tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
-                                <UserIcon
-                                    color={focused ? primary : primary_tint}
-                                    size={30} />
-                            )
+                                <UserIcon color={focused ? primary : primary_tint} size={30} />
+                            ),
                         }}
                     />
                 </Tabs>
-
             </TiwiProvider>
-        </CategoryProvider >
+        </CategoryProvider>
     );
 }
