@@ -9,14 +9,16 @@ const useColor = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
         textColor: useThemeColor({}, 'text'),
-        accent: useThemeColor({}, 'accent'),
         primary: useThemeColor({}, 'primary'),
+        primary_tint: useThemeColor({}, 'primary_tint'),
     }
 }
 
 function filterRecorded(data: DataType): { recorded: DataType[], notRecorded: DataType[] } {
     let recorded: DataType[] = [];
     let notRecorded: DataType[] = [];
+
+    // todo optimise
     const recordedKey = new Set(Object.keys(data).filter(key => data[key]["recording"]));
 
     for (const key in data) {
@@ -99,7 +101,7 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
 
     const goToSentence = () => {
         router.push({
-            pathname: tiwi.recording ? '/viewRecording' : '/(addRecording)',
+            pathname: tiwi[id].recording ? '/viewRecording' : '/(addRecording)',
             params: {
                 sentenceID: id
             },
@@ -116,7 +118,7 @@ const SentenceCard: React.FC<{ tiwi: DataType, finished: boolean }> = ({ tiwi })
     };
 
     return (
-        <View style={[styles.sentenceCard__container, { backgroundColor: color.primary }]}>
+        <View style={[styles.sentenceCard__container, { backgroundColor: color.primary_tint }]}>
             <ThemedText type='defaultSemiBold'>{tiwi.Tiwi ? 'Tiwi: ' : 'Tiwi Gloss: '}</ThemedText>
             <ThemedText>{tiwi[id].Tiwi}</ThemedText>
             <ThemedText type='defaultSemiBold'>{tiwi.English ? 'English: ' : 'English Gloss: '}</ThemedText>

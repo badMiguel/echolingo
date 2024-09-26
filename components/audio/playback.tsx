@@ -38,9 +38,10 @@ const useColor = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
         textColor: useThemeColor({}, 'text'),
-        tint: useThemeColor({}, 'tint'),
-        accent: useThemeColor({}, 'accent'),
         primary: useThemeColor({}, 'primary'),
+        primary_tint: useThemeColor({}, 'primary_tint'),
+        secondary: useThemeColor({}, 'secondary'),
+        seconday_tint: useThemeColor({}, 'secondary_tint'),
     }
 };
 
@@ -59,7 +60,7 @@ export default function AudioPlayback({ uri }: { uri: URI, disabled?: boolean })
 
 
     return (
-        <View style={[styles.mainView, { backgroundColor: color.primary }]}>
+        <View style={[styles.mainView, { backgroundColor: color.primary_tint }]}>
             <AudioSlider
                 uri={uri}
                 progress={progress}
@@ -112,7 +113,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({
             }
             disabled={uri ? undefined : true}
         >
-            <TabBarIcon color={uri ? color.accent : color.tint} size={50} name={playing ? "pause-circle-sharp" : "play-circle-sharp"} />
+            <TabBarIcon color={uri ? color.primary : color.secondary} size={50} name={playing ? "pause-circle-sharp" : "play-circle-sharp"} />
         </Pressable>
     )
 }
@@ -136,7 +137,7 @@ const ForwardBackward: React.FC<ForwardBackwardProp> = ({ f_or_b, uri, startSoun
             onPress={() => changePosition()}
             disabled={uri ? undefined : true}
         >
-            <TabBarIcon color={uri ? color.accent : color.tint} size={30} name={f_or_b === 'f' ? 'play-skip-forward' : 'play-skip-back'} />
+            <TabBarIcon color={uri ? color.primary : color.secondary} size={30} name={f_or_b === 'f' ? 'play-skip-forward' : 'play-skip-back'} />
         </Pressable>
     );
 }
@@ -165,9 +166,9 @@ const AudioSlider: React.FC<SliderProp> = ({ uri, startSound, progress, duration
             maximumValue={duration}
             value={position}
             onSlidingComplete={(val) => changePosition(val)}
-            minimumTrackTintColor={color.accent}
-            maximumTrackTintColor={color.tint}
-            thumbTintColor={color.accent}
+            minimumTrackTintColor={color.primary}
+            maximumTrackTintColor={color.secondary}
+            thumbTintColor={color.primary}
             disabled={uri ? false : true}
         />
     );

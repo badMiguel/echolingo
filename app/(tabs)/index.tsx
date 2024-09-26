@@ -8,7 +8,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 export default function Home() {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
-    const accent = useThemeColor({}, 'accent');
+    const accent = useThemeColor({}, 'primary');
 
     const params = useLocalSearchParams();
     const userName: string = Array.isArray(params.userName) ? params.userName[0] : params.userName;

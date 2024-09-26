@@ -10,7 +10,8 @@ import { ThemedText } from "@/components/ThemedText";
 export default function Upload() {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
-    const accent = useThemeColor({}, 'accent');
+    const primary = useThemeColor({}, 'primary');
+    const primary_tint = useThemeColor({}, 'primary_tint');
 
     const [uri, setUri] = useState<string | undefined>();
     const [uploaded, setUploaded] = useState<boolean>(false);
@@ -82,33 +83,33 @@ export default function Upload() {
                 <Pressable
                     style={[
                         styles.button,
-                        { backgroundColor: isSuccess || saving ? accent : accent }
+                        { backgroundColor: isSuccess || saving ? primary_tint : primary }
                     ]}
                     onPress={() => saveUpload()}
                     disabled={isSuccess ? true : saving ? true : false}
                 >
                     <ThemedText
                         type='defaultSemiBold'
-                        style={{ color: isSuccess || saving ? accent : bgColor }}
+                        style={{ color: isSuccess || saving ? primary : bgColor }}
                     >{saving ? 'Saving ...' : 'Save'}</ThemedText>
                 </Pressable>
                 <Pressable
                     style={[
                         styles.button,
-                        { backgroundColor: saving ? accent : accent }
+                        { backgroundColor: saving ? primary_tint : primary }
                     ]}
                     onPress={() => useDocumentPicker()}
                     disabled={saving ? true : false}
                 >
                     <ThemedText
                         type='defaultSemiBold'
-                        style={{ color: saving ? accent : bgColor }}
+                        style={{ color: saving ? primary : bgColor }}
                     >{isSuccess ? 'Upload Another From Device' : 'Upload From Device'}</ThemedText>
                 </Pressable>
             </View>
             <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
                 <Text
-                    style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>
+                    style={[styles.notif__text, { backgroundColor: primary_tint, color: textColor }]}>
                     {isSuccess
                         ? 'Recording successfully saved'
                         : 'Failed to save recording'
@@ -153,6 +154,7 @@ const styles = StyleSheet.create({
     },
 
     notif__text: {
+        fontSize: 18,
         alignSelf: 'flex-start',
         textAlign: 'center',
         paddingTop: 7,

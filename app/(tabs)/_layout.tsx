@@ -5,8 +5,10 @@ import { CategoryProvider } from "@/contexts/CategoryContext";
 import { TiwiProvider } from "@/contexts/TiwiContext";
 
 export default function RootLayout() {
-    const tabFocusColor = useThemeColor({}, 'accent');
-    const tabUnfocusedColor = useThemeColor({}, 'tint');
+    const primary = useThemeColor({}, 'primary');
+    const primary_tint = useThemeColor({}, 'primary_tint');
+    const bgColor = useThemeColor({}, 'background');
+    const textColor = useThemeColor({}, 'text');
 
     const params = useLocalSearchParams();
     const userType = Array.isArray(params.userType) ? params.userType[0] : params.userType;
@@ -16,26 +18,22 @@ export default function RootLayout() {
             <TiwiProvider>
                 <Tabs
                     screenOptions={{
-                        tabBarStyle: {
-                            height: 60,
-                        },
+                        tabBarStyle: { height: 60 },
                         tabBarShowLabel: false,
-                        headerShown: false,
-                        headerStyle: {
-                            paddingTop: 50,
-                        }
+                        headerStyle: { backgroundColor: bgColor, shadowColor: "black" },
+                        headerTintColor: textColor,
                     }}
                 >
                     <Tabs.Screen
                         name="index"
                         options={{
                             title: "Home",
-                            tabBarActiveTintColor: tabFocusColor,
-                            tabBarInactiveTintColor: tabUnfocusedColor,
+                            tabBarActiveTintColor: primary,
+                            tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
                                     name={focused ? 'home' : 'home-outline'}
-                                    color={focused ? tabFocusColor : tabUnfocusedColor}
+                                    color={focused ? primary : primary_tint}
                                     size={30} />
                             ),
                         }}
@@ -45,11 +43,11 @@ export default function RootLayout() {
                         options={{
                             title: "Tasks",
                             headerShown: false,
-                            tabBarActiveTintColor: tabFocusColor,
-                            tabBarInactiveTintColor: tabUnfocusedColor,
+                            tabBarActiveTintColor: primary,
+                            tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <ClipboardListIcon
-                                    color={focused ? tabFocusColor : tabUnfocusedColor}
+                                    color={focused ? primary : primary_tint}
                                     size={30} />
                             ),
                             href: userType === 'teacher' ? null : "/(tasks)"
@@ -60,12 +58,12 @@ export default function RootLayout() {
                         options={{
                             title: "Recording List",
                             headerShown: false,
-                            tabBarActiveTintColor: tabFocusColor,
-                            tabBarInactiveTintColor: tabUnfocusedColor,
+                            tabBarActiveTintColor: primary,
+                            tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
                                     name={focused ? 'list' : 'list-sharp'}
-                                    color={focused ? tabFocusColor : tabUnfocusedColor}
+                                    color={focused ? primary : primary_tint}
                                     size={30} />
                             ),
                             href: userType !== 'teacher' ? null : "/(recordingList)"
@@ -77,12 +75,12 @@ export default function RootLayout() {
                         options={{
                             title: "Add Recording",
                             headerShown: false,
-                            tabBarActiveTintColor: tabFocusColor,
-                            tabBarInactiveTintColor: tabUnfocusedColor,
+                            tabBarActiveTintColor: primary,
+                            tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
                                     name={focused ? 'add' : 'add-sharp'}
-                                    color={focused ? tabFocusColor : tabUnfocusedColor}
+                                    color={focused ? primary : primary_tint}
                                     size={30} />
                             ),
                             href: userType !== 'teacher' ? null : "/(addRecording)"
@@ -94,12 +92,12 @@ export default function RootLayout() {
                         options={{
                             title: "Challenges",
                             headerShown: false,
-                            tabBarActiveTintColor: tabFocusColor,
-                            tabBarInactiveTintColor: tabUnfocusedColor,
+                            tabBarActiveTintColor: primary,
+                            tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <TabBarIcon
                                     name={focused ? 'checkmark' : 'checkmark-outline'}
-                                    color={focused ? tabFocusColor : tabUnfocusedColor}
+                                    color={focused ? primary : primary_tint}
                                     size={30} />
                             ),
                             href: userType !== 'student' ? null : "/(challenges)"
@@ -109,11 +107,11 @@ export default function RootLayout() {
                         name="profile"
                         options={{
                             title: "Profile",
-                            tabBarActiveTintColor: tabFocusColor,
-                            tabBarInactiveTintColor: tabUnfocusedColor,
+                            tabBarActiveTintColor: primary,
+                            tabBarInactiveTintColor: primary_tint,
                             tabBarIcon: ({ focused }) => (
                                 <UserIcon
-                                    color={focused ? tabFocusColor : tabUnfocusedColor}
+                                    color={focused ? primary : primary_tint}
                                     size={30} />
                             )
                         }}

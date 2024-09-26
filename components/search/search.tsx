@@ -5,13 +5,13 @@ import { StyleSheet, TextInput, View } from "react-native";
 
 type TrieNode = {
     children: Map<string, TrieNode>;
-    id: string;
+    id: string[];
 }
 
 function createTrieNode(): TrieNode {
     return {
         children: new Map(),
-        id: "0"
+        id: []
     }
 }
 
@@ -34,7 +34,7 @@ export class Trie {
             node = node.children.get(char)!;
         }
 
-        node.id = id;
+        node.id.push(id);
     }
 
     prefixOf(searchTerm: string, data: DataType): string[] {
@@ -48,11 +48,11 @@ export class Trie {
             }
 
             prefix += char;
-            if (node.id !== "0") {
-                potential.push(node.id);
+            if (node.id.length > 0) {
+                potential.push(...node.id);
             }
 
-            if (potential.length > 11) {
+            if (potential.length > 10) {
                 return potential
             }
 
@@ -68,12 +68,12 @@ export class Trie {
     }
 
     private checkChild(potential: string[], prefix: string, node: TrieNode) {
-        if (potential.length > 11) {
+        if (potential.length > 10) {
             return;
         }
 
-        if (node.id !== "0") {
-            potential.push(node.id);
+        if (node.id.length > 0) {
+            potential.push(...node.id);
         }
 
         for (const child of node.children.keys()) {
@@ -84,7 +84,7 @@ export class Trie {
     // fallback when no results from trie. perform exhaustive search
     literalSearch(searchTerm: string, data: DataType): string[] {
         const filtered: string[] = [];
-        const searchTerms = searchTerm.split(" ");
+        const searchTerms = searchTerm.toLowerCase().split(" ");
 
         for (const key of Object.keys(data)) {
             const entry = data[key]
@@ -92,8 +92,8 @@ export class Trie {
             // only checks if there is at least one match then push to potential
             const hasMatch = (field: string | null): boolean => {
                 if (!field) return false;
-                const term = field.split(" ");
-                return term.some(word => searchTerms.includes(word));
+                const fieldWords = field.toLowerCase().split(" ");
+                return fieldWords.some(word => searchTerms.includes(word));
             }
 
             if (
@@ -110,10 +110,9 @@ export class Trie {
     }
 }
 
-
 export default function SearchBar() {
     const textColor = useThemeColor({}, "text");
-    const tint = useThemeColor({}, "tint");
+    const primary = useThemeColor({}, "primary");
 
     const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -125,7 +124,7 @@ export default function SearchBar() {
                 onChangeText={(text) => setSearchTerm(text)}
                 style={[styles.searchBar, {}]}
                 placeholder={"Search here..."}
-                placeholderTextColor={tint}
+                placeholderTextColor={primary}
                 cursorColor={textColor}
             />
         </View>

@@ -9,18 +9,10 @@ import { useCategoryContext } from "@/contexts/CategoryContext";
 import * as FileSystem from 'expo-file-system';
 import { Record } from "../(addRecording)/record";
 
-const useColor = () => {
-    return {
-        bgColor: useThemeColor({}, 'background'),
-        textColor: useThemeColor({}, 'text'),
-        accent: useThemeColor({}, 'accent'),
-    };
-};
-
 export default function Sentence() {
     const navigation = useNavigation();
     const current = useTiwiContext();
-    const color = useColor();
+    const bgColor = useThemeColor({}, 'background');
     const { category } = useCategoryContext();
 
     useEffect(() => {
@@ -32,7 +24,7 @@ export default function Sentence() {
     }, [navigation])
 
     return (
-        <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>
+        <View style={[styles.mainView, { backgroundColor: bgColor }]}>
             {!current ? (
                 <View>
                     <ThemedText>Congratulations! You have completed this category.</ThemedText>

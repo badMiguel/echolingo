@@ -3,16 +3,14 @@ import { Stack } from 'expo-router'
 import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function RootLayout() {
-
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
+    const primary = useThemeColor({}, 'primary');
 
     return (
         <Stack
             screenOptions={{
-                headerStyle: {
-                    backgroundColor: bgColor,
-                },
+                headerStyle: { backgroundColor: bgColor },
                 headerTintColor: textColor,
             }}
         >

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Pressable, Alert } from "react-native";
+import { View, StyleSheet, Pressable, Text, Alert } from "react-native";
 import useRecording from "@/hooks/recording/useRecording";
 import AudioPlayback from "@/components/audio/playback";
 import useCRUD from "@/hooks/recording/useCRUD";
@@ -10,7 +10,7 @@ import { ThemedText } from "@/components/ThemedText";
 export default function RecordView() {
     const bgColor = useThemeColor({}, 'background');
     const textColor = useThemeColor({}, 'text');
-    const accent = useThemeColor({}, 'accent');
+    const primary_tint = useThemeColor({}, 'primary_tint');
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [show, setShow] = useState<boolean>(false);
@@ -24,13 +24,13 @@ export default function RecordView() {
                 <Record passShow={getShow} passIsSuccess={getIsSuccess} />
             </View>
             <View style={[styles.notif__view, { opacity: show ? 1 : 0 }]} >
-                <ThemedText
-                    style={[styles.notif__text, { backgroundColor: accent, color: textColor }]}>
+                <Text
+                    style={[styles.notif__text, { backgroundColor: primary_tint, color: textColor }]}>
                     {isSuccess
                         ? 'Recording successfully saved'
                         : 'Failed to save recording'
                     }
-                </ThemedText>
+                </Text>
             </View>
         </View>
     );
@@ -45,7 +45,8 @@ import { Button } from 'react-native-paper';
 export function Record({ fromStudent, passShow, passIsSuccess }:
     { fromStudent?: boolean, passShow?: (show: boolean) => void, passIsSuccess?: (success: boolean) => void }) {
     const bgColor = useThemeColor({}, 'background');
-    const accent = useThemeColor({}, 'accent');
+    const primary = useThemeColor({}, 'primary');
+    const primary_tint= useThemeColor({}, 'primary_tint');
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -152,12 +153,12 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
                     disabled={!tempUri || isLoading || isSuccess ? true : undefined}
                     style={[
                         styles.button,
-                        { backgroundColor: !tempUri || isLoading || isSuccess ? accent : accent }
+                        { backgroundColor: !tempUri || isLoading || isSuccess ? primary_tint : primary }
                     ]}
                 >
                     <ThemedText type='defaultSemiBold' style={[
                         styles.button__text,
-                        { color: !tempUri || isLoading || isSuccess ? accent : bgColor }
+                        { color: !tempUri || isLoading || isSuccess ? primary : bgColor }
                     ]}>
                         {isLoading ? "Loading" : "Save"}
                     </ThemedText>
@@ -168,12 +169,12 @@ export function Record({ fromStudent, passShow, passIsSuccess }:
                 disabled={isLoading ? true : undefined}
                 style={[
                     styles.button,
-                    { backgroundColor: isLoading ? accent : accent }
+                    { backgroundColor: isLoading ? primary_tint : primary }
                 ]}
             >
                 <ThemedText type='defaultSemiBold' style={[
                     styles.button__text,
-                    { color: isLoading ? accent : bgColor }
+                    { color: isLoading ? primary : bgColor }
                 ]}>
                     {recording ? "Stop Recording"
                         : haveRecording ? "Record Another"
@@ -236,7 +237,8 @@ const styles = StyleSheet.create({
         paddingBottom: 7,
         paddingLeft: 15,
         paddingRight: 15,
-        borderRadius: 5
+        borderRadius: 5,
+        fontSize: 18,
     },
 
     button: {

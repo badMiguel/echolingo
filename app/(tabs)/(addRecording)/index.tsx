@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
+import { Picker } from '@react-native-picker/picker';
 
 import { Entry, useTiwiListContext } from '@/contexts/TiwiContext';
 import useCRUD from '@/hooks/recording/useCRUD';
 import { ThemedText } from '@/components/ThemedText';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import categoryData from '@/data/json/category_data.json';
+import { Dropdown } from 'react-native-element-dropdown';
 
 type AddDetailProp = {
     currentID: number | undefined;
@@ -17,7 +20,7 @@ const useColor = () => {
     return {
         bgColor: useThemeColor({}, 'background'),
         textColor: useThemeColor({}, 'text'),
-        accent: useThemeColor({}, 'accent'),
+        primary: useThemeColor({}, 'primary'),
     }
 }
 
@@ -50,7 +53,7 @@ export default function Add() {
                     <AddRecording currentID={currentID} />
                     {sentenceID && (
                         <Pressable
-                            style={[styles.button, { backgroundColor: color.accent }]}
+                            style={[styles.button, { backgroundColor: color.primary }]}
                             onPress={() => router.navigate('/(recordingList)')}
                         >
                             <ThemedText
@@ -77,8 +80,17 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
     const [englishError, setEnglishError] = useState<boolean>(false);
     const [topicError, setTopicError] = useState<boolean>(false);
 
+    const [topicList, setTopicList] = useState<string[]>([]);
     const { saveDetails, addDetails } = useCRUD();
     const color = useColor();
+
+    useEffect(() => {
+        const topic: string[] = [];
+        for (const t of categoryData) {
+            topic.push(t.categoryName)
+        }
+        setTopicList(topic);
+    }, [])
 
     useEffect(() => {
         if (current) {
@@ -100,6 +112,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
         setTopic(undefined);
         setEnglishError(false);
         setTiwiError(false);
+        setTopicError(false);
     }
 
     // todo add validation and error handling
@@ -160,7 +173,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                         ? 'Should add Tiwi data'
                         : 'Enter tiwi'
                     }
-                    placeholderTextColor={tiwiError ? '#ff474c' : color.accent}
+                    placeholderTextColor={tiwiError ? '#ff474c' : color.primary}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -176,7 +189,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     }}
                     style={styles.formItem}
                     placeholder={'Enter tiwi gloss'}
-                    placeholderTextColor={color.accent}
+                    placeholderTextColor={color.primary}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -195,7 +208,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                         ? 'Should add English data'
                         : 'Enter English'
                     }
-                    placeholderTextColor={englishError ? '#ff474c' : color.accent}
+                    placeholderTextColor={englishError ? '#ff474c' : color.primary}
                     cursorColor={color.textColor}
                 />
             </View>
@@ -211,28 +224,28 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     }}
                     style={[styles.formItem,]}
                     placeholder={'Enter English gloss'}
-                    placeholderTextColor={color.accent}
+                    placeholderTextColor={color.primary}
                     cursorColor={color.textColor}
                 />
             </View>
 
             <View style={styles.formItem__container}>
                 <ThemedText type='defaultSemiBold'>Topic</ThemedText>
-                <TextInput
-                    autoCorrect={false}  // might be frustrating if yes for uncommon language
+                <Dropdown
+                    // todo add interface to add new topic
+                    data={categoryData}
+                    labelField="categoryName"
+                    valueField="topic"
                     value={topic}
-                    onChangeText={(text) => setTopic(text)}
-                    style={[styles.formItem, { borderColor: topicError ? 'red' : 'black' }]}
-                    placeholder={topicError
-                        ? 'Should add Topic'
-                        : 'Enter Topic'
-                    }
-                    placeholderTextColor={topicError ? '#ff474c' : color.accent}
-                    cursorColor={color.textColor}
+                    onChange={item => setTopic(item.topic)}
+                    placeholder='Select Topic'
+                    placeholderStyle={{ color: topicError ? '#ff474c' : color.primary , fontSize: 20}}
+                    style={[styles.formItem, {}]}
+                    selectedTextStyle={{fontSize: 20}}
                 />
             </View>
 
-            <Pressable style={[styles.button, { backgroundColor: color.accent }]} onPress={() => updateDetails()}>
+            <Pressable style={[styles.button, { backgroundColor: color.primary }]} onPress={() => updateDetails()}>
                 <ThemedText
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}
@@ -240,7 +253,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
                     {currentID ? 'Update' : 'Add'}
                 </ThemedText>
             </Pressable>
-            <Pressable style={[styles.button, { backgroundColor: color.accent }]} onPress={() => clearForm()}>
+            <Pressable style={[styles.button, { backgroundColor: color.primary }]} onPress={() => clearForm()}>
                 <ThemedText
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}
@@ -272,13 +285,13 @@ function AddRecording({ currentID }: { currentID: number | undefined }) {
 
     return (
         <View>
-            <Pressable style={[styles.button, { backgroundColor: color.accent }]} onPress={() => record()}>
+            <Pressable style={[styles.button, { backgroundColor: color.primary }]} onPress={() => record()}>
                 <ThemedText
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}
                 >Record Now</ThemedText>
             </Pressable>
-            <Pressable style={[styles.button, { backgroundColor: color.accent }]} onPress={() => upload()}>
+            <Pressable style={[styles.button, { backgroundColor: color.primary }]} onPress={() => upload()}>
                 <ThemedText
                     type='defaultSemiBold'
                     style={{ color: color.bgColor }}
@@ -298,6 +311,7 @@ const styles = StyleSheet.create({
 
     formItem: {
         borderBottomWidth: 0.2,
+        fontSize: 20,
     },
 
     formItem__container: {
