@@ -134,7 +134,7 @@ const SentenceCard: React.FC<{ tiwi: DataType; finished: boolean }> = ({ tiwi })
 
     const goToSubmissions = () => {
         router.push({
-            pathname: '/submissions',
+            pathname: "/submissions",
             params: {
                 sentenceID: id,
             },
@@ -152,20 +152,23 @@ const SentenceCard: React.FC<{ tiwi: DataType; finished: boolean }> = ({ tiwi })
 
             <View style={[styles.button__container, { backgroundColor: color.primary }]}>
                 <Pressable onPress={() => goToSentence()}>
-                    <ThemedText type='defaultSemiBold' style={{ color: color.bgColor }}>{tiwi.recording ? "View" : "Add Recording"}</ThemedText>
+                    <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
+                        {tiwi.recording ? "View" : "Add Recording"}
+                    </ThemedText>
                 </Pressable>
             </View>
 
-            
-            <View style={[styles.button__container, { backgroundColor: hasSubmissions ? color.primary : '#ddd' }]}>
-                <Pressable
-                    onPress={goToSubmissions}
-                    disabled={!hasSubmissions}
-                >
-                
+            <View
+                style={[
+                    styles.button__container,
+                    { backgroundColor: hasSubmissions ? color.primary : "#ddd" },
+                ]}
+            >
+                <Pressable onPress={goToSubmissions} disabled={!hasSubmissions}>
                     <ThemedText
-                        type='defaultSemiBold'
-                        style={{ color: hasSubmissions ? color.bgColor : '#aaa' }}>
+                        type="defaultSemiBold"
+                        style={{ color: hasSubmissions ? color.bgColor : "#aaa" }}
+                    >
                         Submissions
                     </ThemedText>
                 </Pressable>

@@ -46,12 +46,11 @@ export const emptyTiwiData = (complete?: boolean) => {
         "Gloss (tiwi)": null,
         "Image name (optional)": null,
         recording: null,
-        completed: complete ? true: false,
+        completed: complete ? true : false,
         // submissions
-        submissions: [] as Submission[]
-    }
-}
-
+        submissions: [] as Submission[],
+    };
+};
 
 const TiwiContext = createContext<Entry | undefined>(undefined);
 const SetTiwiContext = createContext<Dispatch<SetStateAction<Entry>> | undefined>(undefined);

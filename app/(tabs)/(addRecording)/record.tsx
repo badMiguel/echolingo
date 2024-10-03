@@ -11,7 +11,6 @@ import { data_base, storage } from "@/app/firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Button, Snackbar } from "react-native-paper";
 
-
 export default function RecordView() {
     const bgColor = useThemeColor({}, "background");
     const textColor = useThemeColor({}, "text");
@@ -112,20 +111,19 @@ export function Record({
         setShow(true);
         setTimeout(() => {
             setShow(false);
-        }, 3000)
-    }
-    
+        }, 3000);
+    };
 
     const submit = async () => {
         if (!tempUri) {
             Alert.alert("Error", "No recording available to submit.");
             return;
         }
-    
+
         try {
             console.log("Submitting recording with URI:", tempUri);
-    
-            // upl recording to firebase 
+
+            // upl recording to firebase
             const storageRef = ref(storage, `submissions/${currentID}/${Date.now()}.mp3`);
             const response = await fetch(tempUri);
             const blob = await response.blob();
@@ -137,24 +135,23 @@ export function Record({
             const downloadUrl = await getDownloadURL(storageRef);
             setIsLoading(false);
             console.log("Recording uploaded successfully, download URL:", downloadUrl);
-            
-            setSnackbarVisible(true); 
+
+            setSnackbarVisible(true);
             console.log(snackbarVisible);
-            // save submission 
-            await addDoc(collection(data_base, 'submissions'), {
+            // save submission
+            await addDoc(collection(data_base, "submissions"), {
                 sentenceId: currentID,
-                category: 'casual_study',
+                category: "casual_study",
                 recordingUrl: downloadUrl,
                 submittedAt: new Date(),
             });
-    
+
             // setIsSuccess(true);
             // setShow(true);
-    
+
             // setTimeout(() => {
             //     setShow(false);
             // }, 3000);
-    
         } catch (error) {
             console.error("Error submitting recording:", error);
             Alert.alert("Error", "There was an error submitting the recording.");
@@ -206,41 +203,39 @@ export function Record({
 
             {fromStudent && (
                 <Button
-                        mode="contained"  
-                        onPress={submit}
-                        disabled={!haveRecording}  
+                    mode="contained"
+                    onPress={submit}
+                    disabled={!haveRecording}
+                    style={[
+                        styles.submit__button,
+                        { backgroundColor: haveRecording ? primary : "#ddd" },
+                    ]}
+                    contentStyle={{ paddingVertical: 10 }}
+                    labelStyle={{ color: haveRecording ? bgColor : "#aaa" }}
+                >
+                    <ThemedText
+                        type="defaultSemiBold"
                         style={[
-                            styles.submit__button,
-                            { backgroundColor: haveRecording ? primary : '#ddd' }  
+                            styles.button__text,
+                            {
+                                color: haveRecording ? bgColor : "#aaa",
+                            },
                         ]}
-                        contentStyle={{ paddingVertical: 10 }}  
-                        labelStyle={{ color: haveRecording ? bgColor : '#aaa' }} 
                     >
-                        <ThemedText
-                            type="defaultSemiBold"
-                            style={[
-                                styles.button__text,
-                                {
-                                    color: haveRecording ? bgColor : '#aaa', 
-                                },
-                            ]}
-                        >
-                            Submit
-                        </ThemedText>
-                    </Button>  
-  
-                   
+                        Submit
+                    </ThemedText>
+                </Button>
             )}
-            
+
             <Snackbar
                 visible={snackbarVisible}
-                onDismiss={() => setSnackbarVisible(false)} 
+                onDismiss={() => setSnackbarVisible(false)}
                 duration={5000}
-                style={styles.snackbar} 
+                style={styles.snackbar}
             >
                 Submission successfully saved!
-            </Snackbar>   
-        </View >
+            </Snackbar>
+        </View>
     );
 }
 
@@ -295,8 +290,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         // paddingVertical: 10,
         // paddingHorizontal: 20,
-        alignItems: 'center',
-        // marginVertical: 10, 
+        alignItems: "center",
+        // marginVertical: 10,
     },
 
     snackbar: {
@@ -304,14 +299,13 @@ const styles = StyleSheet.create({
         bottom: -160,
         left: 0,
         right: 0,
-        color: '#fff',
+        color: "#fff",
         borderRadius: 5,
         padding: 10,
         margin: 0,
     },
     submit_func: {
         flex: 1,
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
     },
-
 });

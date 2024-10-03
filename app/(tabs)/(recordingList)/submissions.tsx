@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
-import AudioPlayback from '@/components/audio/playback';
-import { data_base } from '@/app/firebaseConfig';
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import AudioPlayback from "@/components/audio/playback";
+import { data_base } from "@/app/firebaseConfig";
 
 export default function Submissions() {
     const { sentenceID } = useLocalSearchParams();
@@ -11,19 +11,21 @@ export default function Submissions() {
 
     useEffect(() => {
         const fetchSubmissions = async () => {
-            const q = query(collection(data_base, 'submissions'), where('sentenceId', '==', sentenceID));
+            const q = query(
+                collection(data_base, "submissions"),
+                where("sentenceId", "==", sentenceID)
+            );
             const querySnapshot = await getDocs(q);
-            const submissionList = querySnapshot.docs.map(doc => ({
+            const submissionList = querySnapshot.docs.map((doc) => ({
                 recordingUri: doc.data().recordingUrl,
                 submittedAt: doc.data().submittedAt,
             }));
-            setSubmissions(submissionList);  
+            setSubmissions(submissionList);
         };
 
         if (sentenceID) {
-            fetchSubmissions();  
+            fetchSubmissions();
         }
-
     }, [sentenceID]);
 
     return (
@@ -35,8 +37,8 @@ export default function Submissions() {
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item, index }) => (
                         <View>
-                            <Text>Recording {index+1}</Text>
-                            <AudioPlayback uri={item.recordingUri} />  
+                            <Text>Recording {index + 1}</Text>
+                            <AudioPlayback uri={item.recordingUri} />
                         </View>
                     )}
                 />

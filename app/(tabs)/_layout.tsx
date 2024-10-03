@@ -38,7 +38,7 @@ export default function RootLayout() {
                                     size={30}
                                 />
                             ),
-                            tabBarLabel: "Home", 
+                            tabBarLabel: "Home",
                         }}
                     />
                     <Tabs.Screen
