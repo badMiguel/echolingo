@@ -1,5 +1,7 @@
 import * as FileSystem from "expo-file-system";
 import { DataType, Entry, useUpdateData } from "@/contexts/TiwiContext";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase/firebaseConfig";
 
 export type SaveRecReturn = {
     status: boolean;
@@ -19,7 +21,7 @@ export default function useCRUD() {
     const update = useUpdateData();
 
     // add recording to existing sentence
-    async function saveRecording(uri: string, id: number): Promise<SaveRecReturn> {
+    async function saveRecording(uri: string, id: string): Promise<SaveRecReturn> {
         try {
             const fileName = uri.split("/").pop();
             if (!fileName) {
@@ -52,7 +54,7 @@ export default function useCRUD() {
     }
 
     // save other details
-    async function saveDetails(id: number, { tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
+    async function saveDetails(id: string, { tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
         try {
             const saveStatus = await saveJsonFile(
                 id,
@@ -72,38 +74,25 @@ export default function useCRUD() {
     }
 
     async function addDetails({ tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
-        const { loadJson } = useData();
         try {
-            const fileUri = FileSystem.documentDirectory + "tiwi_list.json";
-            let jsonData: DataType = await loadJson();
-
-            if (!jsonData) {
-                throw new Error("Json data does not exists");
-            }
-            const newID = Object.keys(jsonData).length + 1;
-            const newData: Entry = {
-                English: english ? english : "",
-                "Gloss (english)": gEnglish ? gEnglish : null,
-                "Gloss (tiwi)": gTiwi ? gTiwi : null,
-                Tiwi: tiwi ? tiwi : "",
-                Topic: topic ? topic : "",
+            const docRef = await addDoc(collection(db, "sentences"), {
+                English: english,
+                Tiwi: tiwi,
+                Topic: topic,
+                "Gloss (english)": gEnglish,
+                "Gloss (tiwi)": gTiwi,
                 "Image name (optional)": null,
                 recording: null,
                 completed: false,
-            };
-
-            jsonData[newID] = newData;
-
-            // write update json data
-            FileSystem.writeAsStringAsync(fileUri, JSON.stringify(jsonData));
+            });
 
             // small delay
             await new Promise((resolve) => setTimeout(resolve, 100));
             update();
 
-            return { status: true, currentID: newID };
+            return { status: true, currentID: docRef };
         } catch (err) {
-            console.error("Failed to save json file", err);
+            console.error("Failed to save sentence to database:", err);
             return { status: false };
         }
     }
@@ -113,55 +102,51 @@ export default function useCRUD() {
 
 // rewrite the actual json data
 async function saveJsonFile(
-    id: number,
+    id: string,
     updatedData: DataDetail,
     updateData: () => void
 ): Promise<SaveRecReturn> {
-    const { loadJson } = useData();
     try {
-        const fileUri = FileSystem.documentDirectory + "tiwi_list.json";
-        let jsonData: DataType = await loadJson();
-
-        if (!jsonData) {
-            console.error("Json data does not exists");
-            return { status: false };
-        }
-
-        const tiwi = jsonData[id];
-        if (!tiwi) {
-            console.error("Tiwi data is undefined");
-            return { status: false };
-        }
+        const tiwiID = doc(db, "sentences", id);
 
         if (updatedData.tiwi) {
-            tiwi.Tiwi = updatedData.tiwi;
+            await updateDoc(tiwiID, {
+                Tiwi: updatedData.tiwi,
+            });
         }
         if (updatedData.gTiwi) {
-            tiwi["Gloss (tiwi)"] = updatedData.gTiwi;
+            await updateDoc(tiwiID, {
+                "Gloss (tiwi)": updatedData.gTiwi,
+            });
         }
         if (updatedData.english) {
-            tiwi.English = updatedData.english;
+            await updateDoc(tiwiID, {
+                English: updatedData.gTiwi,
+            });
         }
         if (updatedData.gEnglish) {
-            tiwi["Gloss (english)"] = updatedData.gEnglish;
+            await updateDoc(tiwiID, {
+                "Gloss (english)": updatedData.gTiwi,
+            });
         }
         if (updatedData.topic) {
-            tiwi.Topic = updatedData.topic;
+            await updateDoc(tiwiID, {
+                Topic: updatedData.gTiwi,
+            });
         }
         if (updatedData.recordingURI) {
-            tiwi.recording = updatedData.recordingURI;
+            await updateDoc(tiwiID, {
+                Recording: updatedData.gTiwi,
+            });
         }
-
-        // write update json data
-        FileSystem.writeAsStringAsync(fileUri, JSON.stringify(jsonData));
 
         // small delay
         await new Promise((resolve) => setTimeout(resolve, 100));
         updateData();
 
-        return { status: true, filePath: fileUri };
+        return { status: true }; // todo check what this does potential foot gun filePath: fileUri };
     } catch (err) {
-        console.error("Failed to save json file", err);
+        console.error("Failed to save data to firebase", err);
         return { status: false };
     }
 }
