@@ -1,5 +1,5 @@
-{
-    "1": {
+[
+    {
         "English": "What did she do?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -9,7 +9,7 @@
         "recording": null,
         "completed": false
     },
-    "2": {
+    {
         "English": "How are you my friends?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -19,7 +19,7 @@
         "recording": null,
         "completed": false
     },
-    "3": {
+    {
         "English": "How are you, my friend?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -29,7 +29,7 @@
         "recording": null,
         "completed": false
     },
-    "4": {
+    {
         "English": "What did they do?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -39,7 +39,7 @@
         "recording": null,
         "completed": false
     },
-    "5": {
+    {
         "English": "What did he do?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -49,7 +49,7 @@
         "recording": null,
         "completed": false
     },
-    "6": {
+    {
         "English": "What\u2019s in your heart?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -59,7 +59,7 @@
         "recording": null,
         "completed": false
     },
-    "7": {
+    {
         "English": "What is this word/story that you could do to help yourself?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -69,7 +69,7 @@
         "recording": null,
         "completed": false
     },
-    "8": {
+    {
         "English": "What is this word/story that you could do which will help you feel better?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -79,7 +79,7 @@
         "recording": null,
         "completed": false
     },
-    "9": {
+    {
         "English": "Why is he crying?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -89,7 +89,7 @@
         "recording": null,
         "completed": false
     },
-    "10": {
+    {
         "English": "Why are you not happy?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -99,7 +99,7 @@
         "recording": null,
         "completed": false
     },
-    "11": {
+    {
         "English": "Why is she crying?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -109,7 +109,7 @@
         "recording": null,
         "completed": false
     },
-    "12": {
+    {
         "English": "Why are they crying?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -119,7 +119,7 @@
         "recording": null,
         "completed": false
     },
-    "13": {
+    {
         "English": "Where is the pain?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -129,7 +129,7 @@
         "recording": null,
         "completed": false
     },
-    "14": {
+    {
         "English": "Where do you feel the pain?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -139,7 +139,7 @@
         "recording": null,
         "completed": false
     },
-    "15": {
+    {
         "English": "Where is your hearing going?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -149,7 +149,7 @@
         "recording": null,
         "completed": false
     },
-    "16": {
+    {
         "English": "Where is your head/thinking going (not concentrating)?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -159,7 +159,7 @@
         "recording": null,
         "completed": false
     },
-    "17": {
+    {
         "English": "She has good ears/is a good listener",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -169,7 +169,7 @@
         "recording": null,
         "completed": false
     },
-    "18": {
+    {
         "English": "He has good ears/is a good listener",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -179,7 +179,7 @@
         "recording": null,
         "completed": false
     },
-    "19": {
+    {
         "English": "She has good ears",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -189,7 +189,7 @@
         "recording": null,
         "completed": false
     },
-    "20": {
+    {
         "English": "He has good ears",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -199,7 +199,7 @@
         "recording": null,
         "completed": false
     },
-    "21": {
+    {
         "English": "Let\u2019s talk together",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -209,7 +209,7 @@
         "recording": null,
         "completed": false
     },
-    "22": {
+    {
         "English": "Let\u2019s talk about what is in your heart/mind",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -219,7 +219,7 @@
         "recording": null,
         "completed": false
     },
-    "23": {
+    {
         "English": "You and I walking together/side by side",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -229,7 +229,7 @@
         "recording": null,
         "completed": false
     },
-    "24": {
+    {
         "English": "Listen/hear",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -239,7 +239,7 @@
         "recording": null,
         "completed": false
     },
-    "25": {
+    {
         "English": "Leaving worries/bad stories behind. Go forward, follow the good road.",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -249,7 +249,7 @@
         "recording": null,
         "completed": false
     },
-    "26": {
+    {
         "English": "Care for each other",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -259,7 +259,7 @@
         "recording": null,
         "completed": false
     },
-    "27": {
+    {
         "English": "Look after ourselves",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -269,7 +269,7 @@
         "recording": null,
         "completed": false
     },
-    "28": {
+    {
         "English": "If you\u2019ve got bad feeling, I am here to talk with you",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -279,7 +279,7 @@
         "recording": null,
         "completed": false
     },
-    "29": {
+    {
         "English": "Who are you related to?/Who is your family?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -289,7 +289,7 @@
         "recording": null,
         "completed": false
     },
-    "30": {
+    {
         "English": "Did you sleep well last night?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -299,7 +299,7 @@
         "recording": null,
         "completed": false
     },
-    "31": {
+    {
         "English": "Are you hungry?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -309,7 +309,7 @@
         "recording": null,
         "completed": false
     },
-    "32": {
+    {
         "English": "Are you ok?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -319,7 +319,7 @@
         "recording": null,
         "completed": false
     },
-    "33": {
+    {
         "English": "Are you ok?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -329,7 +329,7 @@
         "recording": null,
         "completed": false
     },
-    "34": {
+    {
         "English": "I am here if you need to talk",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -339,7 +339,7 @@
         "recording": null,
         "completed": false
     },
-    "35": {
+    {
         "English": "I am here if you need to talk about what is in your heart and mind",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -349,7 +349,7 @@
         "recording": null,
         "completed": false
     },
-    "36": {
+    {
         "English": "I didn\u2019t sleep well last night",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -359,7 +359,7 @@
         "recording": null,
         "completed": false
     },
-    "37": {
+    {
         "English": "I listen to a story without getting involved/ I observe their story",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -369,7 +369,7 @@
         "recording": null,
         "completed": false
     },
-    "38": {
+    {
         "English": "I will help you",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -379,7 +379,7 @@
         "recording": null,
         "completed": false
     },
-    "39": {
+    {
         "English": "I will come to see you",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -389,7 +389,7 @@
         "recording": null,
         "completed": false
     },
-    "40": {
+    {
         "English": "I will come to see you later",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -399,7 +399,7 @@
         "recording": null,
         "completed": false
     },
-    "41": {
+    {
         "English": "Why is he angry?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -409,7 +409,7 @@
         "recording": null,
         "completed": false
     },
-    "42": {
+    {
         "English": "Why do you feel shame?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -419,7 +419,7 @@
         "recording": null,
         "completed": false
     },
-    "43": {
+    {
         "English": "Why are you feeling sad/unhappy?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -429,7 +429,7 @@
         "recording": null,
         "completed": false
     },
-    "44": {
+    {
         "English": "Why are you sleeping a lot?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -439,7 +439,7 @@
         "recording": null,
         "completed": false
     },
-    "45": {
+    {
         "English": "Why do all of you feel shame?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -449,7 +449,7 @@
         "recording": null,
         "completed": false
     },
-    "46": {
+    {
         "English": "Why are they angry?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -459,7 +459,7 @@
         "recording": null,
         "completed": false
     },
-    "47": {
+    {
         "English": "Why is she angry?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -469,7 +469,7 @@
         "recording": null,
         "completed": false
     },
-    "48": {
+    {
         "English": "Why are you arguing?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -479,7 +479,7 @@
         "recording": null,
         "completed": false
     },
-    "49": {
+    {
         "English": "Why are you both arguing?",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -489,7 +489,7 @@
         "recording": null,
         "completed": false
     },
-    "50": {
+    {
         "English": "Good afternoon",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -499,7 +499,7 @@
         "recording": null,
         "completed": false
     },
-    "51": {
+    {
         "English": "Good night",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -509,7 +509,7 @@
         "recording": null,
         "completed": false
     },
-    "52": {
+    {
         "English": "Good Morning",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -519,7 +519,7 @@
         "recording": null,
         "completed": false
     },
-    "53": {
+    {
         "English": "Look after yourself",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -529,7 +529,7 @@
         "recording": null,
         "completed": false
     },
-    "54": {
+    {
         "English": "We will talk together later",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -539,7 +539,7 @@
         "recording": null,
         "completed": false
     },
-    "55": {
+    {
         "English": "Later on, we will talk together",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -549,7 +549,7 @@
         "recording": null,
         "completed": false
     },
-    "56": {
+    {
         "English": "Feeling or thinking she is good/proud/\u201cflash\u201d",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -559,7 +559,7 @@
         "recording": null,
         "completed": false
     },
-    "57": {
+    {
         "English": "Frightened/scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -569,7 +569,7 @@
         "recording": null,
         "completed": false
     },
-    "58": {
+    {
         "English": "Frightened/scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -579,7 +579,7 @@
         "recording": null,
         "completed": false
     },
-    "59": {
+    {
         "English": "Shame/Shy (main meanings). Can also mean: \u201cSorry\u201d for others, Unhappy/Worried",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -589,7 +589,7 @@
         "recording": null,
         "completed": false
     },
-    "60": {
+    {
         "English": "Feeling or thinking he is good/proud/\u201cflash\u201d",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -599,7 +599,7 @@
         "recording": null,
         "completed": false
     },
-    "61": {
+    {
         "English": "Stressing. Can also mean: Confused/paranoid/not coping",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -609,7 +609,7 @@
         "recording": null,
         "completed": false
     },
-    "62": {
+    {
         "English": "Hearing voices in their ears telling them what to do",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -619,7 +619,7 @@
         "recording": null,
         "completed": false
     },
-    "63": {
+    {
         "English": "Hearing voices in their head telling them what to do",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -629,7 +629,7 @@
         "recording": null,
         "completed": false
     },
-    "64": {
+    {
         "English": "Feeling weak or tired",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -639,7 +639,7 @@
         "recording": null,
         "completed": false
     },
-    "65": {
+    {
         "English": "She got a shock",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -649,7 +649,7 @@
         "recording": null,
         "completed": false
     },
-    "66": {
+    {
         "English": "Feeling strong (body and mind)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -659,7 +659,7 @@
         "recording": null,
         "completed": false
     },
-    "67": {
+    {
         "English": "\u201cNo good\u201d. Can also mean: Annoyed/sick",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -669,7 +669,7 @@
         "recording": null,
         "completed": false
     },
-    "68": {
+    {
         "English": "Feeling \u201cno good\u201d in your body. Can also mean: Not feeling yourself/Sad inside",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -679,7 +679,7 @@
         "recording": null,
         "completed": false
     },
-    "69": {
+    {
         "English": "Whispering to himself",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -689,7 +689,7 @@
         "recording": null,
         "completed": false
     },
-    "70": {
+    {
         "English": "Whispering to herself",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -699,7 +699,7 @@
         "recording": null,
         "completed": false
     },
-    "71": {
+    {
         "English": "Whispering to themselves",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -709,7 +709,7 @@
         "recording": null,
         "completed": false
     },
-    "72": {
+    {
         "English": "Sweating",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -719,7 +719,7 @@
         "recording": null,
         "completed": false
     },
-    "73": {
+    {
         "English": "She ran away",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -729,7 +729,7 @@
         "recording": null,
         "completed": false
     },
-    "74": {
+    {
         "English": "She ran away from her bad story (problems/worries)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -739,7 +739,7 @@
         "recording": null,
         "completed": false
     },
-    "75": {
+    {
         "English": "They ran away",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -749,7 +749,7 @@
         "recording": null,
         "completed": false
     },
-    "76": {
+    {
         "English": "He ran away",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -759,7 +759,7 @@
         "recording": null,
         "completed": false
     },
-    "77": {
+    {
         "English": "He ran away from his bad story (problems/worries)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -769,7 +769,7 @@
         "recording": null,
         "completed": false
     },
-    "78": {
+    {
         "English": "People who have worries/\u201cstressing\u201d/not coping",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -779,7 +779,7 @@
         "recording": null,
         "completed": false
     },
-    "79": {
+    {
         "English": "Our friends who have worries/\u201cstressing\u201d/not coping",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -789,7 +789,7 @@
         "recording": null,
         "completed": false
     },
-    "80": {
+    {
         "English": "People who have worries/\u201cstressing\u201d/not coping",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -799,7 +799,7 @@
         "recording": null,
         "completed": false
     },
-    "81": {
+    {
         "English": "Not happy",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -809,7 +809,7 @@
         "recording": null,
         "completed": false
     },
-    "82": {
+    {
         "English": "I didn\u2019t sleep well",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -819,7 +819,7 @@
         "recording": null,
         "completed": false
     },
-    "83": {
+    {
         "English": "I have no friends",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -829,7 +829,7 @@
         "recording": null,
         "completed": false
     },
-    "84": {
+    {
         "English": "I have no family",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -839,7 +839,7 @@
         "recording": null,
         "completed": false
     },
-    "85": {
+    {
         "English": "Nobody loves me/cares for me",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -849,7 +849,7 @@
         "recording": null,
         "completed": false
     },
-    "86": {
+    {
         "English": "Happy, Relaxed/calm, Proud",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -859,7 +859,7 @@
         "recording": null,
         "completed": false
     },
-    "87": {
+    {
         "English": "Somebody is talking, but it is all in my head/I can hear people talking inside my head (auditory hallucinations)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -869,7 +869,7 @@
         "recording": null,
         "completed": false
     },
-    "88": {
+    {
         "English": "He has lost touch with reality/his mind is somewhere else",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -879,7 +879,7 @@
         "recording": null,
         "completed": false
     },
-    "89": {
+    {
         "English": "She has lost touch with reality/her mind is somewhere else",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -889,7 +889,7 @@
         "recording": null,
         "completed": false
     },
-    "90": {
+    {
         "English": "They lose touch with reality/their mind is somewhere else",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -899,7 +899,7 @@
         "recording": null,
         "completed": false
     },
-    "91": {
+    {
         "English": "\u201cCheeky drugs\u201d/\u201dhot drugs\u201d/Synthetic drugs (e.g. Synthetic marijuana, ice, methamphetamine)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -909,7 +909,7 @@
         "recording": null,
         "completed": false
     },
-    "92": {
+    {
         "English": "Hearing voices",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -919,7 +919,7 @@
         "recording": null,
         "completed": false
     },
-    "93": {
+    {
         "English": "Scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -929,7 +929,7 @@
         "recording": null,
         "completed": false
     },
-    "94": {
+    {
         "English": "Scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -939,7 +939,7 @@
         "recording": null,
         "completed": false
     },
-    "95": {
+    {
         "English": "Scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -949,7 +949,7 @@
         "recording": null,
         "completed": false
     },
-    "96": {
+    {
         "English": "Jealous",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -959,7 +959,7 @@
         "recording": null,
         "completed": false
     },
-    "97": {
+    {
         "English": "Feeling good",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -969,7 +969,7 @@
         "recording": null,
         "completed": false
     },
-    "98": {
+    {
         "English": "Feeling good",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -979,7 +979,7 @@
         "recording": null,
         "completed": false
     },
-    "99": {
+    {
         "English": "Feeling good",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -989,7 +989,7 @@
         "recording": null,
         "completed": false
     },
-    "100": {
+    {
         "English": "Unhappy",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -999,7 +999,7 @@
         "recording": null,
         "completed": false
     },
-    "101": {
+    {
         "English": "Beer/\u201cGrog\u201d/Alcohol. Also means: Saltwater",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1009,7 +1009,7 @@
         "recording": null,
         "completed": false
     },
-    "102": {
+    {
         "English": "Don\u2019t get angry/aggressive",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1019,7 +1019,7 @@
         "recording": null,
         "completed": false
     },
-    "103": {
+    {
         "English": "Sweating",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1029,7 +1029,7 @@
         "recording": null,
         "completed": false
     },
-    "104": {
+    {
         "English": "He is deadly/smart/clever",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1039,7 +1039,7 @@
         "recording": null,
         "completed": false
     },
-    "105": {
+    {
         "English": "He is surprised",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1049,7 +1049,7 @@
         "recording": null,
         "completed": false
     },
-    "106": {
+    {
         "English": "He took his life away (suicide)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1059,7 +1059,7 @@
         "recording": null,
         "completed": false
     },
-    "107": {
+    {
         "English": "Teaching people/reminding ourselves of the right story, to keep on track (positive thinking)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1069,7 +1069,7 @@
         "recording": null,
         "completed": false
     },
-    "108": {
+    {
         "English": "Our family see things that are not there when they are sick",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1079,7 +1079,7 @@
         "recording": null,
         "completed": false
     },
-    "109": {
+    {
         "English": "I am not hungry",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1089,7 +1089,7 @@
         "recording": null,
         "completed": false
     },
-    "110": {
+    {
         "English": "I am not well",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1099,7 +1099,7 @@
         "recording": null,
         "completed": false
     },
-    "111": {
+    {
         "English": "I am not well",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1109,7 +1109,7 @@
         "recording": null,
         "completed": false
     },
-    "112": {
+    {
         "English": "I am on my own/alone",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1119,7 +1119,7 @@
         "recording": null,
         "completed": false
     },
-    "113": {
+    {
         "English": "I am hot. Can also mean: I am angry",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1129,7 +1129,7 @@
         "recording": null,
         "completed": false
     },
-    "114": {
+    {
         "English": "She is talking to herself",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1139,7 +1139,7 @@
         "recording": null,
         "completed": false
     },
-    "115": {
+    {
         "English": "He is talking to himself",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1149,7 +1149,7 @@
         "recording": null,
         "completed": false
     },
-    "116": {
+    {
         "English": "They talk to themselves",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1159,7 +1159,7 @@
         "recording": null,
         "completed": false
     },
-    "117": {
+    {
         "English": "They are talking to themselves",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1169,7 +1169,7 @@
         "recording": null,
         "completed": false
     },
-    "118": {
+    {
         "English": "She is surprised",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1179,7 +1179,7 @@
         "recording": null,
         "completed": false
     },
-    "119": {
+    {
         "English": "She took her life away (suicide)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1189,7 +1189,7 @@
         "recording": null,
         "completed": false
     },
-    "120": {
+    {
         "English": "I am \u201csorry\u201d (I acknowledge your or my grief)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1199,7 +1199,7 @@
         "recording": null,
         "completed": false
     },
-    "121": {
+    {
         "English": "Feeling anxious/uneasy. Heart beating fast, a problem/bad news is coming",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1209,7 +1209,7 @@
         "recording": null,
         "completed": false
     },
-    "122": {
+    {
         "English": "From the past, they still carry that bad feeling inside them (trauma)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1219,7 +1219,7 @@
         "recording": null,
         "completed": false
     },
-    "123": {
+    {
         "English": "Big eyes (staring)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1229,7 +1229,7 @@
         "recording": null,
         "completed": false
     },
-    "124": {
+    {
         "English": "Big eyes (staring)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1239,7 +1239,7 @@
         "recording": null,
         "completed": false
     },
-    "125": {
+    {
         "English": "Big eyes (staring)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1249,7 +1249,7 @@
         "recording": null,
         "completed": false
     },
-    "126": {
+    {
         "English": "Why did he look at me? (suspicious)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1259,7 +1259,7 @@
         "recording": null,
         "completed": false
     },
-    "127": {
+    {
         "English": "Why are they looking at me? (suspicious)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1269,7 +1269,7 @@
         "recording": null,
         "completed": false
     },
-    "128": {
+    {
         "English": "Why did she look at me? (suspicious)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1279,7 +1279,7 @@
         "recording": null,
         "completed": false
     },
-    "129": {
+    {
         "English": "Talking all jumbled up (talking but not making sense)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1289,7 +1289,7 @@
         "recording": null,
         "completed": false
     },
-    "130": {
+    {
         "English": "Talking all jumbled up (talking but not making sense)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1299,7 +1299,7 @@
         "recording": null,
         "completed": false
     },
-    "131": {
+    {
         "English": "Talking all jumbled up (talking but not making sense)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1309,7 +1309,7 @@
         "recording": null,
         "completed": false
     },
-    "132": {
+    {
         "English": "These people are talking all jumbled up (these people are talking but not making sense)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1319,7 +1319,7 @@
         "recording": null,
         "completed": false
     },
-    "133": {
+    {
         "English": "Crying",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1329,7 +1329,7 @@
         "recording": null,
         "completed": false
     },
-    "134": {
+    {
         "English": "Crying",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1339,7 +1339,7 @@
         "recording": null,
         "completed": false
     },
-    "135": {
+    {
         "English": "Crying",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1349,7 +1349,7 @@
         "recording": null,
         "completed": false
     },
-    "136": {
+    {
         "English": "Feeling weak or tired",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1359,7 +1359,7 @@
         "recording": null,
         "completed": false
     },
-    "137": {
+    {
         "English": "I am being loved",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1369,7 +1369,7 @@
         "recording": null,
         "completed": false
     },
-    "138": {
+    {
         "English": "They love me",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1379,7 +1379,7 @@
         "recording": null,
         "completed": false
     },
-    "139": {
+    {
         "English": "Feeling strong as a group",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1389,7 +1389,7 @@
         "recording": null,
         "completed": false
     },
-    "140": {
+    {
         "English": "Nervous, shaking (anxiety)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1399,7 +1399,7 @@
         "recording": null,
         "completed": false
     },
-    "141": {
+    {
         "English": "I am shaky",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1409,7 +1409,7 @@
         "recording": null,
         "completed": false
     },
-    "142": {
+    {
         "English": "I am shaky inside my stomach (nausea)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1419,7 +1419,7 @@
         "recording": null,
         "completed": false
     },
-    "143": {
+    {
         "English": "Pain in the head/headache",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1429,7 +1429,7 @@
         "recording": null,
         "completed": false
     },
-    "144": {
+    {
         "English": "I slept well last night/good sleep",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1439,7 +1439,7 @@
         "recording": null,
         "completed": false
     },
-    "145": {
+    {
         "English": "Feel \u201csorry\u201d for that family/we feel \u201csorry\u201d for them (grief)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1449,7 +1449,7 @@
         "recording": null,
         "completed": false
     },
-    "146": {
+    {
         "English": "We grieve for ourselves/ Feeling \u201csorry\u201d for ourselves",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1459,7 +1459,7 @@
         "recording": null,
         "completed": false
     },
-    "147": {
+    {
         "English": "He is laughing to himself",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1469,7 +1469,7 @@
         "recording": null,
         "completed": false
     },
-    "148": {
+    {
         "English": "She is laughing to herself",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1479,7 +1479,7 @@
         "recording": null,
         "completed": false
     },
-    "149": {
+    {
         "English": "They are laughing to themselves",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1489,7 +1489,7 @@
         "recording": null,
         "completed": false
     },
-    "150": {
+    {
         "English": "Heart beating fast",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1499,7 +1499,7 @@
         "recording": null,
         "completed": false
     },
-    "151": {
+    {
         "English": "Everyone is talking in my head",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1509,7 +1509,7 @@
         "recording": null,
         "completed": false
     },
-    "152": {
+    {
         "English": "I am going back to my homeland because I am feeling sick (longing for country)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1519,7 +1519,7 @@
         "recording": null,
         "completed": false
     },
-    "153": {
+    {
         "English": "Hearing voices",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1529,7 +1529,7 @@
         "recording": null,
         "completed": false
     },
-    "154": {
+    {
         "English": "Seeing spirits/seeing things that are not there (visual hallucinations)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1539,7 +1539,7 @@
         "recording": null,
         "completed": false
     },
-    "155": {
+    {
         "English": "They are feeling or thinking they are good/proud/\u201cflash\u201d",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1549,7 +1549,7 @@
         "recording": null,
         "completed": false
     },
-    "156": {
+    {
         "English": "\u201cGunja\u201d/cannabis/marijuana",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1559,7 +1559,7 @@
         "recording": null,
         "completed": false
     },
-    "157": {
+    {
         "English": "Frightened/scared",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1569,7 +1569,7 @@
         "recording": null,
         "completed": false
     },
-    "158": {
+    {
         "English": "They are surprised",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1579,7 +1579,7 @@
         "recording": null,
         "completed": false
     },
-    "159": {
+    {
         "English": "They are talking to themselves",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1589,7 +1589,7 @@
         "recording": null,
         "completed": false
     },
-    "160": {
+    {
         "English": "Feeling anxious/unsure",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1599,7 +1599,7 @@
         "recording": null,
         "completed": false
     },
-    "161": {
+    {
         "English": "Feeling anxious/unsure with shortness of breath",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1609,7 +1609,7 @@
         "recording": null,
         "completed": false
     },
-    "162": {
+    {
         "English": "Feeling anxious/unsure with shortness of breath",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1619,7 +1619,7 @@
         "recording": null,
         "completed": false
     },
-    "163": {
+    {
         "English": "Feeling anxious/unsure with head (thoughts) racing",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1629,7 +1629,7 @@
         "recording": null,
         "completed": false
     },
-    "164": {
+    {
         "English": "Feeling anxious/unsure with heart beating fast",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1639,7 +1639,7 @@
         "recording": null,
         "completed": false
     },
-    "165": {
+    {
         "English": "Feeling anxious/unsure and not thinking straight (confused)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1649,7 +1649,7 @@
         "recording": null,
         "completed": false
     },
-    "166": {
+    {
         "English": "He got a shock",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1659,7 +1659,7 @@
         "recording": null,
         "completed": false
     },
-    "167": {
+    {
         "English": "Feeling strong. NB: can represent body and mind",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1669,7 +1669,7 @@
         "recording": null,
         "completed": false
     },
-    "168": {
+    {
         "English": "Goosebumps",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1679,7 +1679,7 @@
         "recording": null,
         "completed": false
     },
-    "169": {
+    {
         "English": "Heartbeat/Pulse. Can also mean: Totem, Craving for bush tucker",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1689,7 +1689,7 @@
         "recording": null,
         "completed": false
     },
-    "170": {
+    {
         "English": "Tight muscles (feeling tense)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1699,7 +1699,7 @@
         "recording": null,
         "completed": false
     },
-    "171": {
+    {
         "English": "Sometimes I forget",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1709,7 +1709,7 @@
         "recording": null,
         "completed": false
     },
-    "172": {
+    {
         "English": "Lots of beer (Intoxicated/drunk)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1719,7 +1719,7 @@
         "recording": null,
         "completed": false
     },
-    "173": {
+    {
         "English": "There are lots of voices/people talking around us",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1729,7 +1729,7 @@
         "recording": null,
         "completed": false
     },
-    "174": {
+    {
         "English": "Lots of \u201cgunja\u201d (Intoxicated/\u201dstoned\u201d/feeling the effects of cannabis)",
         "Gloss (english)": null,
         "Gloss (tiwi)": null,
@@ -1739,4 +1739,4 @@
         "recording": null,
         "completed": false
     }
-}
+]
