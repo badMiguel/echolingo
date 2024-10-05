@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Pressable } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
-import useCRUD from "@/hooks/recording/useCRUD";
+import useCRUD from "@/hooks/data/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";

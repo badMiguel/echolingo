@@ -10,7 +10,7 @@ import React, {
 
 import { useCategoryContext } from "@/contexts/CategoryContext";
 import categoryData from "@/data/json/category_data.json";
-import useData from "@/hooks/recording/useData";
+import useData from "@/hooks/data/useData";
 
 // converted json from list of objects to key value pair, where key is the id
 // for faster lookups
@@ -126,7 +126,7 @@ export function useTiwiContext() {
 export function useSetTiwiContext() {
     const context = useContext(SetTiwiContext);
     if (!context) {
-        throw new Error("useSetTiwiContext must be used within a TiwiProvider");
+        console.error("useSetTiwiContext must be used within a TiwiProvider");
     }
     return context;
 }

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Pressable, Text, Alert } from "react-native";
 import useRecording from "@/hooks/recording/useRecording";
 import AudioPlayback from "@/components/audio/playback";
-import useCRUD from "@/hooks/recording/useCRUD";
+import useCRUD from "@/hooks/data/useCRUD";
 import { useLocalSearchParams } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import { addDoc, collection } from "firebase/firestore";
-import { data_base, storage } from "@/app/firebaseConfig";
+import { data, storage } from "@/firebase/firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Button, Snackbar } from "react-native-paper";
 
@@ -139,7 +139,7 @@ export function Record({
             setSnackbarVisible(true);
             console.log(snackbarVisible);
             // save submission
-            await addDoc(collection(data_base, "submissions"), {
+            await addDoc(collection(data, "submissions"), {
                 sentenceId: currentID,
                 category: "casual_study",
                 recordingUrl: downloadUrl,

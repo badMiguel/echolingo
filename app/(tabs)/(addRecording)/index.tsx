@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 
 import { Entry, useTiwiListContext } from "@/contexts/TiwiContext";
-import useCRUD from "@/hooks/recording/useCRUD";
+import useCRUD from "@/hooks/data/useCRUD";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import categoryData from "@/data/json/category_data.json";
