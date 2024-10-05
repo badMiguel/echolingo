@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "project_hit238",
-        "slug": "project_hit238",
+        "name": "echolingo",
+        "slug": "echolingo",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
@@ -16,6 +16,7 @@
             "supportsTablet": true
         },
         "android": {
+            "package": "com.hit238.echolingo",
             "adaptiveIcon": {
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#ffffff"
