@@ -11,7 +11,6 @@ import { getStorage } from "firebase/storage";
 const firebaseConfig = {
     apiKey: "AIzaSyDoWuDkE2J8gbUAoHvhyjb1U9jkYIMS6lk",
     authDomain: "echolingo-4aa6d.firebaseapp.com",
-    // databaseURL: "https://languageapp-b7daf.firebaseio.com",
     projectId: "echolingo-4aa6d",
     storageBucket: "echolingo-4aa6d.appspot.com",
     messagingSenderId: "89256999282",
