@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import AudioPlayback from "@/components/audio/playback";
 import { db } from "@/firebase/firebaseConfig";
 

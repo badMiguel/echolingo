@@ -1,5 +1,4 @@
 import React, {
-    Dispatch,
     ReactNode,
     SetStateAction,
     createContext,
@@ -50,7 +49,7 @@ export const emptyTiwiData = (complete?: boolean) => {
 };
 
 const TiwiContext = createContext<Entry | undefined>(undefined);
-const SetTiwiContext = createContext<Dispatch<SetStateAction<Entry>> | undefined>(undefined);
+const SetTiwiContext = createContext<React.Dispatch<SetStateAction<Entry>> | undefined>(undefined);
 const TiwiListContext = createContext<DataType | undefined>(undefined);
 const UpdateDataContext = createContext<() => void>(() => {});
 
@@ -89,6 +88,9 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 console.error("Error listening to firestore", error);
             }
         );
+
+        // Clean up the listener on component unmount
+        return () => unsubscribe();
     }, []);
 
     useEffect(() => {

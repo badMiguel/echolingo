@@ -67,7 +67,9 @@ const SentenceCard: React.FC<{ tiwi: Entry }> = ({ tiwi }) => {
     const color = useColor();
 
     const goToSentence = () => {
-        setCurrentID(tiwi);
+        if (setCurrentID) {
+            setCurrentID(tiwi);
+        } // todo error handle ???
 
         router.push({
             pathname: "/sentence",

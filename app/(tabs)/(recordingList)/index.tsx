@@ -120,7 +120,7 @@ export default function RecordingList() {
 const SentenceCard: React.FC<{ tiwi: DataType; finished: boolean }> = ({ tiwi }) => {
     const id: string = Object.keys(tiwi)[0];
     const color = useColor();
-    const hasSubmissions = tiwi[id].submissions && tiwi[id].submissions.length > 0;
+    const hasSubmissions = tiwi[id].submissions && tiwi[id].submissions;
 
     const goToSentence = () => {
         router.push({
