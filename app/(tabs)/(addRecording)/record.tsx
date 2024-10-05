@@ -7,7 +7,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import { addDoc, collection } from "firebase/firestore";
-import { data, storage } from "@/firebase/firebaseConfig";
+import { db, storage } from "@/firebase/firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Button, Snackbar } from "react-native-paper";
 
@@ -139,7 +139,7 @@ export function Record({
             setSnackbarVisible(true);
             console.log(snackbarVisible);
             // save submission
-            await addDoc(collection(data, "submissions"), {
+            await addDoc(collection(db, "submissions"), {
                 sentenceId: currentID,
                 category: "casual_study",
                 recordingUrl: downloadUrl,

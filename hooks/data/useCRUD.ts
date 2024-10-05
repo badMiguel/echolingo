@@ -1,6 +1,5 @@
 import * as FileSystem from "expo-file-system";
 import { DataType, Entry, useUpdateData } from "@/contexts/TiwiContext";
-import useData from "./useData";
 
 export type SaveRecReturn = {
     status: boolean;

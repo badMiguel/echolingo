@@ -121,7 +121,6 @@ const SentenceCard: React.FC<{ tiwi: DataType; finished: boolean }> = ({ tiwi })
     const id: string = Object.keys(tiwi)[0];
     const color = useColor();
     const hasSubmissions = tiwi[id].submissions && tiwi[id].submissions.length > 0;
-    console.log(hasSubmissions);
 
     const goToSentence = () => {
         router.push({

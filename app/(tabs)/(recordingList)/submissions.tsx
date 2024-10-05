@@ -3,7 +3,7 @@ import { View, Text, FlatList } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import AudioPlayback from "@/components/audio/playback";
-import { data } from "@/firebase/firebaseConfig";
+import { db } from "@/firebase/firebaseConfig";
 
 export default function Submissions() {
     const { sentenceID } = useLocalSearchParams();
@@ -12,7 +12,7 @@ export default function Submissions() {
     useEffect(() => {
         const fetchSubmissions = async () => {
             const q = query(
-                collection(data, "submissions"),
+                collection(db, "submissions"),
                 where("sentenceId", "==", sentenceID)
             );
             const querySnapshot = await getDocs(q);

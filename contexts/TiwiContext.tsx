@@ -10,10 +10,8 @@ import React, {
 
 import { useCategoryContext } from "@/contexts/CategoryContext";
 import categoryData from "@/data/json/category_data.json";
-import useData from "@/hooks/data/useData";
-
-// converted json from list of objects to key value pair, where key is the id
-// for faster lookups
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/firebase/firebaseConfig";
 
 export type Submission = {
     recordingUri: string;
@@ -21,7 +19,6 @@ export type Submission = {
 };
 
 export type Entry = {
-    // based on the data given, assumed that english, tiwi, and topic is not null
     English: string;
     Tiwi: string;
     Topic: string;
@@ -63,16 +60,35 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [filteredList, setFilteredList] = useState<DataType | undefined>(undefined);
 
     const { category } = useCategoryContext();
-    const { loadJson } = useData();
 
     // todo add error handling
     useEffect(() => {
-        const getData = async () => {
-            const data = await loadJson();
-            setTiwiData(data);
-        };
+        const sentenceRef = collection(db, "sentences");
 
-        getData();
+        const unsubscribe = onSnapshot(
+            sentenceRef,
+            (snapshot) => {
+                const sentenceData: DataType = {};
+                snapshot.docs.map((doc) => {
+                    const item = doc.data() as Entry;
+                    sentenceData[doc.id] = {
+                        English: item.English,
+                        Tiwi: item.Tiwi,
+                        Topic: item.Topic,
+                        "Gloss (english)": item["Gloss (english)"],
+                        "Gloss (tiwi)": item["Gloss (tiwi)"],
+                        "Image name (optional)": item["Image name (optional)"],
+                        recording: item.recording,
+                        completed: item.completed,
+                        submissions: undefined,
+                    };
+                });
+                setTiwiData(sentenceData);
+            },
+            (error) => {
+                console.error("Error listening to firestore", error);
+            }
+        );
     }, []);
 
     useEffect(() => {
@@ -99,11 +115,12 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, [tiwiData, category]);
 
     const updateData = async () => {
-        const data = await loadJson();
+        // todo removed this idk what it will do yet
+        //const data = await loadJson();
         // todo error handling
-        if (data) {
-            setTiwiData(data);
-        }
+        // if (data) {
+        //     setTiwiData(data);
+        // }
     };
 
     return (
