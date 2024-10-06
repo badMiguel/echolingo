@@ -20,6 +20,7 @@ const useColor = () => {
         bgColor: useThemeColor({}, "background"),
         textColor: useThemeColor({}, "text"),
         primary: useThemeColor({}, "primary"),
+        primary_tint: useThemeColor({}, "primary_tint"),
     };
 };
 
@@ -78,6 +79,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
     const [tiwiError, setTiwiError] = useState<boolean>(false);
     const [englishError, setEnglishError] = useState<boolean>(false);
     const [topicError, setTopicError] = useState<boolean>(false);
+    const [inProgress, setInProgress] = useState<boolean>(false);
 
     const { saveDetails, addDetails } = useCRUD();
     const color = useColor();
@@ -128,6 +130,8 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
         }
 
         try {
+            setInProgress(true);
+
             if (!current) {
                 const { status, currentID } = await addDetails({
                     tiwi: tiwi,
@@ -158,6 +162,8 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
         } catch (err) {
             console.error("Failed to create new data", err);
         }
+
+        setInProgress(false);
     };
 
     return (
@@ -246,18 +252,32 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
             </View>
 
             <Pressable
-                style={[styles.button, { backgroundColor: color.primary }]}
+                style={[
+                    styles.button,
+                    { backgroundColor: inProgress ? color.primary_tint : color.primary },
+                ]}
                 onPress={() => updateDetails()}
+                disabled={inProgress ? true : false}
             >
-                <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
-                    {currentID ? "Update" : "Add"}
+                <ThemedText
+                    type="defaultSemiBold"
+                    style={{ color: inProgress ? color.primary : color.bgColor }}
+                >
+                    {inProgress ? "Loading" : currentID ? "Update" : "Add"}
                 </ThemedText>
             </Pressable>
             <Pressable
-                style={[styles.button, { backgroundColor: color.primary }]}
+                style={[
+                    styles.button,
+                    { backgroundColor: inProgress ? color.primary_tint : color.primary },
+                ]}
                 onPress={() => clearForm()}
+                disabled={inProgress ? true : false}
             >
-                <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
+                <ThemedText
+                    type="defaultSemiBold"
+                    style={{ color: inProgress ? color.primary : color.bgColor }}
+                >
                     Clear
                 </ThemedText>
             </Pressable>
