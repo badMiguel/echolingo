@@ -103,7 +103,7 @@ export default function RecordingList() {
                             </ThemedText>
                         )
                     ) : (
-                        <SentenceCard tiwi={item} finished={false} />
+                        <SentenceCard sentence={item} finished={false} />
                     )
                 }
                 renderSectionHeader={({ section: { title } }) => (
@@ -117,14 +117,16 @@ export default function RecordingList() {
     );
 }
 
-const SentenceCard: React.FC<{ tiwi: DataType; finished: boolean }> = ({ tiwi }) => {
-    const id: string = Object.keys(tiwi)[0];
+const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
+    sentence: sentence,
+}) => {
+    const id: string = Object.keys(sentence)[0];
     const color = useColor();
-    const hasSubmissions = tiwi[id].submissions && tiwi[id].submissions;
+    const hasSubmissions = sentence[id].submissions && sentence[id].submissions;
 
     const goToSentence = () => {
         router.push({
-            pathname: tiwi[id].recording ? "/viewRecording" : "/(addRecording)",
+            pathname: sentence[id].recording ? "/viewRecording" : "/(addRecording)",
             params: {
                 sentenceID: id,
             },
@@ -142,17 +144,19 @@ const SentenceCard: React.FC<{ tiwi: DataType; finished: boolean }> = ({ tiwi })
 
     return (
         <View style={[styles.sentenceCard__container, { backgroundColor: color.primary_tint }]}>
-            <ThemedText type="defaultSemiBold">{tiwi.Tiwi ? "Tiwi: " : "Tiwi Gloss: "}</ThemedText>
-            <ThemedText>{tiwi[id].Tiwi}</ThemedText>
             <ThemedText type="defaultSemiBold">
-                {tiwi.English ? "English: " : "English Gloss: "}
+                {sentence[id].Tiwi ? "Tiwi: " : "Tiwi Gloss: "}
             </ThemedText>
-            <ThemedText>{tiwi[id].English}</ThemedText>
+            <ThemedText>{sentence[id].Tiwi}</ThemedText>
+            <ThemedText type="defaultSemiBold">
+                {sentence[id].English ? "English: " : "English Gloss: "}
+            </ThemedText>
+            <ThemedText>{sentence[id].English}</ThemedText>
 
             <View style={[styles.button__container, { backgroundColor: color.primary }]}>
                 <Pressable onPress={() => goToSentence()}>
                     <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
-                        {tiwi.recording ? "View" : "Add Recording"}
+                        {sentence[id].recording ? "View" : "Add Recording"}
                     </ThemedText>
                 </Pressable>
             </View>
