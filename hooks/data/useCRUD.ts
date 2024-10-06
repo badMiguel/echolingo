@@ -1,7 +1,6 @@
-import * as FileSystem from "expo-file-system";
-import { DataType, Entry } from "@/contexts/TiwiContext";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
-import { db } from "@/firebase/firebaseConfig";
+import { db, storage } from "@/firebase/firebaseConfig";
+import { StorageReference, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export type SaveRecReturn = {
     status: boolean;
@@ -21,27 +20,34 @@ export default function useCRUD() {
     // add recording to existing sentence
     async function saveRecording(uri: string, id: string): Promise<SaveRecReturn> {
         try {
-            const fileName = uri.split("/").pop();
-            if (!fileName) {
-                console.error("filename does not exist");
-                return { status: false };
-            }
+            const response = await fetch(uri);
+            const fileBlob = await response.blob();
 
-            const filePath = FileSystem.documentDirectory + fileName;
+            const filePath = `recording/${id}`;
+            let fileRef: StorageReference;
+            let downloadURL: string;
 
             try {
-                await FileSystem.moveAsync({
-                    from: uri,
-                    to: filePath,
-                });
+                // todo make fallback e.g. get ref again up to 3 times
+                fileRef = ref(storage, filePath);
+                if (!fileRef) {
+                    throw new Error("Failed to get reference for recording");
+                }
+
+                downloadURL = await getDownloadURL(fileRef);
+                if (!downloadURL) {
+                    throw new Error("Failed to get download url of recording");
+                }
+
+                await uploadBytes(fileRef, fileBlob);
             } catch (err) {
-                console.error("Failed to save recording to local storage", err);
+                console.error("Failed to save audio to firebase", err);
                 return { status: false };
             }
 
-            const saveStatus = await saveJsonFile(id, { recordingURI: fileName });
+            const saveStatus = await updateSentenceData(id, { recordingURI: downloadURL });
             if (!saveStatus.status) {
-                throw new Error("Failed to save recording details to json in local storage");
+                throw new Error("Failed to save recording details to firebase");
             }
 
             return { status: true, filePath: filePath };
@@ -54,7 +60,7 @@ export default function useCRUD() {
     // save other details
     async function saveDetails(id: string, { tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
         try {
-            const saveStatus = await saveJsonFile(id, {
+            const saveStatus = await updateSentenceData(id, {
                 tiwi: tiwi,
                 gTiwi: gTiwi,
                 english: english,
@@ -100,7 +106,7 @@ export default function useCRUD() {
 }
 
 // rewrite the actual json data
-async function saveJsonFile(id: string, updatedData: DataDetail): Promise<SaveRecReturn> {
+async function updateSentenceData(id: string, updatedData: DataDetail): Promise<SaveRecReturn> {
     try {
         const tiwiID = doc(db, "sentences", id);
 
