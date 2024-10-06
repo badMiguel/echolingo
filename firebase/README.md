@@ -1,10 +1,14 @@
-# Firebase Firestore Sample Usage
+# Firebase Sample Usage
+
+A simple guide on basic API calls for Firebase' Firestore and Storage
+
+## Firestore
 
 > [!NOTE]
 > Replace "**collectionName**" with the type of data
 > E.g. sentence for tiwi language data
 
-## Query-ing
+### Query-ing
 
 _a.k.a. filtering_
 
@@ -24,7 +28,7 @@ export async function query(item) {
 }
 ```
 
-## Adding Data
+### Adding Data
 
 ```typescript
 import { db } from "@/firebase/firebaseConfig";
@@ -43,7 +47,7 @@ export async function saveDataTest() {
 }
 ```
 
-## Reading Data
+### Reading Data
 
 ```typescript
 export async function readDataTest() {
@@ -59,7 +63,7 @@ export async function readDataTest() {
 }
 ```
 
-## Modifying Data
+### Modifying Data
 
 ```typescript
 import { db } from "@/firebase/firebaseConfig";
@@ -82,7 +86,7 @@ export async function updateDataTest(item) {
 > [!TIP]
 > Use query to get the id of the data to be modified
 
-## Deleting Data
+### Deleting Data
 
 ```typescript
 export async function deleteDataTest(item) {
@@ -99,3 +103,29 @@ export async function deleteDataTest(item) {
 
 > [!TIP]
 > Use query to get the id of the data to be modified
+
+More information on official [Firebase docs](https://firebase.google.com/docs/firestore)
+
+## Storage
+
+### Uploading
+
+```typescript
+// if you only have the uri/path to the file
+
+export async function uploadFile(uri) {
+    const response = await fetch(uri);
+    const fileBlob = await response.blob();
+    const filePath = `recording/${id}`;
+
+    try {
+        fileRef = ref(storage, filePath);
+        await uploadBytes(fileRef, fileBlob);
+        downloadURL = await getDownloadURL(fileRef);
+    } catch (err) {
+        console.error("Failed to upload file");
+    }
+}
+```
+
+More information on official [Firebase docs](https://firebase.google.com/docs/storage)
