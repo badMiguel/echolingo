@@ -141,11 +141,11 @@ async function updateSentenceData(id: string, updatedData: DataDetail): Promise<
             updateFields["Topic"] = updatedData.topic;
         }
         if (updatedData.recordingURI) {
-            updateFields["Recording"] = updatedData.recordingURI;
+            updateFields["recording"] = updatedData.recordingURI;
         }
 
         if (Object.keys(updateFields).length > 0) {
-            await updateDoc(tiwiID, { updateFields });
+            await updateDoc(tiwiID, updateFields);
         }
 
         // small delay
