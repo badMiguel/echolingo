@@ -34,12 +34,12 @@ export default function useCRUD() {
                     throw new Error("Failed to get reference for recording");
                 }
 
+                await uploadBytes(fileRef, fileBlob);
+
                 downloadURL = await getDownloadURL(fileRef);
                 if (!downloadURL) {
                     throw new Error("Failed to get download url of recording");
                 }
-
-                await uploadBytes(fileRef, fileBlob);
             } catch (err) {
                 console.error("Failed to save audio to firebase", err);
                 return { status: false };
@@ -81,16 +81,27 @@ export default function useCRUD() {
 
     async function addDetails({ tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
         try {
-            const docRef = await addDoc(collection(db, "sentences"), {
-                English: english,
-                Tiwi: tiwi,
-                Topic: topic,
-                "Gloss (english)": gEnglish,
-                "Gloss (tiwi)": gTiwi,
-                "Image name (optional)": null,
-                recording: null,
-                completed: false,
-            });
+            const newSentenceData: { [key: string]: string } = {};
+
+            if (tiwi) {
+                newSentenceData["Tiwi"] = tiwi;
+            }
+
+            if (gTiwi) {
+                newSentenceData["Gloss (tiwi)"] = gTiwi;
+            }
+
+            if (english) {
+                newSentenceData["English"] = english;
+            }
+            if (gEnglish) {
+                newSentenceData["Gloss (english)"] = gEnglish;
+            }
+            if (topic) {
+                newSentenceData["Topic"] = topic;
+            }
+
+            const docRef = await addDoc(collection(db, "sentences"), newSentenceData);
 
             // small delay
             await new Promise((resolve) => setTimeout(resolve, 100));

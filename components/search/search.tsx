@@ -21,8 +21,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
         const trie = new Trie();
 
         for (const item in data) {
-            trie.insert(data[item].English, item);
-            trie.insert(data[item].Tiwi, item);
+            if (data[item]["English"]) {
+                trie.insert(data[item].English, item);
+            }
+            if (data[item]["Tiwi"]) {
+                trie.insert(data[item].Tiwi, item);
+            }
             if (data[item]["Gloss (tiwi)"]) {
                 trie.insert(data[item]["Gloss (tiwi)"]!, item);
             }
