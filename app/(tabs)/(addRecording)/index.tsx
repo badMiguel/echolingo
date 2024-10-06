@@ -10,9 +10,9 @@ import categoryData from "@/data/json/category_data.json";
 import { Dropdown } from "react-native-element-dropdown";
 
 type AddDetailProp = {
-    currentID: number | undefined;
+    currentID: string | undefined;
     current: Entry | undefined;
-    changeCurrent: (currentID: number) => void;
+    changeCurrent: (currentID: string) => void;
 };
 
 const useColor = () => {
@@ -24,7 +24,7 @@ const useColor = () => {
 };
 
 export default function Add() {
-    const [currentID, setCurrentID] = useState<number>();
+    const [currentID, setCurrentID] = useState<string>();
     const [current, setCurrent] = useState<Entry | undefined>();
 
     const { sentenceID } = useLocalSearchParams();
@@ -37,12 +37,12 @@ export default function Add() {
             const id: string = Array.isArray(sentenceID) ? sentenceID[0] : sentenceID;
             const item: Entry | undefined = data[id];
 
-            setCurrentID(parseInt(id));
+            setCurrentID(id);
             setCurrent(item);
         }
     }, [sentenceID, data]);
 
-    const updateCurrent = (currentID: number) => {
+    const updateCurrent = (currentID: string) => {
         setCurrentID(currentID);
     };
 
@@ -265,7 +265,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
     );
 };
 
-function AddRecording({ currentID }: { currentID: number | undefined }) {
+function AddRecording({ currentID }: { currentID: string | undefined }) {
     const color = useColor();
     const record = () => {
         router.push({

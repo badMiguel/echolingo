@@ -68,7 +68,7 @@ export function Record({
     const { saveRecording } = useCRUD();
     const { current } = useLocalSearchParams();
 
-    const currentID: number = Array.isArray(current) ? parseInt(current[0]) : parseInt(current);
+    const currentID: string = Array.isArray(current) ? current[0] : current;
 
     useEffect(() => {
         setTempUri(uri);

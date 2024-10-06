@@ -95,7 +95,7 @@ export default function useCRUD() {
             // small delay
             await new Promise((resolve) => setTimeout(resolve, 100));
 
-            return { status: true, currentID: docRef };
+            return { status: true, currentID: docRef.id };
         } catch (err) {
             console.error("Failed to save sentence to database:", err);
             return { status: false };

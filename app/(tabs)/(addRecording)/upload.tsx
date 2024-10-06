@@ -22,7 +22,7 @@ export default function Upload() {
     const { saveRecording } = useCRUD();
 
     const { current } = useLocalSearchParams();
-    const id = Array.isArray(current) ? parseInt(current[0]) : parseInt(current);
+    const id: string = Array.isArray(current) ? (current[0]) : (current);
 
     const useDocumentPicker = async () => {
         const uploadedUri = await openDocumentPicker();
