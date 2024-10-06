@@ -23,6 +23,7 @@ export default function RootLayout() {
                         headerStyle: { backgroundColor: bgColor, shadowColor: "black" },
                         headerTintColor: textColor,
                         tabBarLabelStyle: { fontSize: 12 },
+                        tabBarHideOnKeyboard: true,
                     }}
                 >
                     <Tabs.Screen
