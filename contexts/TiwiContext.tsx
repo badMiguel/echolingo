@@ -51,7 +51,6 @@ export const emptyTiwiData = (complete?: boolean) => {
 const TiwiContext = createContext<Entry | undefined>(undefined);
 const SetTiwiContext = createContext<React.Dispatch<SetStateAction<Entry>> | undefined>(undefined);
 const TiwiListContext = createContext<DataType | undefined>(undefined);
-const UpdateDataContext = createContext<() => void>(() => {});
 
 export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [currentTiwi, setCurrentTiwi] = useState<Entry>(emptyTiwiData);
@@ -116,23 +115,10 @@ export const TiwiProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setFilteredList(tiwiList);
     }, [tiwiData, category]);
 
-    const updateData = async () => {
-        // todo removed this idk what it will do yet
-        //const data = await loadJson();
-        // todo error handling
-        // if (data) {
-        //     setTiwiData(data);
-        // }
-    };
-
     return (
         <TiwiListContext.Provider value={filteredList}>
             <TiwiContext.Provider value={currentTiwi}>
-                <SetTiwiContext.Provider value={setCurrentTiwi}>
-                    <UpdateDataContext.Provider value={updateData}>
-                        {children}
-                    </UpdateDataContext.Provider>
-                </SetTiwiContext.Provider>
+                <SetTiwiContext.Provider value={setCurrentTiwi}>{children}</SetTiwiContext.Provider>
             </TiwiContext.Provider>
         </TiwiListContext.Provider>
     );
@@ -152,8 +138,4 @@ export function useSetTiwiContext() {
 
 export const useTiwiListContext = () => {
     return useContext(TiwiListContext);
-};
-
-export const useUpdateData = () => {
-    return useContext(UpdateDataContext);
 };

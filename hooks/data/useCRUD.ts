@@ -1,5 +1,5 @@
 import * as FileSystem from "expo-file-system";
-import { DataType, Entry, useUpdateData } from "@/contexts/TiwiContext";
+import { DataType, Entry } from "@/contexts/TiwiContext";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 
@@ -18,8 +18,6 @@ type DataDetail = {
 };
 
 export default function useCRUD() {
-    const update = useUpdateData();
-
     // add recording to existing sentence
     async function saveRecording(uri: string, id: string): Promise<SaveRecReturn> {
         try {
@@ -41,7 +39,7 @@ export default function useCRUD() {
                 return { status: false };
             }
 
-            const saveStatus = await saveJsonFile(id, { recordingURI: fileName }, update);
+            const saveStatus = await saveJsonFile(id, { recordingURI: fileName });
             if (!saveStatus.status) {
                 throw new Error("Failed to save recording details to json in local storage");
             }
@@ -56,11 +54,13 @@ export default function useCRUD() {
     // save other details
     async function saveDetails(id: string, { tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
         try {
-            const saveStatus = await saveJsonFile(
-                id,
-                { tiwi: tiwi, gTiwi: gTiwi, english: english, gEnglish: gEnglish, topic: topic },
-                update
-            );
+            const saveStatus = await saveJsonFile(id, {
+                tiwi: tiwi,
+                gTiwi: gTiwi,
+                english: english,
+                gEnglish: gEnglish,
+                topic: topic,
+            });
 
             if (!saveStatus) {
                 throw new Error("Failed to save sentence details");
@@ -88,7 +88,6 @@ export default function useCRUD() {
 
             // small delay
             await new Promise((resolve) => setTimeout(resolve, 100));
-            update();
 
             return { status: true, currentID: docRef };
         } catch (err) {
@@ -101,11 +100,7 @@ export default function useCRUD() {
 }
 
 // rewrite the actual json data
-async function saveJsonFile(
-    id: string,
-    updatedData: DataDetail,
-    updateData: () => void
-): Promise<SaveRecReturn> {
+async function saveJsonFile(id: string, updatedData: DataDetail): Promise<SaveRecReturn> {
     try {
         const tiwiID = doc(db, "sentences", id);
 
@@ -138,7 +133,6 @@ async function saveJsonFile(
 
         // small delay
         await new Promise((resolve) => setTimeout(resolve, 100));
-        updateData();
 
         return { status: true }; // todo check what this does potential foot gun filePath: fileUri };
     } catch (err) {

@@ -25,10 +25,9 @@ async function addDefaultData() {
         console.log("Successfully added all data");
     } catch (error) {
         console.error("Error adding default data:", error);
-
     }
 
-    return
+    return;
 }
 
-addDefaultData()
+addDefaultData();

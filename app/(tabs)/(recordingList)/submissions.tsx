@@ -11,10 +11,7 @@ export default function Submissions() {
 
     useEffect(() => {
         const fetchSubmissions = async () => {
-            const q = query(
-                collection(db, "submissions"),
-                where("sentenceId", "==", sentenceID)
-            );
+            const q = query(collection(db, "submissions"), where("sentenceId", "==", sentenceID));
             const querySnapshot = await getDocs(q);
             const submissionList = querySnapshot.docs.map((doc) => ({
                 recordingUri: doc.data().recordingUrl,
