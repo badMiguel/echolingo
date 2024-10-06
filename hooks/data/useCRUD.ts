@@ -109,35 +109,31 @@ async function saveJsonFile(
     try {
         const tiwiID = doc(db, "sentences", id);
 
+        const updateFields: { [key: string]: string } = {};
+
         if (updatedData.tiwi) {
-            await updateDoc(tiwiID, {
-                Tiwi: updatedData.tiwi,
-            });
+            updateFields["Tiwi"] = updatedData.tiwi;
         }
+
         if (updatedData.gTiwi) {
-            await updateDoc(tiwiID, {
-                "Gloss (tiwi)": updatedData.gTiwi,
-            });
+            updateFields["Gloss (tiwi)"] = updatedData.gTiwi;
         }
+
         if (updatedData.english) {
-            await updateDoc(tiwiID, {
-                English: updatedData.gTiwi,
-            });
+            updateFields["English"] = updatedData.english;
         }
         if (updatedData.gEnglish) {
-            await updateDoc(tiwiID, {
-                "Gloss (english)": updatedData.gTiwi,
-            });
+            updateFields["Gloss (english)"] = updatedData.gEnglish;
         }
         if (updatedData.topic) {
-            await updateDoc(tiwiID, {
-                Topic: updatedData.gTiwi,
-            });
+            updateFields["Topic"] = updatedData.topic;
         }
         if (updatedData.recordingURI) {
-            await updateDoc(tiwiID, {
-                Recording: updatedData.gTiwi,
-            });
+            updateFields["Recording"] = updatedData.recordingURI;
+        }
+
+        if (Object.keys(updateFields).length > 0) {
+            await updateDoc(tiwiID, { updateFields });
         }
 
         // small delay
