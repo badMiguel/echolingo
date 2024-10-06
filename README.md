@@ -1,6 +1,9 @@
 # HIT238
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+EchoLingo is a mobile application that aims to teach and improve students' Tiwi
+language skills. The app provides an easy-to-use interface to display a list of
+sentences provided by the teacher. The app also provides an interface for teachers
+to update the database to be available for everyone.
 
 ## Get started
 
