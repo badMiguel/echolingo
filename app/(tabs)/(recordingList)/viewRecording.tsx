@@ -30,7 +30,7 @@ export default function ViewRecording() {
                 setTiwi(tiwiData);
 
                 if (tiwiData.recording) {
-                    setUri(FileSystem.documentDirectory + tiwiData.recording);
+                    setUri(tiwiData.recording);
                 }
             }
         }
