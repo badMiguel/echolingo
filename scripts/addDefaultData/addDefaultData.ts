@@ -1,11 +1,11 @@
-import { db } from "../firebase/firebaseConfig";
+import { db } from "../../firebase/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
-import data from "../data/json/tiwi_list.json";
+import data from "../../data/json/tiwi_list.json";
 
 // save default data in json to firebase
 // run: ts-node addDefaultData.ts
 async function addDefaultData() {
-    console.log("hi");
+    console.log("Inserting Sentence Data");
     try {
         for (const item of data) {
             const docRef = await addDoc(collection(db, "sentences"), {
@@ -23,11 +23,11 @@ async function addDefaultData() {
         }
 
         console.log("Successfully added all data");
+        process.exit(0);
     } catch (error) {
         console.error("Error adding default data:", error);
+        process.exit(1);
     }
-
-    return;
 }
 
 addDefaultData();
