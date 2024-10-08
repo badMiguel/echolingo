@@ -1,9 +1,10 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Trie } from "./trie";
 import { useTiwiListContext } from "@/contexts/TiwiContext";
 import { ThemedText } from "../ThemedText";
+import { router, useLocalSearchParams } from "expo-router";
 
 type SearchBarProps = {
     searchResults: (data: string[] | Map<string, string[]>, searchedTerm: string) => void;
@@ -16,7 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
 
     const [searchedTerm, setSearchedTerm] = useState<string>("");
     const [results, setResults] = useState<string[] | Map<string, string[]>>([]);
-    const [suggestionList, setSuggestionsList] = useState<string[]>([]);
+    const [suggestionList, setSuggestionsList] = useState<[string, string[]][]>([]);
     const trieRef = useRef<Trie | null>(null);
 
     const data = useTiwiListContext();
@@ -61,14 +62,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
         }
 
         if (text.length > 0) {
-            const suggestions: string[] = [];
+            const suggestions: [string, string[]][] = [];
             for (const item of potential) {
                 if (suggestions.length === 5) {
                     break;
                 }
 
-                if (Array.isArray(item)) {
-                    suggestions.push(item[0]);
+                if (typeof item !== "string") {
+                    suggestions.push([item[0], item[1]]);
                 }
             }
 
@@ -79,6 +80,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
 
         setResults(potential);
         setSearchedTerm(text);
+    };
+
+    const suggestionPressed = (id: string[]) => {
+        router.push({
+            pathname: "/(addRecording)",
+            params: { sentenceID: id[0] },
+        });
     };
 
     return (
@@ -95,15 +103,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
             />
             {suggestionList.length > 0 && (
                 <View style={[styles.suggestion__container, { backgroundColor: primary_tint }]}>
-                    <>
-                        <ThemedText type="defaultSemiBold">Suggestions:</ThemedText>
-                        {suggestionList.map((item, key) => (
-                            <View key={key} style={[styles.suggestion, {}]}>
+                    <ThemedText type="defaultSemiBold">Suggestions:</ThemedText>
+                    {suggestionList.map((item, key) => (
+                        <Pressable key={key} onPress={() => suggestionPressed(item[1])}>
+                            <View style={[styles.suggestion, {}]}>
                                 <Text>-</Text>
-                                <ThemedText>{item}</ThemedText>
+                                <ThemedText>{item[0]}</ThemedText>
                             </View>
-                        ))}
-                    </>
+                        </Pressable>
+                    ))}
                 </View>
             )}
         </View>
