@@ -12,6 +12,7 @@ type SearchBarProps = {
 const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const textColor = useThemeColor({}, "text");
     const primary = useThemeColor({}, "primary");
+    const primary_tint = useThemeColor({}, "primary_tint");
 
     const [searchedTerm, setSearchedTerm] = useState<string>("");
     const [results, setResults] = useState<string[] | string[][]>([]);
@@ -71,6 +72,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
             }
 
             setSuggestionsList(suggestions);
+        } else {
+            setSuggestionsList([]);
         }
 
         setResults(potential);
@@ -89,9 +92,19 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
                 cursorColor={textColor}
                 onSubmitEditing={() => handleSearch()}
             />
-            {suggestionList.map((item, key) => (
-                <ThemedText>{item}</ThemedText>
-            ))}
+            {suggestionList.length > 0 && (
+                <View style={[styles.suggestion__container, { backgroundColor: primary_tint }]}>
+                    <>
+                        <ThemedText type="defaultSemiBold">Suggestions:</ThemedText>
+                        {suggestionList.map((item, key) => (
+                            <View style={[styles.suggestion, {}]}>
+                                <Text>-</Text>
+                                <ThemedText>{item}</ThemedText>
+                            </View>
+                        ))}
+                    </>
+                </View>
+            )}
         </View>
     );
 };
@@ -108,5 +121,21 @@ const styles = StyleSheet.create({
     searchBar: {
         fontSize: 20,
         borderBottomWidth: 0.2,
+    },
+
+    suggestion__container: {
+        gap: 10,
+        marginTop: 20,
+        paddingRight: 35,
+        paddingLeft: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+
+    suggestion: {
+        flexDirection: "row",
+        gap: 15,
     },
 });
