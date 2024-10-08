@@ -1,6 +1,6 @@
-import { db } from "../firebase/firebaseConfig";
+import { db } from "../../firebase/firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
-import data from "../data/json/tiwi_list.json";
+import data from "../../data/json/tiwi_list.json";
 
 // save default data in json to firebase
 // run: ts-node addDefaultData.ts
