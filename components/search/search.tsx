@@ -5,14 +5,14 @@ import { Trie } from "./trie";
 import { useTiwiListContext } from "@/contexts/TiwiContext";
 
 type SearchBarProps = {
-    searchResults: (data: string[]) => void;
+    searchResults: (data: string[], searchedTerm: string) => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const textColor = useThemeColor({}, "text");
     const primary = useThemeColor({}, "primary");
 
-    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [searchedTerm, setSearchTerm] = useState<string>("");
     const trieRef = useRef<Trie | null>(null);
 
     const data = useTiwiListContext();
@@ -41,15 +41,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const handleSearch = () => {
         // todo error handling
         if (data) {
-            const results = trieRef.current?.prefixOf(searchTerm, data);
-            searchResults(results ? results : []);
+            const results = trieRef.current?.prefixOf(searchedTerm, data);
+            searchResults(results ? results : [], searchedTerm);
         }
     };
 
     return (
         <TextInput
             autoCorrect={false}
-            value={searchTerm}
+            value={searchedTerm}
             onChangeText={(text) => setSearchTerm(text)}
             style={[styles.searchBar, {}]}
             placeholder={"Search here..."}
