@@ -6,7 +6,7 @@ import { useTiwiListContext } from "@/contexts/TiwiContext";
 import { ThemedText } from "../ThemedText";
 
 type SearchBarProps = {
-    searchResults: (data: string[] | string[][], searchedTerm: string) => void;
+    searchResults: (data: string[] | Map<string, string[]>, searchedTerm: string) => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
@@ -15,7 +15,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const primary_tint = useThemeColor({}, "primary_tint");
 
     const [searchedTerm, setSearchedTerm] = useState<string>("");
-    const [results, setResults] = useState<string[] | string[][]>([]);
+    const [results, setResults] = useState<string[] | Map<string, string[]>>([]);
     const [suggestionList, setSuggestionsList] = useState<string[]>([]);
     const trieRef = useRef<Trie | null>(null);
 
@@ -44,6 +44,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
 
     const handleSearch = () => {
         searchResults(results ? results : [], searchedTerm);
+        setSuggestionsList([]);
     };
 
     const handleChange = (text: string) => {
@@ -60,14 +61,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
         }
 
         if (text.length > 0) {
-            const suggestions = [];
+            const suggestions: string[] = [];
             for (const item of potential) {
                 if (suggestions.length === 5) {
                     break;
                 }
 
                 if (Array.isArray(item)) {
-                    suggestions.push(item[1]);
+                    suggestions.push(item[0]);
                 }
             }
 
@@ -97,7 +98,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
                     <>
                         <ThemedText type="defaultSemiBold">Suggestions:</ThemedText>
                         {suggestionList.map((item, key) => (
-                            <View style={[styles.suggestion, {}]}>
+                            <View key={key} style={[styles.suggestion, {}]}>
                                 <Text>-</Text>
                                 <ThemedText>{item}</ThemedText>
                             </View>
