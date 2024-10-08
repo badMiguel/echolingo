@@ -7,7 +7,6 @@ import { TiwiProvider } from "@/contexts/TiwiContext";
 export default function RootLayout() {
     const primary = useThemeColor({}, "primary");
     const secondary = useThemeColor({}, "secondary");
-    const primary_tint = useThemeColor({}, "primary_tint");
     const bgColor = useThemeColor({}, "background");
     const textColor = useThemeColor({}, "text");
 

@@ -1,18 +1,21 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Trie } from "./trie";
 import { useTiwiListContext } from "@/contexts/TiwiContext";
+import { ThemedText } from "../ThemedText";
 
 type SearchBarProps = {
-    searchResults: (data: string[], searchedTerm: string) => void;
+    searchResults: (data: string[] | string[][], searchedTerm: string) => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const textColor = useThemeColor({}, "text");
     const primary = useThemeColor({}, "primary");
 
-    const [searchedTerm, setSearchTerm] = useState<string>("");
+    const [searchedTerm, setSearchedTerm] = useState<string>("");
+    const [results, setResults] = useState<string[] | string[][]>([]);
+    const [suggestionList, setSuggestionsList] = useState<string[]>([]);
     const trieRef = useRef<Trie | null>(null);
 
     const data = useTiwiListContext();
@@ -39,34 +42,70 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     }, [data]);
 
     const handleSearch = () => {
-        // todo error handling
-        if (data) {
-            const results = trieRef.current?.prefixOf(searchedTerm, data);
-            searchResults(results ? results : [], searchedTerm);
+        searchResults(results ? results : [], searchedTerm);
+    };
+
+    const handleChange = (text: string) => {
+        // todo better error handle
+        if (!data) {
+            console.error("Error loading data");
+            return searchResults([], "");
         }
+
+        const potential = trieRef.current?.prefixOf(text, data);
+        // todo better error handle
+        if (!potential) {
+            return searchResults([], "");
+        }
+
+        if (text.length > 0) {
+            const suggestions = [];
+            for (const item of potential) {
+                if (suggestions.length === 5) {
+                    break;
+                }
+
+                if (Array.isArray(item)) {
+                    suggestions.push(item[1]);
+                }
+            }
+
+            setSuggestionsList(suggestions);
+        }
+
+        setResults(potential);
+        setSearchedTerm(text);
     };
 
     return (
-        <TextInput
-            autoCorrect={false}
-            value={searchedTerm}
-            onChangeText={(text) => setSearchTerm(text)}
-            style={[styles.searchBar, {}]}
-            placeholder={"Search here..."}
-            placeholderTextColor={primary}
-            cursorColor={textColor}
-            onSubmitEditing={() => handleSearch()}
-        />
+        <View style={[styles.mainView, {}]}>
+            <TextInput
+                autoCorrect={false}
+                value={searchedTerm}
+                onChangeText={(text) => handleChange(text)}
+                style={[styles.searchBar, {}]}
+                placeholder={"Search here..."}
+                placeholderTextColor={primary}
+                cursorColor={textColor}
+                onSubmitEditing={() => handleSearch()}
+            />
+            {suggestionList.map((item, key) => (
+                <ThemedText>{item}</ThemedText>
+            ))}
+        </View>
     );
 };
 
 export default SearchBar;
 
 const styles = StyleSheet.create({
-    searchBar: {
+    mainView: {
         marginTop: 20,
         marginLeft: 30,
         marginRight: 30,
+    },
+
+    searchBar: {
         fontSize: 20,
         borderBottomWidth: 0.2,
     },

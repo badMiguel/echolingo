@@ -36,7 +36,7 @@ function filterRecorded(data: DataType): { recorded: DataType[]; notRecorded: Da
 export default function RecordingList() {
     const [dataRecorded, setDataRecorded] = useState<DataType[]>([]);
     const [dataNotRecorded, setDataNotRecorded] = useState<DataType[]>([]);
-    const [searchResults, setSearchResults] = useState<string[] | undefined>();
+    const [searchResults, setSearchResults] = useState<string[] | string[][] | undefined>();
     const data = useTiwiListContext();
     const color = useColor();
 
@@ -51,11 +51,18 @@ export default function RecordingList() {
     }, []);
 
     useEffect(() => {
-        // todo error handling and optimisation
-        if (searchResults) {
+        // todo better error handling and optimisation
+        if (!data) {
+            console.error("Error Loading Data");
+        } else if (searchResults) {
             const newItems: DataType = {};
-            if (data) {
-                for (const i of searchResults) {
+
+            if (Array.isArray(searchResults[0])) {
+                for (const i of searchResults as string[][]) {
+                    newItems[i[0]] = data[i[0]];
+                }
+            } else {
+                for (const i of searchResults as string[]) {
                     newItems[i] = data[i];
                 }
             }
@@ -83,7 +90,7 @@ export default function RecordingList() {
         },
     ];
 
-    const handleSearchResults = (searchList: string[]) => {
+    const handleSearchResults = (searchList: string[] | string[][]) => {
         setSearchResults(searchList);
     };
 

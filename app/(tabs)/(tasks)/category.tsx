@@ -34,12 +34,21 @@ export default function Category() {
         }
     }, [navigation]);
 
-    const handleSearch = (searchList: string[], searchedTerm: string) => {
-        // todo error handling
-        if (tiwiList) {
+    const handleSearch = (searchList: string[] | string[][], searchedTerm: string) => {
+        // todo better error handling
+        if (!tiwiList) {
+            console.error("Error loading tiwi list");
+        } else {
             const newItems: DataType = {};
-            for (const i of searchList) {
-                newItems[i] = tiwiList[i];
+
+            if (Array.isArray(searchList[0])) {
+                for (const i of searchList as string[][]) {
+                    newItems[i[0]] = tiwiList[i[0]];
+                }
+            } else {
+                for (const i of searchList as string[]) {
+                    newItems[i] = tiwiList[i];
+                }
             }
 
             setSearchedTerm(searchedTerm);

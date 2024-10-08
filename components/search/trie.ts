@@ -34,8 +34,8 @@ export class Trie {
         node.id.push(id);
     }
 
-    prefixOf(searchTerm: string, data: DataType): string[] {
-        const potential: string[] = [];
+    prefixOf(searchTerm: string, data: DataType): string[][] | string[] {
+        const potential: string[][] = [];
         let prefix: string = "";
         let node: TrieNode = this.root;
 
@@ -46,7 +46,7 @@ export class Trie {
 
             prefix += char;
             if (node.id.length > 0) {
-                potential.push(...node.id);
+                potential.push([...node.id, prefix]);
             }
 
             // todo paginate this or something to not get all child at once
@@ -65,14 +65,14 @@ export class Trie {
         return potential;
     }
 
-    private checkChild(potential: string[], prefix: string, node: TrieNode) {
+    private checkChild(potential: string[][], prefix: string, node: TrieNode) {
         // todo paginate this or something to not get all child at once
         // if (potential.length > 10) {
         //     return;
         // }
 
         if (node.id.length > 0) {
-            potential.push(...node.id);
+            potential.push([...node.id, prefix]);
         }
 
         for (const child of node.children.keys()) {
