@@ -4,8 +4,9 @@ import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Trie } from "./trie";
 import { useSetTiwiContext, useTiwiListContext } from "@/contexts/TiwiContext";
 import { ThemedText } from "../ThemedText";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import { useUserTypeContext } from "@/contexts/UserType";
+import { Ionicons } from "@expo/vector-icons";
 
 type SearchBarProps = {
     searchResults: (data: string[] | Map<string, string[]>, searchedTerm: string) => void;
@@ -120,7 +121,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
                     {suggestionList.map((item, key) => (
                         <Pressable key={key} onPress={() => suggestionPressed(item[1])}>
                             <View style={[styles.suggestion, {}]}>
-                                <Text>-</Text>
+                                <Ionicons name="open-outline" size={20} />
                                 <ThemedText>{item[0]}</ThemedText>
                             </View>
                         </Pressable>
