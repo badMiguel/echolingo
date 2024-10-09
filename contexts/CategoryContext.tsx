@@ -29,7 +29,7 @@ export function useCategoryContext() {
 export function useSetCategoryContext() {
     const context = useContext(SetCategoryContext);
     if (!context) {
-        throw new Error("useSetCategoryContext must be used within a CategoryProvider");
+        console.error("useSetCategoryContext must be used within a CategoryProvider");
     }
 
     return context;
