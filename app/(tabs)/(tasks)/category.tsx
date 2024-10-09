@@ -22,7 +22,8 @@ export default function Category() {
     const tiwiList = useTiwiListContext();
     const color = useColor();
 
-    const [searchResults, setSearchResults] = useState<DataType | undefined>();
+    const [searchedTerm, setSearchedTerm] = useState<string>();
+    const [searchResults, setSearchResults] = useState<DataType>();
 
     // change header title dynamically
     useEffect(() => {
@@ -33,14 +34,26 @@ export default function Category() {
         }
     }, [navigation]);
 
-    const handleSearch = (searchList: string[]) => {
-        // todo error handling
-        if (tiwiList) {
+    const handleSearch = (searchList: string[] | Map<string, string[]>, searchedTerm: string) => {
+        // todo better error handling
+        if (!tiwiList) {
+            console.error("Error loading tiwi list");
+        } else {
             const newItems: DataType = {};
-            for (const i of searchList) {
-                newItems[i] = tiwiList[i];
+
+            if (Array.isArray(searchList)) {
+                for (const i of searchList) {
+                    newItems[i] = tiwiList[i];
+                }
+            } else {
+                for (const i of searchList) {
+                    for (const j of i[1]) {
+                        newItems[j] = tiwiList[j];
+                    }
+                }
             }
 
+            setSearchedTerm(searchedTerm);
             setSearchResults(newItems);
         }
     };
@@ -48,6 +61,11 @@ export default function Category() {
     return (
         <View style={[{ flex: 1, backgroundColor: color.bgColor }]}>
             <SearchBar searchResults={handleSearch} />
+            {searchResults && Object.entries(searchResults).length == 0 && (
+                <ThemedText style={{ padding: 30 }}>
+                    No search results for {searchedTerm}
+                </ThemedText>
+            )}
             {tiwiList ? (
                 <FlatList
                     style={styles.flatlist}
