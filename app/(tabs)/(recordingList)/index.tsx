@@ -5,6 +5,7 @@ import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import SearchBar from "@/components/search/search";
+import { Switch } from "react-native-paper";
 
 const useColor = () => {
     return {
@@ -39,6 +40,8 @@ export default function RecordingList() {
     const [searchResults, setSearchResults] = useState<
         string[] | Map<string, string[]> | undefined
     >();
+    const [showRecorded, setShowRecorded] = useState<boolean>(false);
+
     const data = useTiwiListContext();
     const color = useColor();
 
@@ -66,7 +69,7 @@ export default function RecordingList() {
             } else {
                 for (const i of searchResults) {
                     for (const j of i[1]) {
-                        newItems[j] = data[j];
+                        newItems[j] = data[i[0]];
                     }
                 }
             }
@@ -85,12 +88,14 @@ export default function RecordingList() {
 
     const sections = [
         {
-            title: "Not yet recorded",
-            data: dataNotRecorded.length > 0 ? dataNotRecorded : [{ "0": emptyTiwiData() }],
-        },
-        {
-            title: "With recordings",
-            data: dataRecorded.length > 0 ? dataRecorded : [{ "0": emptyTiwiData() }],
+            title: showRecorded ? "With Recording" : "Without Recording",
+            data: showRecorded
+                ? dataRecorded.length > 0
+                    ? dataRecorded
+                    : [{ "0": emptyTiwiData() }]
+                : dataNotRecorded.length > 0
+                    ? dataNotRecorded
+                    : [{ "0": emptyTiwiData() }],
         },
     ];
 
@@ -118,9 +123,13 @@ export default function RecordingList() {
                     )
                 }
                 renderSectionHeader={({ section: { title } }) => (
-                    <ThemedText type="subtitle" style={styles.sectionlist__header}>
-                        {title}
-                    </ThemedText>
+                    <View style={styles.sectionlist__header}>
+                        <ThemedText type="subtitle">{title}</ThemedText>
+                        <Switch
+                            onValueChange={() => setShowRecorded(!showRecorded)}
+                            value={showRecorded}
+                        />
+                    </View>
                 )}
                 style={styles.sectionlist}
             />
@@ -199,6 +208,8 @@ const styles = StyleSheet.create({
 
     sectionlist__header: {
         marginTop: 30,
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
 
     sentenceCard__container: {
