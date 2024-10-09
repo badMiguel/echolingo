@@ -2,9 +2,10 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Trie } from "./trie";
-import { useTiwiListContext } from "@/contexts/TiwiContext";
+import { useSetTiwiContext, useTiwiListContext } from "@/contexts/TiwiContext";
 import { ThemedText } from "../ThemedText";
 import { router, useLocalSearchParams } from "expo-router";
+import { useUserTypeContext } from "@/contexts/UserType";
 
 type SearchBarProps = {
     searchResults: (data: string[] | Map<string, string[]>, searchedTerm: string) => void;
@@ -20,6 +21,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const [suggestionList, setSuggestionsList] = useState<[string, string[]][]>([]);
     const trieRef = useRef<Trie | null>(null);
 
+    const userType = useUserTypeContext();
+    const setTiwi = useSetTiwiContext();
     const data = useTiwiListContext();
 
     useEffect(() => {
@@ -83,10 +86,20 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     };
 
     const suggestionPressed = (id: string[]) => {
-        router.push({
-            pathname: "/(addRecording)",
-            params: { sentenceID: id[0] },
-        });
+        if (userType === "student") {
+            // todo better error handling
+            if (setTiwi && data) {
+                setTiwi(data[id[0]]);
+            }
+            router.push({
+                pathname: "/sentence",
+            });
+        } else if (userType === "teacher") {
+            router.push({
+                pathname: "/(addRecording)",
+                params: { sentenceID: id[0] },
+            });
+        }
     };
 
     return (

@@ -15,7 +15,6 @@ export default function Home() {
     const date = new Date();
     const hours = date.getHours();
 
-
     const greetings = (): string => {
         if (hours < 12) {
             return "Morning";

@@ -34,7 +34,7 @@ export class Trie {
         node.id.push(id);
     }
 
-    prefixOf(searchTerm: string, data: DataType): Map<string, string[]>| string[] {
+    prefixOf(searchTerm: string, data: DataType): Map<string, string[]> | string[] {
         const potential = new Map<string, string[]>();
         let prefix: string = "";
         let node: TrieNode = this.root;
@@ -46,7 +46,7 @@ export class Trie {
 
             prefix += char;
             if (node.id.length > 0) {
-                potential.set(prefix, node.id)
+                potential.set(prefix, node.id);
             }
 
             // todo paginate this or something to not get all child at once
