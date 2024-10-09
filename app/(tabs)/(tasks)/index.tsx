@@ -94,7 +94,10 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
     const setCategory = useSetCategoryContext();
 
     const goToCategory = (categoryName: string) => {
-        setCategory(categoryName);
+        // todo error handling
+        if (setCategory) {
+            setCategory(categoryName);
+        }
         router.push({
             pathname: "/category",
         });
@@ -109,7 +112,7 @@ function CategoryCard({ categoryName, categoryImgSrc }: CategoryCardProps) {
                 ]}
             >
                 <View style={styles.categoryCard__label}>
-                    <ThemedText type="subtitle">{categoryName}</ThemedText>
+                    <ThemedText type="defaultSemiBold">{categoryName}</ThemedText>
                 </View>
                 <View style={styles.button__container}>
                     <Pressable
@@ -181,8 +184,9 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
         paddingLeft: 20,
         paddingRight: 20,
-        paddingBottom: 5,
+        paddingBottom: 3,
         paddingTop: 5,
+        justifyContent: "center",
         borderRadius: 10,
         flexShrink: 1,
     },
