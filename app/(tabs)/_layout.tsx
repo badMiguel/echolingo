@@ -1,8 +1,9 @@
-import { Tabs, useLocalSearchParams } from "expo-router";
+import { Tabs } from "expo-router";
 import { TabBarIcon, UserIcon, ClipboardListIcon } from "@/components/navigation/TabBarIcon";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { CategoryProvider } from "@/contexts/CategoryContext";
 import { TiwiProvider } from "@/contexts/TiwiContext";
+import { useUserTypeContext } from "@/contexts/UserType";
 
 export default function RootLayout() {
     const primary = useThemeColor({}, "primary");
@@ -10,8 +11,7 @@ export default function RootLayout() {
     const bgColor = useThemeColor({}, "background");
     const textColor = useThemeColor({}, "text");
 
-    const params = useLocalSearchParams();
-    const userType = Array.isArray(params.userType) ? params.userType[0] : params.userType;
+    const userType = useUserTypeContext();
 
     return (
         <CategoryProvider>

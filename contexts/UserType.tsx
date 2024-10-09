@@ -21,9 +21,10 @@ export function useUserTypeContext() {
 
 export function useSetUserTypeContext() {
     const setUserType = useContext(SetUserTypeContext);
-    if (!setUserType) {
-        console.error("Failed to use SetUserTypeContext");
-    }
+    // todo error handling
+    // if (!setUserType) {
+    //     console.error("Failed to use SetUserTypeContext");
+    // }
 
     return setUserType;
 }

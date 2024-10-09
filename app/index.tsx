@@ -13,15 +13,12 @@ export default function Index() {
 
     const login = (type: string, name: string) => {
         // todo better error handling
-        if (!setUserType) {
-            console.error("failed to use setUserTypeContext");
-        } else {
+        if (setUserType) {
             setUserType(type);
         }
         router.push({
             pathname: "/(tabs)",
             params: {
-                userType: type,
                 userName: name,
             },
         });

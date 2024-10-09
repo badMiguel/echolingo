@@ -3,6 +3,7 @@ import React from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useUserTypeContext } from "@/contexts/UserType";
 
 export default function Home() {
     const bgColor = useThemeColor({}, "background");
@@ -13,6 +14,7 @@ export default function Home() {
     const userName: string = Array.isArray(params.userName) ? params.userName[0] : params.userName;
     const date = new Date();
     const hours = date.getHours();
+
 
     const greetings = (): string => {
         if (hours < 12) {
