@@ -13,6 +13,7 @@ export default function RootLayout() {
                 screenOptions={{
                     headerStyle: { backgroundColor: bgColor },
                     headerTintColor: textColor,
+                    headerTitleStyle: { fontFamily: "Poppins-SemiBold"},
                 }}
             >
                 <Stack.Screen

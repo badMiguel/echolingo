@@ -13,6 +13,7 @@ function recordingListLayout() {
                     backgroundColor: bgColor,
                 },
                 headerTintColor: textColor,
+                headerTitleStyle: { fontFamily: "Poppins-SemiBold" },
             }}
         >
             <Stack.Screen

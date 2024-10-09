@@ -12,6 +12,7 @@ const TasksLayout = () => {
                     backgroundColor: bgColor,
                 },
                 headerTintColor: textColor,
+                headerTitleStyle: { fontFamily: "Poppins-SemiBold" },
             }}
         >
             <Stack.Screen

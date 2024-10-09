@@ -12,6 +12,7 @@ export default function AddRecordingLayout() {
                     backgroundColor: bgColor,
                 },
                 headerTintColor: textColor,
+                headerTitleStyle: { fontFamily: "Poppins-SemiBold" },
             }}
         >
             <Stack.Screen

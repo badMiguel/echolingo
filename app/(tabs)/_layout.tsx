@@ -24,6 +24,7 @@ export default function RootLayout() {
                         headerTintColor: textColor,
                         tabBarLabelStyle: { fontSize: 12 },
                         tabBarHideOnKeyboard: true,
+                        headerTitleStyle: { fontFamily: "Poppins-SemiBold" },
                     }}
                 >
                     <Tabs.Screen
