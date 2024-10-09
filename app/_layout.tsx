@@ -11,24 +11,11 @@ export default function RootLayout() {
         <UserTypeProvider>
             <Stack
                 screenOptions={{
-                    headerStyle: { backgroundColor: bgColor },
-                    headerTintColor: textColor,
-                    headerTitleStyle: { fontFamily: "Poppins-SemiBold"},
+                    headerShown: false,
                 }}
             >
-                <Stack.Screen
-                    name="(tabs)"
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="index"
-                    options={{
-                        headerShown: true,
-                        title: "Choose User Type",
-                    }}
-                />
+                <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="index" />
             </Stack>
         </UserTypeProvider>
     );

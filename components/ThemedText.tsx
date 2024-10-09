@@ -1,12 +1,25 @@
 import { Text, type TextProps, StyleSheet } from "react-native";
-
 import { useThemeColor } from "@/hooks/useThemeColor";
+import * as Font from "expo-font";
 
 export type ThemedTextProps = TextProps & {
     lightColor?: string;
     darkColor?: string;
     type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
 };
+
+export async function loadFont() {
+    await Font.loadAsync({
+        "Poppins-ExtraBold": require("@/assets/fonts/Poppins-ExtraBold.ttf"),
+        "Poppins-SemiBold": require("@/assets/fonts/Poppins-SemiBold.ttf"),
+        "Poppins-Regular": require("@/assets/fonts/Poppins-Regular.ttf"),
+        "Poppins-Medium": require("@/assets/fonts/Poppins-Medium.ttf"),
+        "Poppins-Black": require("@/assets/fonts/Poppins-Black.ttf"),
+        "Poppins-Bold": require("@/assets/fonts/Poppins-Bold.ttf"),
+    });
+
+    return true;
+}
 
 export function ThemedText({
     style,
@@ -47,11 +60,11 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 40,
         lineHeight: 50,
-        fontFamily: "Poppins-Bold"
+        fontFamily: "Poppins-Bold",
     },
     subtitle: {
         fontSize: 25,
-        fontFamily: "Poppins-SemiBold"
+        fontFamily: "Poppins-SemiBold",
     },
     link: {
         lineHeight: 30,

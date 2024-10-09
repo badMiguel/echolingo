@@ -1,34 +1,35 @@
 import { View, Button, StyleSheet, Text } from "react-native";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { router } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { UserTypeProvider, useSetUserTypeContext } from "@/contexts/UserType";
-import * as Font from "expo-font";
+import { useSetUserTypeContext } from "@/contexts/UserType";
+import { ThemedText, loadFont } from "@/components/ThemedText";
+import * as SplashScreen from "expo-splash-screen";
 
 export const UserTypeContext = createContext("");
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 export default function Index() {
     const bgColor = useThemeColor({}, "background");
     const buttonColor = useThemeColor({}, "primary");
     const setUserType = useSetUserTypeContext();
 
-    const [fontLoaded, setFontLoaded] = useState<boolean>(false);
-
-    const loadFonts = async () => {
-        await Font.loadAsync({
-            "Poppins-ExtraBold": require("@/assets/fonts/Poppins-ExtraBold.ttf"),
-            "Poppins-SemiBold": require("@/assets/fonts/Poppins-SemiBold.ttf"),
-            "Poppins-Regular": require("@/assets/fonts/Poppins-Regular.ttf"),
-            "Poppins-Medium": require("@/assets/fonts/Poppins-Medium.ttf"),
-            "Poppins-Black": require("@/assets/fonts/Poppins-Black.ttf"),
-            "Poppins-Bold": require("@/assets/fonts/Poppins-Bold.ttf"),
-        });
-
-        setFontLoaded(true);
-    };
+    const [appReady, setAppReady] = useState<boolean>(false);
 
     useEffect(() => {
-        loadFonts();
+        async function font() {
+            try {
+                const status = await loadFont();
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+                setAppReady(status);
+            } catch (error) {
+                console.warn("Failed to fetch fonts", error);
+            }
+        }
+
+        font();
     }, []);
 
     const login = (type: string, name: string) => {
@@ -44,13 +45,32 @@ export default function Index() {
         });
     };
 
-    // todo add splash screen
-    if (!fontLoaded) {
+    const onLayoutRootView = useCallback(async () => {
+        if (appReady) {
+            // hides splashscreen
+            await SplashScreen.hideAsync();
+        }
+    }, [appReady]);
+
+    if (!appReady) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: bgColor,
+                }}
+            >
+                <Text style={{ fontWeight: 600, fontSize: 25 }}>Loading App...</Text>
+            </View>
+        );
     }
 
     return (
-        <UserTypeProvider>
-            <View style={[styles.mainView, { backgroundColor: bgColor }]}>
+        <View style={[styles.mainView, { backgroundColor: bgColor }]} onLayout={onLayoutRootView}>
+            <ThemedText type="defaultSemiBold">Select User Type</ThemedText>
+            <View style={styles.button__container}>
                 <Button
                     color={buttonColor}
                     onPress={() => login("student", "Student")}
@@ -62,7 +82,7 @@ export default function Index() {
                     title="Teacher View"
                 />
             </View>
-        </UserTypeProvider>
+        </View>
     );
 }
 
@@ -71,6 +91,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        flexDirection: "column",
+        gap: 20,
+    },
+
+    button__container: {
         flexDirection: "row",
         gap: 20,
     },
