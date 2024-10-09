@@ -20,6 +20,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const [searchedTerm, setSearchedTerm] = useState<string>("");
     const [results, setResults] = useState<string[] | Map<string, string[]>>([]);
     const [suggestionList, setSuggestionsList] = useState<[string, string[]][]>([]);
+    const [showSuggestion, setShowSuggestion] = useState<boolean>(false);
+
     const trieRef = useRef<Trie | null>(null);
 
     const userType = useUserTypeContext();
@@ -65,8 +67,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
             return searchResults([], "");
         }
 
+        const suggestions: [string, string[]][] = [];
         if (text.length > 0) {
-            const suggestions: [string, string[]][] = [];
             for (const item of potential) {
                 if (suggestions.length === 5) {
                     break;
@@ -80,6 +82,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
             setSuggestionsList(suggestions);
         } else {
             setSuggestionsList([]);
+        }
+
+        if (suggestions.length > 0) {
+            setShowSuggestion(true);
+        } else {
+            setShowSuggestion(false);
         }
 
         setResults(potential);
@@ -115,9 +123,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
                 cursorColor={textColor}
                 onSubmitEditing={() => handleSearch()}
             />
-            {suggestionList.length > 0 && (
+            {showSuggestion && (
                 <View style={[styles.suggestion__container, { backgroundColor: primary_tint }]}>
-                    <ThemedText type="defaultSemiBold">Suggestions:</ThemedText>
+                    <View style={styles.suggestion__header}>
+                        <ThemedText type="defaultSemiBold">Suggestions:</ThemedText>
+                        <Pressable onPress={() => setShowSuggestion(false)}>
+                            <Ionicons name="close-outline" size={30} style={{ left: 15 }} />
+                        </Pressable>
+                    </View>
                     {suggestionList.map((item, key) => (
                         <Pressable key={key} onPress={() => suggestionPressed(item[1])}>
                             <View style={[styles.suggestion, {}]}>
@@ -155,6 +168,11 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         borderRadius: 10,
         marginBottom: 10,
+    },
+
+    suggestion__header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
 
     suggestion: {
