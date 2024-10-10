@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
 
     button__container: {
         marginTop: 5,
-        paddingTop: 1,
-        paddingBottom: 1,
+        paddingTop: 7,
+        paddingBottom: 5,
         paddingLeft: 20,
         paddingRight: 20,
         borderRadius: 10,

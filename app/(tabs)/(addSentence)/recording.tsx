@@ -337,8 +337,8 @@ const styles = StyleSheet.create({
     button__text: {
         paddingRight: 15,
         paddingLeft: 15,
-        paddingTop: 2,
-        paddingBottom: 2,
+        paddingTop: 7,
+        paddingBottom: 5,
         borderRadius: 10,
     },
 

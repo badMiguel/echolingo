@@ -57,38 +57,36 @@ export default function ViewRecording() {
             </View>
             <View style={styles.playbackButton__container}>
                 <AudioPlayback uri={uri} />
-                <View style={[styles.button__container, { backgroundColor: primary }]}>
-                    <Pressable
-                        onPress={() =>
-                            router.push({
-                                pathname: "/(addSentence)",
-                                params: {
-                                    sentenceID: id,
-                                },
-                            })
-                        }
-                    >
-                        <ThemedText type="defaultSemiBold" style={[{ color: bgColor }]}>
-                            Edit
-                        </ThemedText>
-                    </Pressable>
-                </View>
-                <View style={[styles.button__container, { backgroundColor: primary }]}>
-                    <Pressable
-                        onPress={() =>
-                            router.navigate({
-                                pathname: "/(recordingList)",
-                                params: {
-                                    sentenceID: id,
-                                },
-                            })
-                        }
-                    >
-                        <ThemedText type="defaultSemiBold" style={[{ color: bgColor }]}>
-                            Back
-                        </ThemedText>
-                    </Pressable>
-                </View>
+                <Pressable
+                    style={[styles.button__container, { backgroundColor: primary }]}
+                    onPress={() =>
+                        router.push({
+                            pathname: "/(addSentence)",
+                            params: {
+                                sentenceID: id,
+                            },
+                        })
+                    }
+                >
+                    <ThemedText type="defaultSemiBold" style={[{ color: bgColor }]}>
+                        Edit
+                    </ThemedText>
+                </Pressable>
+                <Pressable
+                    style={[styles.button__container, { backgroundColor: primary }]}
+                    onPress={() =>
+                        router.navigate({
+                            pathname: "/(recordingList)",
+                            params: {
+                                sentenceID: id,
+                            },
+                        })
+                    }
+                >
+                    <ThemedText type="defaultSemiBold" style={[{ color: bgColor }]}>
+                        Back
+                    </ThemedText>
+                </Pressable>
             </View>
         </View>
     );

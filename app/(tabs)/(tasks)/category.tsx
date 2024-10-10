@@ -102,13 +102,14 @@ const SentenceCard: React.FC<{ tiwi: Entry }> = ({ tiwi }) => {
                 {tiwi.English ? "English: " : "English Gloss: "}
             </ThemedText>
             <ThemedText>{tiwi.English || tiwi["Gloss (english)"]}</ThemedText>
-            <View style={[styles.button__container, { backgroundColor: color.primary }]}>
-                <Pressable onPress={() => goToSentence()}>
-                    <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
-                        Study
-                    </ThemedText>
-                </Pressable>
-            </View>
+            <Pressable
+                style={[styles.button__container, { backgroundColor: color.primary }]}
+                onPress={() => goToSentence()}
+            >
+                <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
+                    Study
+                </ThemedText>
+            </Pressable>
         </View>
     );
 };
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
 
     button__container: {
         marginTop: 5,
-        paddingTop: 5,
+        paddingTop: 7,
         paddingBottom: 5,
         paddingLeft: 30,
         paddingRight: 30,

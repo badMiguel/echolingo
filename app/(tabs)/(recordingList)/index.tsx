@@ -94,8 +94,8 @@ export default function RecordingList() {
                     ? dataRecorded
                     : [{ "0": emptyTiwiData() }]
                 : dataNotRecorded.length > 0
-                    ? dataNotRecorded
-                    : [{ "0": emptyTiwiData() }],
+                  ? dataNotRecorded
+                  : [{ "0": emptyTiwiData() }],
         },
     ];
 
@@ -173,29 +173,30 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
             </ThemedText>
             <ThemedText>{sentence[id].English}</ThemedText>
 
-            <View style={[styles.button__container, { backgroundColor: color.primary }]}>
-                <Pressable onPress={() => goToSentence()}>
-                    <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
-                        {sentence[id].recording ? "View" : "Add Recording"}
-                    </ThemedText>
-                </Pressable>
-            </View>
+            <Pressable
+                style={[styles.button__container, { backgroundColor: color.primary }]}
+                onPress={() => goToSentence()}
+            >
+                <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
+                    {sentence[id].recording ? "View" : "Add Recording"}
+                </ThemedText>
+            </Pressable>
 
-            <View
+            <Pressable
                 style={[
                     styles.button__container,
                     { backgroundColor: hasSubmissions ? color.primary : "#ddd" },
                 ]}
+                onPress={goToSubmissions}
+                disabled={!hasSubmissions}
             >
-                <Pressable onPress={goToSubmissions} disabled={!hasSubmissions}>
-                    <ThemedText
-                        type="defaultSemiBold"
-                        style={{ color: hasSubmissions ? color.bgColor : "#aaa" }}
-                    >
-                        Submissions
-                    </ThemedText>
-                </Pressable>
-            </View>
+                <ThemedText
+                    type="defaultSemiBold"
+                    style={{ color: hasSubmissions ? color.bgColor : "#aaa" }}
+                >
+                    Submissions
+                </ThemedText>
+            </Pressable>
         </View>
     );
 };
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
 
     button__container: {
         marginTop: 5,
-        paddingTop: 5,
+        paddingTop: 7,
         paddingBottom: 5,
         paddingLeft: 30,
         paddingRight: 30,
