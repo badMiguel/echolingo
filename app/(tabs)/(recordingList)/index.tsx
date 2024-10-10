@@ -69,7 +69,7 @@ export default function RecordingList() {
             } else {
                 for (const i of searchResults) {
                     for (const j of i[1]) {
-                        newItems[j] = data[i[0]];
+                        newItems[j] = data[j];
                     }
                 }
             }

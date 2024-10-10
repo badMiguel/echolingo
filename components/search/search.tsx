@@ -52,6 +52,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
     const handleSearch = () => {
         searchResults(results ? results : [], searchedTerm);
         setSuggestionsList([]);
+        setShowSuggestion(false);
     };
 
     const handleChange = (text: string) => {
