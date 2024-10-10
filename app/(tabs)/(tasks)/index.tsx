@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
         flex: 1.5,
         paddingLeft: 20,
         paddingRight: 20,
-        paddingTop: 10,
+        paddingTop: 20,
         paddingBottom: 10,
         justifyContent: "space-around",
     },
