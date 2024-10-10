@@ -1,6 +1,6 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useEffect, useRef, useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { Trie } from "./trie";
 import { useSetTiwiContext, useTiwiListContext } from "@/contexts/TiwiContext";
 import { ThemedText } from "../ThemedText";

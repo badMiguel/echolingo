@@ -37,14 +37,6 @@ export default function useAudio() {
         }
     };
 
-    const pausePlaySound = (playing: boolean) => {
-        if (playing) {
-            sound?.pauseAsync();
-        } else {
-            sound?.playAsync();
-        }
-    };
-
     const onPlaybackStatusUpdate = (status: any) => {
         if (status.didJustFinish) {
             setStatus(true);
@@ -83,5 +75,5 @@ export default function useAudio() {
             : undefined;
     }, [sound]);
 
-    return { startSound, pausePlaySound, status, progress, duration, nextRecording };
+    return { startSound, status, progress, duration, nextRecording, sound};
 }

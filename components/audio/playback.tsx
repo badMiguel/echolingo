@@ -4,13 +4,15 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { TabBarIcon } from "../navigation/TabBarIcon";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useFocusEffect } from "expo-router";
+import { Sound } from "expo-av/build/Audio";
 
 export type URI = string | null | undefined;
 
 type PlayButtonProps = {
     uri: URI;
     startSound: (uri: string, startPos: number | undefined) => Promise<void>;
-    pausePlaySound: (playing: boolean) => void;
+    sound: Sound | undefined;
     status: boolean;
     playing: boolean;
     setPlaying: React.Dispatch<SetStateAction<boolean>>;
@@ -46,7 +48,7 @@ const useColor = () => {
 };
 
 export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean }) {
-    const { startSound, pausePlaySound, status, progress, duration, nextRecording } = useAudio();
+    const { startSound, status, progress, duration, nextRecording, sound } = useAudio();
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);
     const color = useColor();
@@ -63,6 +65,14 @@ export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean })
             nextRecording(uri);
         }
     }, [uri]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            return () => {
+                sound?.pauseAsync();
+            };
+        }, [sound])
+    );
 
     return (
         <View style={[styles.mainView, { backgroundColor: color.primary_tint }]}>
@@ -84,7 +94,7 @@ export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean })
                 <PlayButton
                     uri={uri}
                     startSound={startSound}
-                    pausePlaySound={pausePlaySound}
+                    sound={sound}
                     status={status}
                     playing={playing}
                     setPlaying={setPlaying}
@@ -106,7 +116,7 @@ export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean })
 const PlayButton: React.FC<PlayButtonProps> = ({
     uri,
     startSound,
-    pausePlaySound,
+    sound,
     playing,
     setPlaying,
     onGoing,
@@ -124,7 +134,11 @@ const PlayButton: React.FC<PlayButtonProps> = ({
     };
 
     const pausePlayButton = () => {
-        pausePlaySound(playing);
+        if (playing) {
+            sound?.pauseAsync();
+        } else {
+            sound?.playAsync();
+        }
         setPlaying(!playing);
     };
 
