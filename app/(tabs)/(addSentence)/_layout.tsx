@@ -22,12 +22,6 @@ export default function AddRecordingLayout() {
                 }}
             />
             <Stack.Screen
-                name="upload"
-                options={{
-                    title: "Upload",
-                }}
-            />
-            <Stack.Screen
                 name="recording"
                 options={{
                     title: "Record",

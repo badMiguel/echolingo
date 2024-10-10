@@ -25,9 +25,9 @@ export default function Index() {
                 const status = await loadFont();
                 const endTime = performance.now();
 
-                const uploadTime = endTime - startTime;
-                if (uploadTime < 2000 && status) {
-                    await new Promise((resolve) => setTimeout(resolve, 2000 - uploadTime));
+                const startUpTime = endTime - startTime;
+                if (startUpTime < 2000 && status) {
+                    await new Promise((resolve) => setTimeout(resolve, 2000 - startUpTime));
                 }
 
                 setAppReady(status);
