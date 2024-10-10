@@ -52,7 +52,10 @@ export default function Add() {
             <AddDetails currentID={currentID} current={current} changeCurrent={updateCurrent} />
             {currentID ? (
                 <>
-                    <AddRecording currentID={currentID} />
+                    <AddRecording
+                        currentID={currentID}
+                        haveRecording={current?.recording ? true : false}
+                    />
                     {sentenceID && (
                         <Pressable
                             style={[styles.button, { backgroundColor: color.primary }]}
@@ -285,20 +288,17 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
     );
 };
 
-function AddRecording({ currentID }: { currentID: string | undefined }) {
+function AddRecording({
+    currentID,
+    haveRecording,
+}: {
+    currentID: string | undefined;
+    haveRecording: boolean;
+}) {
     const color = useColor();
     const record = () => {
         router.push({
-            pathname: "/record",
-            params: {
-                current: currentID ? currentID : undefined,
-            },
-        });
-    };
-
-    const upload = () => {
-        router.push({
-            pathname: "/upload",
+            pathname: "/recording",
             params: {
                 current: currentID ? currentID : undefined,
             },
@@ -306,24 +306,14 @@ function AddRecording({ currentID }: { currentID: string | undefined }) {
     };
 
     return (
-        <View>
-            <Pressable
-                style={[styles.button, { backgroundColor: color.primary }]}
-                onPress={() => record()}
-            >
-                <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
-                    Record Now
-                </ThemedText>
-            </Pressable>
-            <Pressable
-                style={[styles.button, { backgroundColor: color.primary }]}
-                onPress={() => upload()}
-            >
-                <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
-                    Upload From Device
-                </ThemedText>
-            </Pressable>
-        </View>
+        <Pressable
+            style={[styles.button, { backgroundColor: color.primary }]}
+            onPress={() => record()}
+        >
+            <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
+                {haveRecording ? "Modify Recording" : "Add Recording"}
+            </ThemedText>
+        </Pressable>
     );
 }
 

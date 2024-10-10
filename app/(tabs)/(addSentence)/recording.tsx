@@ -10,6 +10,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Button, Snackbar } from "react-native-paper";
+import * as DocumentPicker from "expo-document-picker";
 
 export default function RecordView() {
     const bgColor = useThemeColor({}, "background");
@@ -86,6 +87,12 @@ export function Record({
             setIsSuccess(false);
         }
     }, [recording]);
+
+    const useDocumentPicker = async () => {
+        const uploadedUri = await openDocumentPicker();
+        setTempUri(uploadedUri);
+        setIsSuccess(false);
+    };
 
     const save = async () => {
         setIsSuccess(false);
@@ -201,7 +208,7 @@ export function Record({
                 </ThemedText>
             </Pressable>
 
-            {fromStudent && (
+            {fromStudent ? (
                 <Button
                     mode="contained"
                     onPress={submit}
@@ -225,6 +232,19 @@ export function Record({
                         Submit
                     </ThemedText>
                 </Button>
+            ) : (
+                <Pressable
+                    style={[styles.button, { backgroundColor: isLoading ? primary_tint : primary }]}
+                    onPress={() => useDocumentPicker()}
+                    disabled={isLoading ? true : false}
+                >
+                    <ThemedText
+                        type="defaultSemiBold"
+                        style={{ color: isLoading ? primary : bgColor }}
+                    >
+                        {isSuccess ? "Upload Another From Device" : "Upload From Device"}
+                    </ThemedText>
+                </Pressable>
             )}
 
             <Snackbar
@@ -237,6 +257,23 @@ export function Record({
             </Snackbar>
         </View>
     );
+}
+
+async function openDocumentPicker() {
+    try {
+        const result = await DocumentPicker.getDocumentAsync({
+            type: "*/*",
+            copyToCacheDirectory: true,
+        });
+
+        if (result.canceled) {
+            throw new Error("Canceled by user");
+        }
+
+        return result.assets[0].uri;
+    } catch (err) {
+        console.error("Failed opening document picker", err);
+    }
 }
 
 const styles = StyleSheet.create({

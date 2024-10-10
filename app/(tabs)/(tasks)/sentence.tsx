@@ -7,7 +7,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import { useCategoryContext } from "@/contexts/CategoryContext";
 import * as FileSystem from "expo-file-system";
-import { Record } from "../(addSentence)/record";
+import { Record } from "../(addSentence)/recording";
 
 export default function Sentence() {
     const navigation = useNavigation();
