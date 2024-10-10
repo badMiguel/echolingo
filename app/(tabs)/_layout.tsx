@@ -22,7 +22,7 @@ export default function RootLayout() {
                         tabBarShowLabel: true,
                         headerStyle: { backgroundColor: bgColor, shadowColor: "black" },
                         headerTintColor: textColor,
-                        tabBarLabelStyle: { fontSize: 12 },
+                        tabBarLabelStyle: { fontSize: 12, top: -7 },
                         tabBarHideOnKeyboard: true,
                         headerTitleStyle: { fontFamily: "Poppins-SemiBold" },
                     }}
@@ -37,7 +37,7 @@ export default function RootLayout() {
                                 <TabBarIcon
                                     name={focused ? "home" : "home-outline"}
                                     color={focused ? primary : secondary}
-                                    size={30}
+                                    size={25}
                                 />
                             ),
                             tabBarLabel: "Home",
@@ -53,7 +53,7 @@ export default function RootLayout() {
                             tabBarIcon: ({ focused }) => (
                                 <ClipboardListIcon
                                     color={focused ? primary : secondary}
-                                    size={30}
+                                    size={25}
                                 />
                             ),
                             tabBarLabel: "Tasks",
@@ -71,7 +71,7 @@ export default function RootLayout() {
                                 <TabBarIcon
                                     name={focused ? "list" : "list-sharp"}
                                     color={focused ? primary : secondary}
-                                    size={30}
+                                    size={25}
                                 />
                             ),
                             tabBarLabel: "Recordings",
@@ -90,7 +90,7 @@ export default function RootLayout() {
                                 <TabBarIcon
                                     name={focused ? "add" : "add-sharp"}
                                     color={focused ? primary : secondary}
-                                    size={30}
+                                    size={25}
                                 />
                             ),
                             tabBarLabel: "Add",
@@ -109,13 +109,33 @@ export default function RootLayout() {
                                 <TabBarIcon
                                     name={focused ? "checkmark" : "checkmark-outline"}
                                     color={focused ? primary : secondary}
-                                    size={30}
+                                    size={25}
                                 />
                             ),
                             tabBarLabel: "Challenges",
                             href: userType !== "student" ? null : "/(challenges)",
                         }}
                     />
+
+                    <Tabs.Screen
+                        name="(options)"
+                        options={{
+                            title: "Options",
+                            headerShown: false,
+                            tabBarActiveTintColor: primary,
+                            tabBarInactiveTintColor: secondary,
+                            tabBarIcon: ({ focused }) => (
+                                <TabBarIcon
+                                    name={focused ? "options" : "options-sharp"}
+                                    color={focused ? primary : secondary}
+                                    size={25}
+                                />
+                            ),
+                            tabBarLabel: "Options",
+                            href: userType !== "teacher" ? null : "/(options)",
+                        }}
+                    />
+
                     <Tabs.Screen
                         name="profile"
                         options={{
@@ -123,7 +143,7 @@ export default function RootLayout() {
                             tabBarActiveTintColor: primary,
                             tabBarInactiveTintColor: secondary,
                             tabBarIcon: ({ focused }) => (
-                                <UserIcon color={focused ? primary : secondary} size={30} />
+                                <UserIcon color={focused ? primary : secondary} size={25} />
                             ),
                             tabBarLabel: "Profile",
                         }}
