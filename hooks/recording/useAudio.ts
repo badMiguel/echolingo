@@ -70,8 +70,8 @@ export default function useAudio() {
     useEffect(() => {
         return sound
             ? () => {
-                sound.unloadAsync();
-            }
+                  sound.unloadAsync();
+              }
             : undefined;
     }, [sound]);
 

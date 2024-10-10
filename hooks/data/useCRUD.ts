@@ -1,6 +1,7 @@
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseConfig";
 import { StorageReference, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Entry, useTiwiListContext } from "@/contexts/TiwiContext";
 
 export type SaveRecReturn = {
     status: boolean;
@@ -8,18 +9,25 @@ export type SaveRecReturn = {
 };
 
 type DataDetail = {
-    tiwi?: string;
-    gTiwi?: string;
-    english?: string;
-    gEnglish?: string;
-    recordingURI?: string;
-    topic?: string;
+    tiwi?: string | null;
+    gTiwi?: string | null;
+    english?: string | null;
+    gEnglish?: string | null;
+    recordingURI?: string | null;
+    topic?: string | null;
 };
 
 export default function useCRUD() {
+    const data = useTiwiListContext();
+
     // add recording to existing sentence
     async function saveRecording(uri: string, id: string): Promise<SaveRecReturn> {
         try {
+            // todo better error handling
+            if (!data) {
+                throw new Error("Failed to get data on saveRecording()");
+            }
+
             const response = await fetch(uri);
             const fileBlob = await response.blob();
 
@@ -45,7 +53,11 @@ export default function useCRUD() {
                 return { status: false };
             }
 
-            const saveStatus = await updateSentenceData(id, { recordingURI: downloadURL });
+            const saveStatus = await updateSentenceData(
+                id,
+                { recordingURI: downloadURL },
+                data[id]
+            );
             if (!saveStatus.status) {
                 throw new Error("Failed to save recording details to firebase");
             }
@@ -58,15 +70,28 @@ export default function useCRUD() {
     }
 
     // save other details
-    async function saveDetails(id: string, { tiwi, gTiwi, english, gEnglish, topic }: DataDetail) {
+    async function saveDetails(
+        id: string,
+        { tiwi, gTiwi, english, gEnglish, topic, recordingURI }: DataDetail
+    ) {
         try {
-            const saveStatus = await updateSentenceData(id, {
-                tiwi: tiwi,
-                gTiwi: gTiwi,
-                english: english,
-                gEnglish: gEnglish,
-                topic: topic,
-            });
+            // todo better error handling
+            if (!data) {
+                throw new Error("Failed to get data on saveDetails()");
+            }
+
+            const saveStatus = await updateSentenceData(
+                id,
+                {
+                    tiwi: tiwi,
+                    gTiwi: gTiwi,
+                    english: english,
+                    gEnglish: gEnglish,
+                    topic: topic,
+                    recordingURI: recordingURI,
+                },
+                data[id]
+            );
 
             if (!saveStatus) {
                 throw new Error("Failed to save sentence details");
@@ -117,30 +142,34 @@ export default function useCRUD() {
 }
 
 // rewrite the actual json data
-async function updateSentenceData(id: string, updatedData: DataDetail): Promise<SaveRecReturn> {
+async function updateSentenceData(
+    id: string,
+    updatedData: DataDetail,
+    current: Entry
+): Promise<SaveRecReturn> {
     try {
         const tiwiID = doc(db, "sentences", id);
 
-        const updateFields: { [key: string]: string } = {};
+        const updateFields: { [key: string]: string | null | undefined } = {};
 
-        if (updatedData.tiwi) {
+        if (updatedData.tiwi && updatedData.tiwi !== current.Tiwi) {
             updateFields["Tiwi"] = updatedData.tiwi;
         }
 
-        if (updatedData.gTiwi) {
+        if (updatedData.gTiwi !== updatedData.gTiwi) {
             updateFields["Gloss (tiwi)"] = updatedData.gTiwi;
         }
 
-        if (updatedData.english) {
+        if (updatedData.english && updatedData.english !== current.English) {
             updateFields["English"] = updatedData.english;
         }
-        if (updatedData.gEnglish) {
+        if (updatedData.gEnglish !== updatedData.gEnglish) {
             updateFields["Gloss (english)"] = updatedData.gEnglish;
         }
-        if (updatedData.topic) {
+        if (updatedData.topic && updatedData.topic !== current.Topic) {
             updateFields["Topic"] = updatedData.topic;
         }
-        if (updatedData.recordingURI) {
+        if (updatedData.recordingURI !== current.recording) {
             updateFields["recording"] = updatedData.recordingURI;
         }
 

@@ -34,7 +34,7 @@ export default function useRecording() {
             try {
                 await curr?.stopAndUnloadAsync();
             } catch (error) {
-                console.log("Recording already unloaded", error);
+                console.log("Recording already unloaded at stopRecording()");
             }
         } else {
             await recording?.stopAndUnloadAsync();
