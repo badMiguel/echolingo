@@ -70,10 +70,10 @@ export default function useAudio() {
     useEffect(() => {
         return sound
             ? () => {
-                  sound.unloadAsync();
-              }
+                sound.unloadAsync();
+            }
             : undefined;
     }, [sound]);
 
-    return { startSound, status, progress, duration, nextRecording, sound};
+    return { startSound, status, progress, duration, nextRecording, sound };
 }

@@ -1,10 +1,10 @@
 import useAudio from "@/hooks/recording/useAudio";
 import Slider from "@react-native-community/slider";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { TabBarIcon } from "../navigation/TabBarIcon";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useNavigation } from "expo-router";
 import { Sound } from "expo-av/build/Audio";
 
 export type URI = string | null | undefined;
@@ -52,6 +52,12 @@ export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean })
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);
     const color = useColor();
+    const navigation = useNavigation();
+
+    const soundRef = useRef(sound);
+    useEffect(() => {
+        soundRef.current = sound;
+    }, [sound]);
 
     useEffect(() => {
         if (status) {
@@ -69,9 +75,12 @@ export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean })
     useFocusEffect(
         React.useCallback(() => {
             return () => {
-                sound?.pauseAsync();
+                if (navigation.getId() === "/(tabs)/(recordingList)") {
+                    soundRef.current?.pauseAsync();
+                    soundRef.current = undefined;
+                }
             };
-        }, [sound])
+        }, [])
     );
 
     return (
