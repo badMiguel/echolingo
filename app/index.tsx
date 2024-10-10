@@ -21,8 +21,15 @@ export default function Index() {
     useEffect(() => {
         async function font() {
             try {
+                const startTime = performance.now();
                 const status = await loadFont();
-                await new Promise((resolve) => setTimeout(resolve, 2000));
+                const endTime = performance.now();
+
+                const uploadTime = endTime - startTime;
+                if (uploadTime < 2000 && status) {
+                    await new Promise((resolve) => setTimeout(resolve, 2000 - uploadTime));
+                }
+
                 setAppReady(status);
             } catch (error) {
                 console.warn("Failed to fetch fonts", error);
