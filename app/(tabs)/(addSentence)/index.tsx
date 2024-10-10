@@ -169,7 +169,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
     return (
         <View>
             <View style={styles.formItem__container}>
-                <ThemedText type="defaultSemiBold">Tiwi</ThemedText>
+                <ThemedText type="defaultSemiBold">Tiwi *</ThemedText>
                 <TextInput
                     autoCorrect={false} // might be frustrating if yes for uncommon language
                     value={tiwi}
@@ -201,7 +201,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
             </View>
 
             <View style={styles.formItem__container}>
-                <ThemedText type="defaultSemiBold">English</ThemedText>
+                <ThemedText type="defaultSemiBold">English *</ThemedText>
                 <TextInput
                     autoCorrect={false} // might be frustrating if yes for uncommon language
                     value={english}
@@ -233,7 +233,7 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
             </View>
 
             <View style={styles.formItem__container}>
-                <ThemedText type="defaultSemiBold">Topic</ThemedText>
+                <ThemedText type="defaultSemiBold">Topic *</ThemedText>
                 <Dropdown
                     // todo add interface to add new topic
                     data={categoryData}

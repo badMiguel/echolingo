@@ -106,7 +106,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchResults }) => {
             });
         } else if (userType === "teacher") {
             router.push({
-                pathname: "/(addRecording)",
+                pathname: "/(addSentence)",
                 params: { sentenceID: id[0] },
             });
         }

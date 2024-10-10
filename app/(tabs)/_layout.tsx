@@ -80,9 +80,9 @@ export default function RootLayout() {
                     />
 
                     <Tabs.Screen
-                        name="(addRecording)"
+                        name="(addSentence)"
                         options={{
-                            title: "Add Recording",
+                            title: "Add Sentence",
                             headerShown: false,
                             tabBarActiveTintColor: primary,
                             tabBarInactiveTintColor: secondary,
@@ -94,7 +94,7 @@ export default function RootLayout() {
                                 />
                             ),
                             tabBarLabel: "Add",
-                            href: userType !== "teacher" ? null : "/(addRecording)",
+                            href: userType !== "teacher" ? null : "/(addSentence)",
                         }}
                     />
 

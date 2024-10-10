@@ -61,7 +61,7 @@ export default function ViewRecording() {
                     <Pressable
                         onPress={() =>
                             router.push({
-                                pathname: "/(addRecording)",
+                                pathname: "/(addSentence)",
                                 params: {
                                     sentenceID: id,
                                 },

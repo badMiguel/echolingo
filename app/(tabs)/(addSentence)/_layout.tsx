@@ -18,7 +18,7 @@ export default function AddRecordingLayout() {
             <Stack.Screen
                 name="index"
                 options={{
-                    title: "Add Recording",
+                    title: "Add Sentence",
                 }}
             />
             <Stack.Screen

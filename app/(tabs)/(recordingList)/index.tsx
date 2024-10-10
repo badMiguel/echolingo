@@ -146,7 +146,7 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
 
     const goToSentence = () => {
         router.push({
-            pathname: sentence[id].recording ? "/viewRecording" : "/(addRecording)",
+            pathname: sentence[id].recording ? "/viewRecording" : "/(addSentence)",
             params: {
                 sentenceID: id,
             },
