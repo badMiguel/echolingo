@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 
-import { Entry, useTiwiListContext } from "@/contexts/TiwiContext";
+import { Entry, useSetTiwiContext, useTiwiListContext } from "@/contexts/TiwiContext";
 import useCRUD from "@/hooks/data/useCRUD";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -53,7 +53,8 @@ export default function Add() {
             {currentID ? (
                 <>
                     <AddRecording
-                        currentID={currentID}
+                        current={current}
+                        currentId={currentID}
                         haveRecording={current?.recording ? true : false}
                     />
                     {sentenceID && (
@@ -289,18 +290,25 @@ const AddDetails: React.FC<AddDetailProp> = ({ currentID, current, changeCurrent
 };
 
 function AddRecording({
-    currentID,
+    current,
+    currentId,
     haveRecording,
 }: {
-    currentID: string | undefined;
+    current: Entry | undefined;
+    currentId: string | undefined;
     haveRecording: boolean;
 }) {
     const color = useColor();
+    const setCurrentTiwi = useSetTiwiContext();
+
     const record = () => {
+        if (setCurrentTiwi && current) {
+            setCurrentTiwi(current);
+        }
         router.push({
             pathname: "/recording",
             params: {
-                current: currentID ? currentID : undefined,
+                id: currentId ? currentId : undefined,
             },
         });
     };

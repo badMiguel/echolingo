@@ -54,6 +54,27 @@ export default function useAudio() {
         setDuration(status.durationMillis);
     };
 
+    const nextRecording = async (uri: string) => {
+        try {
+            if (sound) {
+                setStatus(false);
+                setProgress(0);
+                await sound.unloadAsync();
+            }
+
+            const { sound: playbackObject } = await Audio.Sound.createAsync(
+                { uri: uri },
+                { shouldPlay: true },
+                onPlaybackStatusUpdate
+            );
+
+            setSound(playbackObject);
+            await playbackObject.pauseAsync();
+        } catch (err) {
+            console.error("Error playing next recording", err);
+        }
+    };
+
     useEffect(() => {
         return sound
             ? () => {
@@ -62,5 +83,5 @@ export default function useAudio() {
             : undefined;
     }, [sound]);
 
-    return { startSound, pausePlaySound, status, progress, duration };
+    return { startSound, pausePlaySound, status, progress, duration, nextRecording };
 }

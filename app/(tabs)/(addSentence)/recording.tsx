@@ -11,6 +11,7 @@ import { db, storage } from "@/firebase/firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Button, Snackbar } from "react-native-paper";
 import * as DocumentPicker from "expo-document-picker";
+import { useTiwiContext } from "@/contexts/TiwiContext";
 
 export default function RecordView() {
     const bgColor = useThemeColor({}, "background");
@@ -59,6 +60,9 @@ export function Record({
     const primary = useThemeColor({}, "primary");
     const primary_tint = useThemeColor({}, "primary_tint");
 
+    const [loaded, setLoaded] = useState<boolean>(false);
+    const [changed, setChanged] = useState<boolean>(false);
+
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [show, setShow] = useState<boolean>(false);
@@ -67,12 +71,22 @@ export function Record({
 
     const { startRecording, stopRecording, recording, uri, haveRecording } = useRecording();
     const { saveRecording } = useCRUD();
-    const { current } = useLocalSearchParams();
-
-    const currentID: string = Array.isArray(current) ? current[0] : current;
+    const { id } = useLocalSearchParams();
+    const currentID: string = Array.isArray(id) ? id[0] : id;
+    const current = useTiwiContext();
 
     useEffect(() => {
-        setTempUri(uri);
+        if (current) {
+            setTempUri(current.recording);
+            setLoaded(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (loaded) {
+            setTempUri(uri);
+            setChanged(true);
+        }
     }, [uri]);
 
     useEffect(() => {
@@ -92,6 +106,7 @@ export function Record({
         const uploadedUri = await openDocumentPicker();
         setTempUri(uploadedUri);
         setIsSuccess(false);
+        setChanged(true);
     };
 
     const save = async () => {
@@ -171,12 +186,14 @@ export function Record({
             {!fromStudent && (
                 <Pressable
                     onPress={() => save()}
-                    disabled={!tempUri || isLoading || isSuccess ? true : undefined}
+                    disabled={!tempUri || isLoading || isSuccess || !changed ? true : undefined}
                     style={[
                         styles.button,
                         {
                             backgroundColor:
-                                !tempUri || isLoading || isSuccess ? primary_tint : primary,
+                                !tempUri || isLoading || isSuccess || !changed
+                                    ? primary_tint
+                                    : primary,
                         },
                     ]}
                 >
@@ -184,7 +201,12 @@ export function Record({
                         type="defaultSemiBold"
                         style={[
                             styles.button__text,
-                            { color: !tempUri || isLoading || isSuccess ? primary : bgColor },
+                            {
+                                color:
+                                    !tempUri || isLoading || isSuccess || !changed
+                                        ? primary
+                                        : bgColor,
+                            },
                         ]}
                     >
                         {isLoading ? "Loading" : "Save"}
@@ -259,7 +281,7 @@ export function Record({
     );
 }
 
-async function openDocumentPicker() {
+async function openDocumentPicker(): Promise<string | undefined> {
     try {
         const result = await DocumentPicker.getDocumentAsync({
             type: "*/*",

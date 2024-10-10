@@ -46,7 +46,7 @@ const useColor = () => {
 };
 
 export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean }) {
-    const { startSound, pausePlaySound, status, progress, duration } = useAudio();
+    const { startSound, pausePlaySound, status, progress, duration, nextRecording } = useAudio();
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);
     const color = useColor();
@@ -57,6 +57,12 @@ export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean })
             setPlaying(false);
         }
     }, [status]);
+
+    useEffect(() => {
+        if (uri && onGoing) {
+            nextRecording(uri);
+        }
+    }, [uri]);
 
     return (
         <View style={[styles.mainView, { backgroundColor: color.primary_tint }]}>
