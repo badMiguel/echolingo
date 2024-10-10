@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Pressable, Text, Alert } from "react-native";
 import useRecording from "@/hooks/recording/useRecording";
 import AudioPlayback from "@/components/audio/playback";
@@ -12,6 +12,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Button, Snackbar } from "react-native-paper";
 import * as DocumentPicker from "expo-document-picker";
 import { useTiwiContext } from "@/contexts/TiwiContext";
+import { Recording } from "expo-av/build/Audio";
 
 export default function RecordView() {
     const bgColor = useThemeColor({}, "background");
@@ -74,16 +75,7 @@ export function Record({
     const { id } = useLocalSearchParams();
     const currentID: string = Array.isArray(id) ? id[0] : id;
     const current = useTiwiContext();
-
-    useFocusEffect(
-        React.useCallback(() => {
-            return () => {
-                if (recording) {
-                    stopRecording();
-                }
-            };
-        }, [recording])
-    );
+    const recordingRef = useRef<Recording | undefined>(undefined);
 
     useEffect(() => {
         if (current) {
@@ -110,7 +102,21 @@ export function Record({
         if (!recording && isSuccess) {
             setIsSuccess(false);
         }
+
+        if (recording) {
+            recordingRef.current = recording;
+        }
     }, [recording]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            return () => {
+                if (recordingRef) {
+                    stopRecording(recordingRef.current);
+                }
+            };
+        }, [])
+    );
 
     const useDocumentPicker = async () => {
         const uploadedUri = await openDocumentPicker();
@@ -224,7 +230,7 @@ export function Record({
                 </Pressable>
             )}
             <Pressable
-                onPress={recording ? stopRecording : startRecording}
+                onPress={() => (recording ? stopRecording() : startRecording())}
                 disabled={isLoading ? true : undefined}
                 style={[styles.button, { backgroundColor: isLoading ? primary_tint : primary }]}
             >
@@ -235,8 +241,8 @@ export function Record({
                     {recording
                         ? "Stop Recording"
                         : haveRecording
-                          ? "Record Another"
-                          : "Start Recording"}
+                            ? "Record Another"
+                            : "Start Recording"}
                 </ThemedText>
             </Pressable>
 

@@ -1,4 +1,5 @@
 import { Audio } from "expo-av";
+import { Recording } from "expo-av/build/Audio";
 import { useState } from "react";
 
 export default function useRecording() {
@@ -28,9 +29,13 @@ export default function useRecording() {
         }
     }
 
-    async function stopRecording() {
+    async function stopRecording(curr?: Recording) {
+        if (curr) {
+            await curr?.stopAndUnloadAsync();
+        } else {
+            await recording?.stopAndUnloadAsync();
+        }
         setRecording(undefined);
-        await recording?.stopAndUnloadAsync();
         await Audio.setAudioModeAsync({
             allowsRecordingIOS: false,
         });
