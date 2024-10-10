@@ -3,7 +3,7 @@ import { View, StyleSheet, Pressable, Text, Alert } from "react-native";
 import useRecording from "@/hooks/recording/useRecording";
 import AudioPlayback from "@/components/audio/playback";
 import useCRUD from "@/hooks/data/useCRUD";
-import { useLocalSearchParams } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import { addDoc, collection } from "firebase/firestore";
@@ -74,6 +74,16 @@ export function Record({
     const { id } = useLocalSearchParams();
     const currentID: string = Array.isArray(id) ? id[0] : id;
     const current = useTiwiContext();
+
+    useFocusEffect(
+        React.useCallback(() => {
+            return () => {
+                if (recording) {
+                    stopRecording();
+                }
+            };
+        }, [recording])
+    );
 
     useEffect(() => {
         if (current) {
