@@ -305,11 +305,14 @@ function AddRecording({
         if (setCurrentTiwi && current) {
             setCurrentTiwi(current);
         }
+        if (!currentId) {
+            console.error("No currentId available for recording");
+            // maybe, just show an alert to the user that something went wrong??
+            return;
+        }
         router.push({
             pathname: "/recording",
-            params: {
-                id: currentId ? currentId : undefined,
-            },
+            params: { id: currentId },
         });
     };
 

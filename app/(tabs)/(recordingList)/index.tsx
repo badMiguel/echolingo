@@ -158,6 +158,7 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
             pathname: "/submissions",
             params: {
                 sentenceID: id,
+                sentenceText: sentence[id].Tiwi || sentence[id].English, // Pass the sentence text
             },
         });
     };
@@ -194,7 +195,7 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
                     type="defaultSemiBold"
                     style={{ color: hasSubmissions ? color.bgColor : "#aaa" }}
                 >
-                    Submissions
+                    Submissions ({sentence[id].submissions?.length || 0})
                 </ThemedText>
             </Pressable>
         </View>

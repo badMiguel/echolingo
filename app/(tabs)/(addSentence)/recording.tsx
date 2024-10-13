@@ -73,9 +73,13 @@ export function Record({
     const { startRecording, stopRecording, recording, uri, haveRecording } = useRecording();
     const { saveRecording } = useCRUD();
     const { id } = useLocalSearchParams();
-    const currentID: string = Array.isArray(id) ? id[0] : id;
+    const currentID: string = Array.isArray(id) ? id[0] : id || 'default';
     const current = useTiwiContext();
     const recordingRef = useRef<Recording | undefined>(undefined);
+
+    useEffect(() => {
+        console.log("Current ID in Record component:", currentID);
+    }, [currentID]);
 
     useEffect(() => {
         if (current) {
@@ -151,7 +155,6 @@ export function Record({
             setShow(false);
         }, 3000);
     };
-
     const submit = async () => {
         if (!tempUri) {
             Alert.alert("Error", "No recording available to submit.");
@@ -159,40 +162,54 @@ export function Record({
         }
 
         try {
+            console.log("Starting submission process");
             console.log("Submitting recording with URI:", tempUri);
+            console.log("Current ID:", currentID);
 
-            // upl recording to firebase
-            const storageRef = ref(storage, `submissions/${currentID}/${Date.now()}.mp3`);
+            const submissionId = currentID === 'default' ? `submission_${Date.now()}` : currentID;
+
+            // upl recording 
+            const storageRef = ref(storage, `submissions/${submissionId}/${Date.now()}.mp3`);
+            console.log("Storage reference created:", storageRef.fullPath);       
+
             const response = await fetch(tempUri);
             const blob = await response.blob();
             console.log("Uploading recording...");
             setIsLoading(true);
             await uploadBytes(storageRef, blob);
 
-            // download URL of the uploaded recording
+            // download URL of the uploaded file
             const downloadUrl = await getDownloadURL(storageRef);
             setIsLoading(false);
             console.log("Recording uploaded successfully, download URL:", downloadUrl);
 
-            setSnackbarVisible(true);
-            console.log(snackbarVisible);
-            // save submission
-            await addDoc(collection(db, "submissions"), {
-                sentenceId: currentID,
+            // save submission to fs
+            const submissionData = {
+                sentenceId: submissionId,
                 category: "casual_study",
                 recordingUrl: downloadUrl,
                 submittedAt: new Date(),
-            });
+            };
+            console.log("Submission data:", JSON.stringify(submissionData, null, 2));
 
-            // setIsSuccess(true);
-            // setShow(true);
+            const submissionsRef = collection(db, "submissions");
+            console.log("Firestore collection reference created");
 
-            // setTimeout(() => {
-            //     setShow(false);
-            // }, 3000);
+            const docRef = await addDoc(submissionsRef, submissionData);
+            console.log("Document written with ID:", docRef.id);
+
+
+            setSnackbarVisible(true);
+            setIsSuccess(true);
+            setShow(true);
+
+            setTimeout(() => {
+                setShow(false);
+            }, 3000);
         } catch (error) {
             console.error("Error submitting recording:", error);
             Alert.alert("Error", "There was an error submitting the recording.");
+            setIsSuccess(false);
         }
     };
 
