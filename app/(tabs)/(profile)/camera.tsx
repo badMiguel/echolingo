@@ -9,6 +9,7 @@ import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/firebase/firebaseConfig";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Camera() {
     const userName = useUserNameContext();
@@ -17,6 +18,7 @@ export default function Camera() {
     const [photoUri, setPhotoUri] = useState<string>();
     const [didTake, setDidTake] = useState<boolean>(false);
     const cameraRef = useRef<CameraView | null>(null);
+    const primary = useThemeColor({}, "primary");
 
     if (!permission) {
         // Camera permissions are still loading.
@@ -84,17 +86,17 @@ export default function Camera() {
             {didTake ? (
                 <ImageBackground
                     source={{ uri: photoUri }}
-                    style={{
-                        height: "100%",
-                    }}
+                    style={styles.imageBackground}
                     resizeMode="cover"
                 >
-                    <Pressable onPress={() => setDidTake(false)}>
-                        <ThemedText style={{ color: "pink" }}>Take Another</ThemedText>
-                    </Pressable>
-                    <Pressable onPress={() => saveImage()}>
-                        <ThemedText style={{ color: "pink" }}>Save</ThemedText>
-                    </Pressable>
+                    <View style={[styles.image__options, { backgroundColor: primary }]}>
+                        <Pressable onPress={() => setDidTake(false)}>
+                            <Ionicons name="repeat-sharp" size={50} color={"white"} />
+                        </Pressable>
+                        <Pressable onPress={() => saveImage()}>
+                            <Ionicons name="checkmark-sharp" size={50} color={"white"} />
+                        </Pressable>
+                    </View>
                 </ImageBackground>
             ) : (
                 <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
@@ -125,6 +127,22 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 50,
         backgroundColor: "black",
+    },
+
+    imageBackground: {
+        height: "100%",
+        justifyContent: "flex-end",
+        alignItems: "center",
+    },
+
+    image__options: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginBottom: 20,
+        borderRadius: 30,
+        gap: 40,
+        paddingRight: "10%",
+        paddingLeft: "10%",
     },
 
     camera: {
