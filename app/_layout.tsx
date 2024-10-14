@@ -1,10 +1,10 @@
 import React from "react";
 import { Stack } from "expo-router";
-import { UserTypeProvider } from "@/contexts/UserType";
+import { UserProvider } from "@/contexts/UserType";
 
 export default function RootLayout() {
     return (
-        <UserTypeProvider>
+        <UserProvider>
             <Stack
                 screenOptions={{
                     headerShown: false,
@@ -13,6 +13,6 @@ export default function RootLayout() {
                 <Stack.Screen name="(tabs)" />
                 <Stack.Screen name="index" />
             </Stack>
-        </UserTypeProvider>
+        </UserProvider>
     );
 }

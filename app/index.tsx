@@ -2,7 +2,7 @@ import { View, Button, StyleSheet, Text } from "react-native";
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import { router } from "expo-router";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { useSetUserTypeContext } from "@/contexts/UserType";
+import { useSetUserNameContext, useSetUserTypeContext } from "@/contexts/UserType";
 import { ThemedText, loadFont } from "@/components/ThemedText";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -15,6 +15,7 @@ export default function Index() {
     const bgColor = useThemeColor({}, "background");
     const buttonColor = useThemeColor({}, "primary");
     const setUserType = useSetUserTypeContext();
+    const setUserName = useSetUserNameContext();
 
     const [appReady, setAppReady] = useState<boolean>(false);
 
@@ -44,11 +45,13 @@ export default function Index() {
         if (setUserType) {
             setUserType(type);
         }
+
+        if (setUserName) {
+            setUserName(name);
+        }
+
         router.push({
             pathname: "/(tabs)",
-            params: {
-                userName: name,
-            },
         });
     };
 
@@ -80,12 +83,12 @@ export default function Index() {
             <View style={styles.button__container}>
                 <Button
                     color={buttonColor}
-                    onPress={() => login("student", "Student")}
+                    onPress={() => login("student", "Student Name")}
                     title="Student View"
                 />
                 <Button
                     color={buttonColor}
-                    onPress={() => login("teacher", "Teacher")}
+                    onPress={() => login("teacher", "Teacher Name")}
                     title="Teacher View"
                 />
             </View>
