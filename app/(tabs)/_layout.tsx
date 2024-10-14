@@ -117,9 +117,10 @@ export default function RootLayout() {
                         }}
                     />
                     <Tabs.Screen
-                        name="profile"
+                        name="(profile)"
                         options={{
                             title: "Profile",
+                            headerShown: false,
                             tabBarActiveTintColor: primary,
                             tabBarInactiveTintColor: secondary,
                             tabBarIcon: ({ focused }) => (
