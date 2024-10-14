@@ -5,13 +5,13 @@ import React from "react";
 import { ImageBackground } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { useUserNameContext } from "@/contexts/UserContext";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/firebase/firebaseConfig";
 import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Camera() {
     const userName = useUserNameContext();
-
     const [facing, setFacing] = useState<CameraType>("front");
     const [permission, requestPermission] = useCameraPermissions();
     const [photoUri, setPhotoUri] = useState<string>();
@@ -80,42 +80,74 @@ export default function Camera() {
     };
 
     return (
-        <>
+        <View style={styles.mainView}>
             {didTake ? (
-                <View style={{ flex: 1 }}>
-                    <ImageBackground
-                        source={{ uri: photoUri }}
-                        style={{
-                            height: "100%",
-                        }}
-                        resizeMode="cover"
-                    >
-                        <Pressable onPress={() => setDidTake(false)}>
-                            <ThemedText style={{ color: "pink" }}>Take Another</ThemedText>
-                        </Pressable>
-                        <Pressable onPress={() => saveImage()}>
-                            <ThemedText style={{ color: "pink" }}>Save</ThemedText>
-                        </Pressable>
-                    </ImageBackground>
-                </View>
+                <ImageBackground
+                    source={{ uri: photoUri }}
+                    style={{
+                        height: "100%",
+                    }}
+                    resizeMode="cover"
+                >
+                    <Pressable onPress={() => setDidTake(false)}>
+                        <ThemedText style={{ color: "pink" }}>Take Another</ThemedText>
+                    </Pressable>
+                    <Pressable onPress={() => saveImage()}>
+                        <ThemedText style={{ color: "pink" }}>Save</ThemedText>
+                    </Pressable>
+                </ImageBackground>
             ) : (
                 <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
-                    <View style={{}}>
-                        <Pressable style={{}} onPress={toggleCameraFacing}>
-                            <ThemedText style={{}}>Flip Camera</ThemedText>
+                    <View style={styles.camera__topOptions}>
+                        <Pressable
+                            style={{}}
+                            onPress={() => router.navigate({ pathname: "/(profile)" })}
+                        >
+                            <Ionicons name="close-sharp" size={40} />
                         </Pressable>
-                        <Pressable onPress={takePicture}>
-                            <ThemedText>Take Pic</ThemedText>
+                        <Pressable style={{}} onPress={toggleCameraFacing}>
+                            <Ionicons name="camera-reverse-sharp" size={40} />
+                        </Pressable>
+                    </View>
+                    <View style={styles.camera__shutterContainer}>
+                        <Pressable onPress={takePicture} style={styles.camera__shutter}>
+                            <Ionicons name="ellipse-sharp" size={80} color="white" />
                         </Pressable>
                     </View>
                 </CameraView>
             )}
-        </>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    mainView: {
+        flex: 1,
+        paddingTop: 50,
+        backgroundColor: "black",
+    },
+
     camera: {
         flex: 1,
+        flexDirection: "column",
+        justifyContent: "space-between",
+    },
+
+    camera__shutter: {
+        alignSelf: "flex-start",
+        borderRadius: 75,
+    },
+
+    camera__shutterContainer: {
+        alignSelf: "center",
+        marginBottom: 20,
+    },
+
+    camera__topOptions: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 20,
+        marginLeft: 10,
+        marginRight: 10,
     },
 });
