@@ -1,5 +1,5 @@
 import { ThemedText } from "@/components/ThemedText";
-import { useUserNameContext } from "@/contexts/UserType";
+import { useUserNameContext } from "@/contexts/UserContext";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { router } from "expo-router";
 import { View, StyleSheet, Text, Image, Pressable, Button } from "react-native";

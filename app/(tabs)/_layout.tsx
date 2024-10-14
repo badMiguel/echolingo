@@ -3,7 +3,7 @@ import { TabBarIcon, UserIcon, ClipboardListIcon } from "@/components/navigation
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { CategoryProvider } from "@/contexts/CategoryContext";
 import { TiwiProvider } from "@/contexts/TiwiContext";
-import { useUserTypeContext } from "@/contexts/UserType";
+import { useUserTypeContext } from "@/contexts/UserContext";
 
 export default function RootLayout() {
     const primary = useThemeColor({}, "primary");

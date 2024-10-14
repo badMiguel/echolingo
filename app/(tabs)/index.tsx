@@ -1,9 +1,9 @@
 import { Button, StyleSheet, View } from "react-native";
 import React from "react";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { useUserNameContext } from "@/contexts/UserType";
+import { useUserNameContext } from "@/contexts/UserContext";
 
 export default function Home() {
     const bgColor = useThemeColor({}, "background");

@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { CameraCapturedPicture, CameraType, CameraView, useCameraPermissions } from "expo-camera";
-import { View, StyleSheet, Button, Pressable, Image } from "react-native";
+import { useRef, useState } from "react";
+import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
+import { View, StyleSheet, Button, Pressable } from "react-native";
 import React from "react";
 import { ImageBackground } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { useUserNameContext } from "@/contexts/UserType";
+import { useUserNameContext } from "@/contexts/UserContext";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/firebase/firebaseConfig";
 import { router } from "expo-router";

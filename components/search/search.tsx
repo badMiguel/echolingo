@@ -5,7 +5,7 @@ import { Trie } from "./trie";
 import { useSetTiwiContext, useTiwiListContext } from "@/contexts/TiwiContext";
 import { ThemedText } from "../ThemedText";
 import { router } from "expo-router";
-import { useUserTypeContext } from "@/contexts/UserType";
+import { useUserTypeContext } from "@/contexts/UserContext";
 import { Ionicons } from "@expo/vector-icons";
 
 type SearchBarProps = {
