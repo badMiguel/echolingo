@@ -72,11 +72,6 @@ export default function Camera() {
             }
 
             await uploadBytes(fileRef, imageBlob);
-            const downloadURL = await getDownloadURL(fileRef);
-
-            if (!downloadURL) {
-                throw new Error("Failed to get download url of recording");
-            }
 
             router.navigate({ pathname: "/(profile)" });
         } catch (error) {
