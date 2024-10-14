@@ -21,6 +21,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
                 setProfilePicLink(link);
             } catch (error) {
+                setProfilePicLink(undefined);
                 console.log("Failed to get profile picture", error);
             }
         }
