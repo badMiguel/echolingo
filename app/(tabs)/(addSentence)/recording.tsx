@@ -13,6 +13,7 @@ import { Button, Snackbar } from "react-native-paper";
 import * as DocumentPicker from "expo-document-picker";
 import { useTiwiContext } from "@/contexts/TiwiContext";
 import { Recording } from "expo-av/build/Audio";
+import { FirebaseError } from "firebase/app";
 
 export default function RecordView() {
     const bgColor = useThemeColor({}, "background");
@@ -48,6 +49,7 @@ export default function RecordView() {
     );
 }
 
+
 export function Record({
     fromStudent,
     passShow,
@@ -72,8 +74,10 @@ export function Record({
 
     const { startRecording, stopRecording, recording, uri, haveRecording } = useRecording();
     const { saveRecording } = useCRUD();
+
     const { id } = useLocalSearchParams();
-    const currentID: string = Array.isArray(id) ? id[0] : id || 'default';
+    const { sentenceID } = useLocalSearchParams<{ sentenceID: string }>();
+    const currentID = sentenceID || 'default';
     const current = useTiwiContext();
     const recordingRef = useRef<Recording | undefined>(undefined);
 
@@ -155,62 +159,77 @@ export function Record({
             setShow(false);
         }, 3000);
     };
+
+
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY = 2000;
+    
     const submit = async () => {
         if (!tempUri) {
             Alert.alert("Error", "No recording available to submit.");
             return;
         }
 
+        let retries = 0;
+    
+        const uploadWithRetry = async (): Promise<string> => {
+            try {
+                const englishSentence = current?.English || 'unknown';
+                const folderName = englishSentence.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                const filename = `${Date.now()}_${currentID}.mp3`;
+                
+                const storageRef = ref(storage, `submissions/${folderName}/${filename}`);
+                console.log("Storage reference created:", storageRef.fullPath);
+    
+                const response = await fetch(tempUri);
+                const blob = await response.blob();
+                console.log("Uploading recording...");
+                
+                await uploadBytes(storageRef, blob);
+                return await getDownloadURL(storageRef);
+            } catch (error) {
+                if (error instanceof FirebaseError && error.code === 'storage/retry-limit-exceeded' && retries < MAX_RETRIES) {
+                    retries++;
+                    console.log(`Upload failed, retrying (${retries}/${MAX_RETRIES})...`);
+                    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+                    return uploadWithRetry();
+                } else {
+                    throw error;
+                }
+            }
+        };
+    
         try {
             console.log("Starting submission process");
-            console.log("Submitting recording with URI:", tempUri);
-            console.log("Current ID:", currentID);
-
-            const submissionId = currentID === 'default' ? `submission_${Date.now()}` : currentID;
-
-            // upl recording 
-            const storageRef = ref(storage, `submissions/${submissionId}/${Date.now()}.mp3`);
-            console.log("Storage reference created:", storageRef.fullPath);       
-
-            const response = await fetch(tempUri);
-            const blob = await response.blob();
-            console.log("Uploading recording...");
             setIsLoading(true);
-            await uploadBytes(storageRef, blob);
-
-            // download URL of the uploaded file
-            const downloadUrl = await getDownloadURL(storageRef);
-            setIsLoading(false);
+            
+            const downloadUrl = await uploadWithRetry();
+            
             console.log("Recording uploaded successfully, download URL:", downloadUrl);
-
-            // save submission to fs
-            const submissionData = {
-                sentenceId: submissionId,
-                category: "casual_study",
+    
+            await addDoc(collection(db, "submissions"), {
+                sentenceId: currentID,
+                sentenceEnglish: current?.English,
+                sentenceTiwi: current?.Tiwi,
                 recordingUrl: downloadUrl,
                 submittedAt: new Date(),
-            };
-            console.log("Submission data:", JSON.stringify(submissionData, null, 2));
-
-            const submissionsRef = collection(db, "submissions");
-            console.log("Firestore collection reference created");
-
-            const docRef = await addDoc(submissionsRef, submissionData);
-            console.log("Document written with ID:", docRef.id);
-
-
+                submittedBy: "student_id_here", // Replace with actual student ID
+            });
+    
+            setIsLoading(false);
             setSnackbarVisible(true);
             setIsSuccess(true);
             setShow(true);
-
+    
             setTimeout(() => {
                 setShow(false);
             }, 3000);
         } catch (error) {
             console.error("Error submitting recording:", error);
-            Alert.alert("Error", "There was an error submitting the recording.");
+            Alert.alert("Error", "There was an error submitting the recording. Please try again later.");
             setIsSuccess(false);
-        }
+            setIsLoading(false);
+        }    
     };
 
     return (

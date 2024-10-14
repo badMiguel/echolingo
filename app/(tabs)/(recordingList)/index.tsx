@@ -141,12 +141,16 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
     sentence: sentence,
 }) => {
     const id: string = Object.keys(sentence)[0];
+    console.log("SentenceCard received sentence data:", JSON.stringify(sentence, null, 2));
+    console.log("Extracted ID:", id);
+
     const color = useColor();
-    const hasSubmissions = sentence[id].submissions && sentence[id].submissions;
+    const hasSubmissions = sentence[id].submissions && sentence[id].submissions.length > 0;
 
     const goToSentence = () => {
+        console.log("Navigating to sentence with ID:", id);
         router.push({
-            pathname: sentence[id].recording ? "/viewRecording" : "/(addSentence)",
+            pathname: sentence[id].recording ? "/viewRecording" : "/(addSentence)/recording",
             params: {
                 sentenceID: id,
             },
@@ -154,11 +158,12 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
     };
 
     const goToSubmissions = () => {
+        console.log("Navigating to submissions with sentenceID:", id);
         router.push({
             pathname: "/submissions",
             params: {
                 sentenceID: id,
-                sentenceText: sentence[id].Tiwi || sentence[id].English, // Pass the sentence text
+                sentenceEnglish: sentence[id].English,
             },
         });
     };

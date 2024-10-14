@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, Alert } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
 import AudioPlayback from "@/components/audio/playback";
-import { db } from "@/firebase/firebaseConfig";
+import { db, storage } from "@/firebase/firebaseConfig";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Pressable } from "react-native";
@@ -11,12 +12,11 @@ import { Pressable } from "react-native";
 interface Submission {
     id: string;
     recordingUrl: string;
-    submittedAt: Timestamp;
+    submittedAt: string;
 }
-  
 
 export default function Submissions() {
-    const { sentenceID, sentenceText } = useLocalSearchParams<{ sentenceID: string, sentenceText: string }>();
+    const { sentenceID, sentenceEnglish } = useLocalSearchParams<{ sentenceID: string, sentenceEnglish: string }>();
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -28,18 +28,24 @@ export default function Submissions() {
         const fetchSubmissions = async () => {
             setIsLoading(true);
             try {
-                // verify sentenceID and sentenceText
-                if (!sentenceID || !sentenceText) {
+                if (!sentenceID || !sentenceEnglish) {
                     throw new Error("Missing sentence information");
                 }
 
-                const q = query(collection(db, "submissions"), where("sentenceId", "==", sentenceID));
-                const querySnapshot = await getDocs(q);
-                const submissionList = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    recordingUrl: doc.data().recordingUrl,
-                    submittedAt: doc.data().submittedAt,
-                }));
+                const folderName = sentenceEnglish.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                const storageRef = ref(storage, `submissions/${folderName}`);
+                
+                const result = await listAll(storageRef);
+                const submissionPromises = result.items.map(async (item) => {
+                    const url = await getDownloadURL(item);
+                    return {
+                        id: item.name,
+                        recordingUrl: url,
+                        submittedAt: new Date(parseInt(item.name.split('_')[0])).toLocaleString(),
+                    };
+                });
+
+                const submissionList = await Promise.all(submissionPromises);
                 setSubmissions(submissionList);
             } catch (error) {
                 console.error("Error fetching submissions:", error);
@@ -49,25 +55,25 @@ export default function Submissions() {
             }
         };
 
-        if (sentenceID && sentenceText) {
+        if (sentenceID && sentenceEnglish) {
             fetchSubmissions();
         } else {
             Alert.alert("Error", "Invalid sentence information");
             router.back();
         }
-    }, [sentenceID, sentenceText]);
+    }, [sentenceID, sentenceEnglish]);
 
     const renderSubmission = ({ item, index }: { item: Submission; index: number }) => (
         <View style={[styles.submissionItem, { backgroundColor: primary_tint }]}>
             <ThemedText type="defaultSemiBold">Submission {index + 1}</ThemedText>
-            <ThemedText>Submitted: {item.submittedAt.toDate().toLocaleString()}</ThemedText>
+            <ThemedText>Submitted: {item.submittedAt}</ThemedText>
             <AudioPlayback uri={item.recordingUrl} />
         </View>
     );
 
     return (
         <View style={[styles.container, { backgroundColor: bgColor }]}>
-            <ThemedText type="subtitle">Submissions for: {sentenceText}</ThemedText>
+            <ThemedText type="subtitle">Submissions for: {sentenceEnglish}</ThemedText>
             {isLoading ? (
                 <ThemedText>Loading submissions...</ThemedText>
             ) : submissions.length > 0 ? (
@@ -91,6 +97,7 @@ export default function Submissions() {
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

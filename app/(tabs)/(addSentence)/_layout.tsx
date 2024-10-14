@@ -15,11 +15,10 @@ export default function AddRecordingLayout() {
                 headerTitleStyle: { fontFamily: "Poppins-SemiBold" },
             }}
         >
-            <Stack.Screen
-                name="index"
-                options={{
-                    title: "Add Sentence",
-                }}
+            <Stack.Screen 
+                name="index" 
+                options={{ 
+                    title: "Add Recording" }} 
             />
             <Stack.Screen
                 name="recording"

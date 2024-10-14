@@ -28,7 +28,7 @@ export default function Add() {
     const [currentID, setCurrentID] = useState<string>();
     const [current, setCurrent] = useState<Entry | undefined>();
 
-    const { sentenceID } = useLocalSearchParams();
+    const { sentenceID } = useLocalSearchParams<{ sentenceID: string }>();
     const data = useTiwiListContext();
     const color = useColor();
 
@@ -43,14 +43,14 @@ export default function Add() {
         }
     }, [sentenceID, data]);
 
-    const updateCurrent = (currentID: string) => {
-        setCurrentID(currentID);
+    const updateCurrent = (sentenceID: string) => {
+        setCurrentID(sentenceID);
     };
 
     return (
         <View style={[styles.mainView, { backgroundColor: color.bgColor }]}>
             <AddDetails currentID={currentID} current={current} changeCurrent={updateCurrent} />
-            {currentID ? (
+            {currentID && (
                 <>
                     <AddRecording
                         current={current}
@@ -68,7 +68,7 @@ export default function Add() {
                         </Pressable>
                     )}
                 </>
-            ) : null}
+            )}
         </View>
     );
 }
@@ -310,9 +310,10 @@ function AddRecording({
             // maybe, just show an alert to the user that something went wrong??
             return;
         }
+        console.log("Recording for:", currentId);
         router.push({
             pathname: "/recording",
-            params: { id: currentId },
+            params: { sentenceID: currentId },
         });
     };
 
