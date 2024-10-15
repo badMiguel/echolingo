@@ -3,13 +3,30 @@ import { useProfilePicContext, useUserNameContext } from "@/contexts/UserContext
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { View, StyleSheet, Text, Image, Pressable, Button, ImageBackground } from "react-native";
+import { View, StyleSheet, Pressable, ImageBackground } from "react-native";
+import * as SMS from "expo-sms";
 
 export default function Profile() {
     const bgColor = useThemeColor({}, "background");
+    const primary = useThemeColor({}, "primary");
+
     const userName = useUserNameContext();
     const defaultProfilePic = require("@/assets/images/default-profile-pic.png");
     const profilePicLink = useProfilePicContext();
+
+    const sendSMS = async () => {
+        const smsAvailable = await SMS.isAvailableAsync();
+
+        if (smsAvailable) {
+            const { result } = await SMS.sendSMSAsync(
+                ["1111111", "2222222", "3333333"],
+                "New recordings available!"
+            );
+            console.log(result);
+        } else {
+            console.warn("No sms available for this device");
+        }
+    };
 
     return (
         <View style={[styles.mainView, { backgroundColor: bgColor }]}>
@@ -24,7 +41,14 @@ export default function Profile() {
                     <Ionicons name="camera-sharp" size={30} color={"white"} />
                 </Pressable>
             </ImageBackground>
-            <ThemedText type="subtitle" style={styles.userName}>{userName}</ThemedText>
+            <ThemedText type="subtitle" style={styles.userName}>
+                {userName}
+            </ThemedText>
+            <Pressable style={[styles.sms__button, { backgroundColor: primary }]} onPress={sendSMS}>
+                <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>
+                    Notify Students
+                </ThemedText>
+            </Pressable>
         </View>
     );
 }
@@ -54,5 +78,14 @@ const styles = StyleSheet.create({
 
     userName: {
         marginTop: 20,
+    },
+
+    sms__button: {
+        marginTop: 100,
+        paddingTop: 10,
+        paddingBottom: 7,
+        paddingRight: 30,
+        paddingLeft: 30,
+        borderRadius: 10,
     },
 });
