@@ -1,4 +1,4 @@
-import { Pressable, SectionList, StyleSheet, View } from "react-native";
+import { Pressable, SectionList, StyleSheet, View, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { DataType, emptyTiwiData, useTiwiListContext } from "@/contexts/TiwiContext";
 import { router } from "expo-router";
@@ -7,6 +7,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import SearchBar from "@/components/search/search";
 import { Switch } from "react-native-paper";
 import { useSubmissions } from "@/contexts/SubmissionsContext";
+import { useCallback } from "react";
 
 const useColor = () => {
     return {
@@ -43,10 +44,41 @@ export default function RecordingList() {
     >();
     const [showRecorded, setShowRecorded] = useState<boolean>(false);
 
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
     const { submissions, isLoading, refreshSubmissions } = useSubmissions();
 
     const data = useTiwiListContext();
     const color = useColor();
+
+
+    const normalizeString = (str: string) => 
+        str.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    const getSubmissionCount = useCallback((sentenceEnglish: string | undefined) => {
+        if (!sentenceEnglish) {
+            console.log("getSubmissionCount: sentenceEnglish is undefined");
+            return 0;
+        }
+        const normalizedSentence = normalizeString(sentenceEnglish);
+        const count = submissions.filter(sub => {
+            const normalizedSubmission = normalizeString(sub.sentenceEnglish);
+            return normalizedSubmission.includes(normalizedSentence) || 
+                   normalizedSentence.includes(normalizedSubmission);
+        }).length;
+        console.log(`getSubmissionCount for "${sentenceEnglish}":`, count);
+        return count;
+    }, [submissions]);
+
+    const handleSearchResults = (searchList: string[] | Map<string, string[]>) => {
+        setSearchResults(searchList);
+    };
+
+    const handleRefresh = async () => {
+        setIsRefreshing(true);
+        await refreshSubmissions();
+        setIsRefreshing(false);
+    };
 
     useEffect(() => {
         // todo error handling and optimisation
@@ -102,21 +134,13 @@ export default function RecordingList() {
         },
     ];
 
-    const getSubmissionCount = (sentenceEnglish: string | undefined) => {
-        if (!sentenceEnglish) {
-            console.warn("Sentence English is undefined");
-            return 0;
-        }
-        console.log("Checking submissions for:", sentenceEnglish);
-        return submissions.filter(sub => 
-            sub.sentenceEnglish && 
-            sub.sentenceEnglish.toLowerCase() === sentenceEnglish.toLowerCase()
-        ).length;
-    };
-
-    const handleSearchResults = (searchList: string[] | Map<string, string[]>) => {
-        setSearchResults(searchList);
-    };
+    if (isLoading) {
+        return (
+            <View style={[styles.loading_container, { backgroundColor: color.bgColor }]}>
+                <ActivityIndicator size="large" color={color.primary} />
+            </View>
+        );
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: color.bgColor }}>
@@ -139,13 +163,16 @@ export default function RecordingList() {
                         );
                     }
                     
+                    const submissionCount = getSubmissionCount(sentenceData.English);
+                    console.log(`Submission count for "${sentenceData.English}":`, submissionCount);
+                    
                     return (
                         <SentenceCard 
                             sentence={item} 
                             finished={false} 
-                            submissionCount={getSubmissionCount(sentenceData.English)}
-                        />
-                    );
+                            submissionCount={submissionCount}
+                        /> 
+                    );               
                 }}
                 renderSectionHeader={({ section: { title } }) => (
                     <View style={styles.sectionlist__header}>
@@ -157,8 +184,8 @@ export default function RecordingList() {
                     </View>
                 )}
                 style={styles.sectionlist}
-                refreshing={isLoading}
-                onRefresh={refreshSubmissions}            
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}          
             />
         </View>
     );
@@ -168,12 +195,14 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean; submission
     sentence, submissionCount
 }) => {
     const id: string = Object.keys(sentence)[0];
+    const sentenceData = sentence[id];
+    console.log("SentenceCard rendering:", id, sentenceData, submissionCount);
     // console.log("SentenceCard received sentence data:", JSON.stringify(sentence, null, 2));
     // console.log("Extracted ID:", id);
 
     const color = useColor();
     const hasSubmissions = sentence[id].submissions && sentence[id].submissions.length > 0;
-
+    
     const goToSentence = () => {
         console.log("Navigating to sentence with ID:", id);
         router.push({
@@ -266,4 +295,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignSelf: "center",
     },
+    loading_container: {
+        flex: 1,
+        justifyContent: 'center',
+    }
 });

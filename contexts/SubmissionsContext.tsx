@@ -13,7 +13,7 @@ interface Submission {
 interface SubmissionsContextType {
     submissions: Submission[];
     isLoading: boolean;
-    refreshSubmissions: () => void;
+    refreshSubmissions: () => Promise<void>;
 }
 
 const SubmissionsContext = createContext<SubmissionsContextType | undefined>(undefined);
@@ -31,13 +31,16 @@ export const SubmissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchSubmissions = async () => {
+        console.log("Fetching submissions...");
         setIsLoading(true);
         try {
             const submissionsRef = ref(storage, 'submissions');
             const submissionsSnapshot = await listAll(submissionsRef);
+            console.log("Submissions folders:", submissionsSnapshot.prefixes.length);
 
             const submissionPromises = submissionsSnapshot.prefixes.map(async (folderRef) => {
                 const folderContent = await listAll(folderRef);
+                console.log(`Folder ${folderRef.name} contents:`, folderContent.items.length);
                 const sentenceSubmissions = await Promise.all(folderContent.items.map(async (item) => {
                     const url = await getDownloadURL(item);
                     return {
@@ -51,6 +54,7 @@ export const SubmissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
             });
 
             const allSubmissions = (await Promise.all(submissionPromises)).flat();
+            console.log("Total submissions fetched:", allSubmissions.length);
             setSubmissions(allSubmissions);
         } catch (error) {
             console.error("Error fetching submissions:", error);
@@ -62,12 +66,13 @@ export const SubmissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
     useEffect(() => {
         fetchSubmissions();
 
-        // listener for new submissions
         const q = query(collection(db, "submissions"), orderBy("submittedAt", "desc"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
+            console.log("Firestore snapshot received, changes:", snapshot.docChanges().length);
             snapshot.docChanges().forEach((change) => {
                 if (change.type === "added") {
                     const newSubmission = change.doc.data() as Submission;
+                    console.log("New submission added:", newSubmission);
                     setSubmissions(prev => [newSubmission, ...prev]);
                 }
             });
@@ -76,9 +81,12 @@ export const SubmissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
         return () => unsubscribe();
     }, []);
 
-    const refreshSubmissions = () => {
-        fetchSubmissions();
+    const refreshSubmissions = async () => {
+        console.log("Refreshing submissions...");
+        await fetchSubmissions();
     };
+
+    console.log("SubmissionsProvider rendering, submissions count:", submissions.length);
 
     return (
         <SubmissionsContext.Provider value={{ submissions, isLoading, refreshSubmissions }}>
