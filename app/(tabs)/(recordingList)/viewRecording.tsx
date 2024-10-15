@@ -102,7 +102,7 @@ export default function ViewRecording() {
                             type="defaultSemiBold"
                             style={[{ color: uri && status ? bgColor : primary }]}
                         >
-                            {uri && status ? "Edit" :  didError ? "Edit" : "Loading"}
+                            {uri && status ? "Edit" : didError ? "Edit" : "Loading"}
                         </ThemedText>
                     </Pressable>
                     <Pressable

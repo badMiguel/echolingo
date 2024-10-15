@@ -16,7 +16,10 @@ interface Submission {
 }
 
 export default function Submissions() {
-    const { sentenceID, sentenceEnglish } = useLocalSearchParams<{ sentenceID: string, sentenceEnglish: string }>();
+    const { sentenceID, sentenceEnglish } = useLocalSearchParams<{
+        sentenceID: string;
+        sentenceEnglish: string;
+    }>();
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -32,16 +35,16 @@ export default function Submissions() {
                     throw new Error("Missing sentence information");
                 }
 
-                const folderName = sentenceEnglish.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                const folderName = sentenceEnglish.replace(/[^a-z0-9]/gi, "_").toLowerCase();
                 const storageRef = ref(storage, `submissions/${folderName}`);
-                
+
                 const result = await listAll(storageRef);
                 const submissionPromises = result.items.map(async (item) => {
                     const url = await getDownloadURL(item);
                     return {
                         id: item.name,
                         recordingUrl: url,
-                        submittedAt: new Date(parseInt(item.name.split('_')[0])).toLocaleString(),
+                        submittedAt: new Date(parseInt(item.name.split("_")[0])).toLocaleString(),
                     };
                 });
 
@@ -116,6 +119,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 10,
-        alignItems: 'center',
+        alignItems: "center",
     },
 });

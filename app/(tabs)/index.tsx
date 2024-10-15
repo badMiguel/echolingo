@@ -1,6 +1,6 @@
 import { Button, StyleSheet, View } from "react-native";
 import React from "react";
-import { router, } from "expo-router";
+import { router } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useUserNameContext } from "@/contexts/UserContext";

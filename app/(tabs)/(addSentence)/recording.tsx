@@ -49,7 +49,6 @@ export default function RecordView() {
     );
 }
 
-
 export function Record({
     fromStudent,
     passShow,
@@ -77,7 +76,7 @@ export function Record({
 
     const { id } = useLocalSearchParams();
     const { sentenceID } = useLocalSearchParams<{ sentenceID: string }>();
-    const currentID = sentenceID || 'default';
+    const currentID = sentenceID || "default";
     const current = useTiwiContext();
     const recordingRef = useRef<Recording | undefined>(undefined);
 
@@ -160,10 +159,9 @@ export function Record({
         }, 3000);
     };
 
-
     const MAX_RETRIES = 3;
     const RETRY_DELAY = 2000;
-    
+
     const submit = async () => {
         if (!tempUri) {
             Alert.alert("Error", "No recording available to submit.");
@@ -171,42 +169,46 @@ export function Record({
         }
 
         let retries = 0;
-    
+
         const uploadWithRetry = async (): Promise<string> => {
             try {
-                const englishSentence = current?.English || 'unknown';
-                const folderName = englishSentence.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                const englishSentence = current?.English || "unknown";
+                const folderName = englishSentence.replace(/[^a-z0-9]/gi, "_").toLowerCase();
                 const filename = `${Date.now()}_${currentID}.mp3`;
-                
+
                 const storageRef = ref(storage, `submissions/${folderName}/${filename}`);
                 console.log("Storage reference created:", storageRef.fullPath);
-    
+
                 const response = await fetch(tempUri);
                 const blob = await response.blob();
                 console.log("Uploading recording...");
-                
+
                 await uploadBytes(storageRef, blob);
                 return await getDownloadURL(storageRef);
             } catch (error) {
-                if (error instanceof FirebaseError && error.code === 'storage/retry-limit-exceeded' && retries < MAX_RETRIES) {
+                if (
+                    error instanceof FirebaseError &&
+                    error.code === "storage/retry-limit-exceeded" &&
+                    retries < MAX_RETRIES
+                ) {
                     retries++;
                     console.log(`Upload failed, retrying (${retries}/${MAX_RETRIES})...`);
-                    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+                    await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
                     return uploadWithRetry();
                 } else {
                     throw error;
                 }
             }
         };
-    
+
         try {
             console.log("Starting submission process");
             setIsLoading(true);
-            
+
             const downloadUrl = await uploadWithRetry();
-            
+
             console.log("Recording uploaded successfully, download URL:", downloadUrl);
-    
+
             await addDoc(collection(db, "submissions"), {
                 sentenceId: currentID,
                 sentenceEnglish: current?.English,
@@ -215,21 +217,24 @@ export function Record({
                 submittedAt: new Date(),
                 submittedBy: "student_id_here", // Replace with actual student ID
             });
-    
+
             setIsLoading(false);
             setSnackbarVisible(true);
             setIsSuccess(true);
             setShow(true);
-    
+
             setTimeout(() => {
                 setShow(false);
             }, 3000);
         } catch (error) {
             console.error("Error submitting recording:", error);
-            Alert.alert("Error", "There was an error submitting the recording. Please try again later.");
+            Alert.alert(
+                "Error",
+                "There was an error submitting the recording. Please try again later."
+            );
             setIsSuccess(false);
             setIsLoading(false);
-        }    
+        }
     };
 
     return (
@@ -277,8 +282,8 @@ export function Record({
                     {recording
                         ? "Stop Recording"
                         : haveRecording
-                            ? "Record Another"
-                            : "Start Recording"}
+                          ? "Record Another"
+                          : "Start Recording"}
                 </ThemedText>
             </Pressable>
 

@@ -141,8 +141,8 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
     sentence: sentence,
 }) => {
     const id: string = Object.keys(sentence)[0];
-    console.log("SentenceCard received sentence data:", JSON.stringify(sentence, null, 2));
-    console.log("Extracted ID:", id);
+    // console.log("SentenceCard received sentence data:", JSON.stringify(sentence, null, 2));
+    // console.log("Extracted ID:", id);
 
     const color = useColor();
     const hasSubmissions = sentence[id].submissions && sentence[id].submissions.length > 0;
