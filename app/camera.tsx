@@ -4,21 +4,25 @@ import { View, StyleSheet, Button, Pressable } from "react-native";
 import React from "react";
 import { ImageBackground } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { useUserNameContext } from "@/contexts/UserContext";
+import { useSetPicChangedContext, useUserNameContext } from "@/contexts/UserContext";
 import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/firebase/firebaseConfig";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import * as DocumentPicker from "expo-document-picker";
 
 export default function Camera() {
-    const userName = useUserNameContext();
+    const primary = useThemeColor({}, "primary");
+
     const [facing, setFacing] = useState<CameraType>("front");
     const [permission, requestPermission] = useCameraPermissions();
     const [photoUri, setPhotoUri] = useState<string>();
     const [didTake, setDidTake] = useState<boolean>(false);
+
     const cameraRef = useRef<CameraView | null>(null);
-    const primary = useThemeColor({}, "primary");
+    const userName = useUserNameContext();
+    const setPicChanged = useSetPicChangedContext();
 
     if (!permission) {
         // Camera permissions are still loading.
@@ -40,8 +44,6 @@ export default function Camera() {
     };
 
     const takePicture = async () => {
-        setDidTake(true);
-
         // todo error handle
         if (cameraRef.current) {
             try {
@@ -51,11 +53,24 @@ export default function Camera() {
                     throw new Error("Photo does not exist");
                 }
 
+                setDidTake(true);
                 setPhotoUri(photo.uri);
             } catch (err) {
                 console.error("Failed taking a picture", err);
                 setDidTake(false);
             }
+        }
+    };
+
+    const useDocumentPicker = async () => {
+        try {
+            const selected = await openDocumentPicker();
+            if (selected) {
+                setDidTake(true);
+                setPhotoUri(selected);
+            }
+        } catch (error) {
+            console.error("Failed uploading image from device");
         }
     };
 
@@ -74,6 +89,10 @@ export default function Camera() {
             }
 
             await uploadBytes(fileRef, imageBlob);
+
+            if (setPicChanged) {
+                setPicChanged(photoUri);
+            }
 
             router.navigate({ pathname: "/(profile)" });
         } catch (error) {
@@ -105,24 +124,42 @@ export default function Camera() {
                             style={{}}
                             onPress={() => router.navigate({ pathname: "/(profile)" })}
                         >
-                            <Ionicons name="close-sharp" size={40} />
+                            <Ionicons name="close-sharp" size={40} color={"white"} />
                         </Pressable>
-                        <Pressable style={{}} onPress={toggleCameraFacing}>
-                            <Ionicons name="camera-reverse-sharp" size={40} />
+                        <Pressable onPress={() => toggleCameraFacing()}>
+                            <Ionicons name="camera-reverse-sharp" size={40} color={"white"} />
                         </Pressable>
                     </View>
                     <View style={styles.camera__bottonOptions}>
-                        <Pressable onPress={takePicture} style={styles.camera__shutter}>
+                        <Pressable onPress={() => useDocumentPicker()} style={{}}>
+                            <Ionicons name="folder-open-sharp" size={40} color="white" />
+                        </Pressable>
+                        <Pressable onPress={() => takePicture()} style={styles.camera__shutter}>
                             <Ionicons name="ellipse-sharp" size={80} color="white" />
                         </Pressable>
-                        <Pressable onPress={()=>{}} style={{}}>
-                            <Ionicons name="folder-open-sharp" size={80} color="white" />
-                        </Pressable>
+                        <View style={{ width: 40 }}></View>
                     </View>
                 </CameraView>
             )}
         </View>
     );
+}
+
+async function openDocumentPicker(): Promise<string | undefined> {
+    try {
+        const result = await DocumentPicker.getDocumentAsync({
+            type: "*/*",
+            copyToCacheDirectory: true,
+        });
+
+        if (result.canceled) {
+            throw new Error("Canceled by user");
+        }
+
+        return result.assets[0].uri;
+    } catch (err) {
+        console.error("Failed opening document picker", err);
+    }
 }
 
 const styles = StyleSheet.create({
@@ -155,20 +192,22 @@ const styles = StyleSheet.create({
     },
 
     camera__shutter: {
-        alignSelf: "flex-start",
         borderRadius: 75,
     },
 
     camera__bottonOptions: {
-        alignSelf: "center",
+        flexDirection: "row",
         marginBottom: 20,
+        justifyContent: "space-around",
+        alignItems: "center",
     },
 
     camera__topOptions: {
+        backgroundColor: "black",
         flexDirection: "row",
         justifyContent: "space-between",
-        marginTop: 20,
-        marginLeft: 10,
-        marginRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
     },
 });

@@ -7,11 +7,13 @@ const SetUserTypeContext = createContext<React.Dispatch<string | undefined> | un
 const UserNameContext = createContext<string | undefined>(undefined);
 const SetUserNameContext = createContext<React.Dispatch<string | undefined> | undefined>(undefined);
 const ProfilePicContext = createContext<string | undefined>(undefined);
+const SetPicChangedContext = createContext<React.Dispatch<string> | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [userType, setUserType] = useState<string>();
     const [userName, setUserName] = useState<string>();
     const [profilePicLink, setProfilePicLink] = useState<string>();
+    const [picChanged, setPicChanged] = useState<string>("");
 
     useEffect(() => {
         async function fetchProfilePic() {
@@ -29,7 +31,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (userName) {
             fetchProfilePic();
         }
-    }, [userName]);
+    }, [userName, picChanged]);
 
     return (
         <UserTypeContext.Provider value={userType}>
@@ -37,7 +39,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 <UserNameContext.Provider value={userName}>
                     <SetUserNameContext.Provider value={setUserName}>
                         <ProfilePicContext.Provider value={profilePicLink}>
-                            {children}
+                            <SetPicChangedContext.Provider value={setPicChanged}>
+                                {children}
+                            </SetPicChangedContext.Provider>
                         </ProfilePicContext.Provider>
                     </SetUserNameContext.Provider>
                 </UserNameContext.Provider>
@@ -64,4 +68,8 @@ export function useSetUserTypeContext() {
 
 export function useProfilePicContext() {
     return useContext(ProfilePicContext);
+}
+
+export function useSetPicChangedContext() {
+    return useContext(SetPicChangedContext);
 }
