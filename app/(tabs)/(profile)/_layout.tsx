@@ -22,13 +22,6 @@ export default function profileLayout() {
                     title: "Profile",
                 }}
             />
-            <Stack.Screen
-                name="camera"
-                options={{
-                    headerShown: false,
-                    title: "Profile",
-                }}
-            />
         </Stack>
     );
 }

@@ -111,9 +111,12 @@ export default function Camera() {
                             <Ionicons name="camera-reverse-sharp" size={40} />
                         </Pressable>
                     </View>
-                    <View style={styles.camera__shutterContainer}>
+                    <View style={styles.camera__bottonOptions}>
                         <Pressable onPress={takePicture} style={styles.camera__shutter}>
                             <Ionicons name="ellipse-sharp" size={80} color="white" />
+                        </Pressable>
+                        <Pressable onPress={()=>{}} style={{}}>
+                            <Ionicons name="folder-open-sharp" size={80} color="white" />
                         </Pressable>
                     </View>
                 </CameraView>
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
         borderRadius: 75,
     },
 
-    camera__shutterContainer: {
+    camera__bottonOptions: {
         alignSelf: "center",
         marginBottom: 20,
     },
