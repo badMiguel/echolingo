@@ -46,7 +46,7 @@ export default function Profile() {
             </ThemedText>
             <Pressable style={[styles.sms__button, { backgroundColor: primary }]} onPress={sendSMS}>
                 <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>
-                    Notify Students
+                    Notify Students via SMS
                 </ThemedText>
             </Pressable>
         </View>
