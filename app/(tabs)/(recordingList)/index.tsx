@@ -6,6 +6,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import SearchBar from "@/components/search/search";
 import { Switch } from "react-native-paper";
+import { useSubmissions } from "@/contexts/SubmissionsContext";
 
 const useColor = () => {
     return {
@@ -42,6 +43,8 @@ export default function RecordingList() {
     >();
     const [showRecorded, setShowRecorded] = useState<boolean>(false);
 
+    const { submissions, isLoading, refreshSubmissions } = useSubmissions();
+
     const data = useTiwiListContext();
     const color = useColor();
 
@@ -53,7 +56,7 @@ export default function RecordingList() {
             setDataRecorded(recorded);
             setDataNotRecorded(notRecorded);
         }
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         // todo better error handling and optimisation
@@ -99,6 +102,18 @@ export default function RecordingList() {
         },
     ];
 
+    const getSubmissionCount = (sentenceEnglish: string | undefined) => {
+        if (!sentenceEnglish) {
+            console.warn("Sentence English is undefined");
+            return 0;
+        }
+        console.log("Checking submissions for:", sentenceEnglish);
+        return submissions.filter(sub => 
+            sub.sentenceEnglish && 
+            sub.sentenceEnglish.toLowerCase() === sentenceEnglish.toLowerCase()
+        ).length;
+    };
+
     const handleSearchResults = (searchList: string[] | Map<string, string[]>) => {
         setSearchResults(searchList);
     };
@@ -109,19 +124,29 @@ export default function RecordingList() {
             <SectionList
                 sections={sections}
                 keyExtractor={(item) => Object.keys(item)[0]}
-                renderItem={({ item }) =>
-                    Object.keys(item)[0] === "0" ? (
-                        item.completed ? (
-                            <ThemedText style={{}}>All sentences have been recorded</ThemedText>
+                renderItem={({ item }) => {
+                    const id = Object.keys(item)[0];
+                    const sentenceData = item[id];
+                    console.log("Rendering item:", id, sentenceData);
+                    
+                    if (id === "0") {
+                        return sentenceData.completed ? (
+                            <ThemedText>All sentences have been recorded</ThemedText>
                         ) : (
                             <ThemedText style={{ marginBottom: 30 }}>
                                 No sentences recorded yet
                             </ThemedText>
-                        )
-                    ) : (
-                        <SentenceCard sentence={item} finished={false} />
-                    )
-                }
+                        );
+                    }
+                    
+                    return (
+                        <SentenceCard 
+                            sentence={item} 
+                            finished={false} 
+                            submissionCount={getSubmissionCount(sentenceData.English)}
+                        />
+                    );
+                }}
                 renderSectionHeader={({ section: { title } }) => (
                     <View style={styles.sectionlist__header}>
                         <ThemedText type="subtitle">{title}</ThemedText>
@@ -132,13 +157,15 @@ export default function RecordingList() {
                     </View>
                 )}
                 style={styles.sectionlist}
+                refreshing={isLoading}
+                onRefresh={refreshSubmissions}            
             />
         </View>
     );
 }
 
-const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
-    sentence: sentence,
+const SentenceCard: React.FC<{ sentence: DataType; finished: boolean; submissionCount: number }> = ({
+    sentence, submissionCount
 }) => {
     const id: string = Object.keys(sentence)[0];
     // console.log("SentenceCard received sentence data:", JSON.stringify(sentence, null, 2));
@@ -191,16 +218,16 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean }> = ({
             <Pressable
                 style={[
                     styles.button__container,
-                    { backgroundColor: hasSubmissions ? color.primary : "#ddd" },
+                    { backgroundColor: submissionCount > 0 ? color.primary : "#ddd" },
                 ]}
                 onPress={goToSubmissions}
-                disabled={!hasSubmissions}
+                disabled={submissionCount === 0}
             >
                 <ThemedText
                     type="defaultSemiBold"
-                    style={{ color: hasSubmissions ? color.bgColor : "#aaa" }}
+                    style={{ color: submissionCount > 0 ? color.bgColor : "#aaa" }}
                 >
-                    Submissions ({sentence[id].submissions?.length || 0})
+                    Submissions ({submissionCount})
                 </ThemedText>
             </Pressable>
         </View>

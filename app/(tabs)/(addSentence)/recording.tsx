@@ -159,8 +159,8 @@ export function Record({
         }, 3000);
     };
 
-    const MAX_RETRIES = 3;
-    const RETRY_DELAY = 2000;
+    // const MAX_RETRIES = 3;
+    // const RETRY_DELAY = 2000;
 
     const submit = async () => {
         if (!tempUri) {
@@ -168,70 +168,44 @@ export function Record({
             return;
         }
 
-        let retries = 0;
-
-        const uploadWithRetry = async (): Promise<string> => {
-            try {
-                const englishSentence = current?.English || "unknown";
-                const folderName = englishSentence.replace(/[^a-z0-9]/gi, "_").toLowerCase();
-                const filename = `${Date.now()}_${currentID}.mp3`;
-
-                const storageRef = ref(storage, `submissions/${folderName}/${filename}`);
-                console.log("Storage reference created:", storageRef.fullPath);
-
-                const response = await fetch(tempUri);
-                const blob = await response.blob();
-                console.log("Uploading recording...");
-
-                await uploadBytes(storageRef, blob);
-                return await getDownloadURL(storageRef);
-            } catch (error) {
-                if (
-                    error instanceof FirebaseError &&
-                    error.code === "storage/retry-limit-exceeded" &&
-                    retries < MAX_RETRIES
-                ) {
-                    retries++;
-                    console.log(`Upload failed, retrying (${retries}/${MAX_RETRIES})...`);
-                    await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
-                    return uploadWithRetry();
-                } else {
-                    throw error;
-                }
-            }
-        };
-
         try {
             console.log("Starting submission process");
             setIsLoading(true);
-
-            const downloadUrl = await uploadWithRetry();
-
-            console.log("Recording uploaded successfully, download URL:", downloadUrl);
-
-            await addDoc(collection(db, "submissions"), {
+    
+            const englishSentence = current?.English || 'unknown';
+            const folderName = englishSentence.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            const filename = `${Date.now()}_${currentID}.mp3`;
+            
+            // upl to Firebase Storage
+            const storageRef = ref(storage, `submissions/${folderName}/${filename}`);
+            const response = await fetch(tempUri);
+            const blob = await response.blob();
+            await uploadBytes(storageRef, blob);
+    
+            const downloadUrl = await getDownloadURL(storageRef);
+    
+            // create a doc in fs
+            const submissionDoc = await addDoc(collection(db, "submissions"), {
                 sentenceId: currentID,
-                sentenceEnglish: current?.English,
+                sentenceEnglish: englishSentence,
                 sentenceTiwi: current?.Tiwi,
                 recordingUrl: downloadUrl,
                 submittedAt: new Date(),
-                submittedBy: "student_id_here", // Replace with actual student ID
+                fileName: filename // link the fs doc to the storage file
             });
-
+    
+            console.log("Submission added with ID: ", submissionDoc.id);
+    
             setIsLoading(false);
-            setSnackbarVisible(true);
             setIsSuccess(true);
             setShow(true);
-
+    
             setTimeout(() => {
                 setShow(false);
             }, 3000);
         } catch (error) {
             console.error("Error submitting recording:", error);
-            Alert.alert(
-                "Error",
-                "There was an error submitting the recording. Please try again later."
-            );
+            Alert.alert("Error", "There was an error submitting the recording. Please try again later.");
             setIsSuccess(false);
             setIsLoading(false);
         }
