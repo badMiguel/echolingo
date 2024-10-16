@@ -100,25 +100,6 @@ export default function RootLayout() {
                                 href: userType !== "teacher" ? null : "/(addSentence)",
                             }}
                         />
-
-                        <Tabs.Screen
-                            name="(challenges)"
-                            options={{
-                                title: "Challenges",
-                                headerShown: false,
-                                tabBarActiveTintColor: primary,
-                                tabBarInactiveTintColor: secondary,
-                                tabBarIcon: ({ focused }) => (
-                                    <TabBarIcon
-                                        name={focused ? "checkmark" : "checkmark-outline"}
-                                        color={focused ? primary : secondary}
-                                        size={30}
-                                    />
-                                ),
-                                tabBarLabel: "Challenges",
-                                href: userType !== "student" ? null : "/(challenges)",
-                            }}
-                        />
                         <Tabs.Screen
                             name="(profile)"
                             options={{
