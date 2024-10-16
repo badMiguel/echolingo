@@ -51,12 +51,18 @@ export default function RecordingList() {
     const data = useTiwiListContext();
     const color = useColor();
 
-    const normalizeString = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const normalizeString = (str: string) => {
+        if (!str) {
+            // console.log("fixed")
+            return "";
+        }
+        return str.toLowerCase().replace(/[^a-z0-9]/g, "");
+    };
 
     const getSubmissionCount = useCallback(
         (sentenceEnglish: string | undefined) => {
             if (!sentenceEnglish) {
-                console.log("getSubmissionCount: sentenceEnglish is undefined");
+                console.error("getSubmissionCount: sentenceEnglish is undefined");
                 return 0;
             }
             const normalizedSentence = normalizeString(sentenceEnglish);
@@ -67,7 +73,7 @@ export default function RecordingList() {
                     normalizedSentence.includes(normalizedSubmission)
                 );
             }).length;
-            console.log(`getSubmissionCount for "${sentenceEnglish}":`, count);
+            // console.log(`getSubmissionCount for "${sentenceEnglish}":`, count);
             return count;
         },
         [submissions]
@@ -154,7 +160,7 @@ export default function RecordingList() {
                 renderItem={({ item }) => {
                     const id = Object.keys(item)[0];
                     const sentenceData = item[id];
-                    console.log("Rendering item:", id, sentenceData);
+                    // console.log("Rendering item:", id, sentenceData);
 
                     if (id === "0") {
                         return sentenceData.completed ? (
@@ -167,7 +173,7 @@ export default function RecordingList() {
                     }
 
                     const submissionCount = getSubmissionCount(sentenceData.English);
-                    console.log(`Submission count for "${sentenceData.English}":`, submissionCount);
+                    // console.log(`Submission count for "${sentenceData.English}":`, submissionCount);
 
                     return (
                         <SentenceCard
@@ -200,8 +206,8 @@ const SentenceCard: React.FC<{
     submissionCount: number;
 }> = ({ sentence, submissionCount }) => {
     const id: string = Object.keys(sentence)[0];
-    const sentenceData = sentence[id];
-    console.log("SentenceCard rendering:", id, sentenceData, submissionCount);
+    // const sentenceData = sentence[id];
+    // console.log("SentenceCard rendering:", id, sentenceData, submissionCount);
     // console.log("SentenceCard received sentence data:", JSON.stringify(sentence, null, 2));
     // console.log("Extracted ID:", id);
 
@@ -209,7 +215,7 @@ const SentenceCard: React.FC<{
     const hasSubmissions = sentence[id].submissions && sentence[id].submissions.length > 0;
 
     const goToSentence = () => {
-        console.log("Navigating to sentence with ID:", id);
+        // console.log("Navigating to sentence with ID:", id);
         router.push({
             pathname: sentence[id].recording ? "/viewRecording" : "/(addSentence)/recording",
             params: {

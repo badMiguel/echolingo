@@ -76,7 +76,7 @@ export const SubmissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
             snapshot.docChanges().forEach((change) => {
                 if (change.type === "added") {
                     const newSubmission = change.doc.data() as Submission;
-                    console.log("New submission added:", newSubmission);
+                    // console.log("New submission added:", newSubmission);
                     setSubmissions((prev) => [newSubmission, ...prev]);
                 }
             });
@@ -90,7 +90,7 @@ export const SubmissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
         await fetchSubmissions();
     };
 
-    console.log("SubmissionsProvider rendering, submissions count:", submissions.length);
+    // console.log("SubmissionsProvider rendering, submissions count:", submissions.length);
 
     return (
         <SubmissionsContext.Provider value={{ submissions, isLoading, refreshSubmissions }}>
