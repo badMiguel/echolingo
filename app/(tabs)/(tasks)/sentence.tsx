@@ -6,7 +6,6 @@ import AudioPlayback from "@/components/audio/playback";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import { useCategoryContext } from "@/contexts/CategoryContext";
-import * as FileSystem from "expo-file-system";
 import { Record } from "../(addSentence)/recording";
 
 export default function Sentence() {
@@ -61,7 +60,7 @@ const Question: React.FC<{ current: Entry }> = ({ current }) => {
             {current.recording ? (
                 <View>
                     <ThemedText type="defaultSemiBold">Teachers Recording:</ThemedText>
-                    <AudioPlayback uri={FileSystem.documentDirectory + current.recording} />
+                    <AudioPlayback uri={current.recording} />
                 </View>
             ) : (
                 <ThemedText type="defaultSemiBold" style={{ alignSelf: "center" }}>
