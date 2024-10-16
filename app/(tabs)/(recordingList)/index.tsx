@@ -217,7 +217,7 @@ const SentenceCard: React.FC<{
     const goToSentence = () => {
         // console.log("Navigating to sentence with ID:", id);
         router.push({
-            pathname: sentence[id].recording ? "/viewRecording" : "/(addSentence)/recording",
+            pathname: sentence[id].recording ? "/viewRecording" : "/(addSentence)",
             params: {
                 sentenceID: id,
             },
@@ -251,7 +251,7 @@ const SentenceCard: React.FC<{
                 onPress={() => goToSentence()}
             >
                 <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
-                    {sentence[id].recording ? "View" : "Add Recording"}
+                    {sentence[id].recording ? "View" : "Update"}
                 </ThemedText>
             </Pressable>
 
