@@ -171,19 +171,19 @@ export function Record({
         try {
             console.log("Starting submission process");
             setIsLoading(true);
-    
-            const englishSentence = current?.English || 'unknown';
-            const folderName = englishSentence.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+
+            const englishSentence = current?.English || "unknown";
+            const folderName = englishSentence.replace(/[^a-z0-9]/gi, "_").toLowerCase();
             const filename = `${Date.now()}_${currentID}.mp3`;
-            
+
             // upl to Firebase Storage
             const storageRef = ref(storage, `submissions/${folderName}/${filename}`);
             const response = await fetch(tempUri);
             const blob = await response.blob();
             await uploadBytes(storageRef, blob);
-    
+
             const downloadUrl = await getDownloadURL(storageRef);
-    
+
             // create a doc in fs
             const submissionDoc = await addDoc(collection(db, "submissions"), {
                 sentenceId: currentID,
@@ -191,21 +191,24 @@ export function Record({
                 sentenceTiwi: current?.Tiwi,
                 recordingUrl: downloadUrl,
                 submittedAt: new Date(),
-                fileName: filename // link the fs doc to the storage file
+                fileName: filename, // link the fs doc to the storage file
             });
-    
+
             console.log("Submission added with ID: ", submissionDoc.id);
-    
+
             setIsLoading(false);
             setIsSuccess(true);
             setShow(true);
-    
+
             setTimeout(() => {
                 setShow(false);
             }, 3000);
         } catch (error) {
             console.error("Error submitting recording:", error);
-            Alert.alert("Error", "There was an error submitting the recording. Please try again later.");
+            Alert.alert(
+                "Error",
+                "There was an error submitting the recording. Please try again later."
+            );
             setIsSuccess(false);
             setIsLoading(false);
         }
@@ -256,8 +259,8 @@ export function Record({
                     {recording
                         ? "Stop Recording"
                         : haveRecording
-                          ? "Record Another"
-                          : "Start Recording"}
+                            ? "Record Another"
+                            : "Start Recording"}
                 </ThemedText>
             </Pressable>
 
@@ -270,7 +273,6 @@ export function Record({
                         styles.submit__button,
                         { backgroundColor: haveRecording ? primary : "#ddd" },
                     ]}
-                    contentStyle={{ paddingVertical: 10 }}
                     labelStyle={{ color: haveRecording ? bgColor : "#aaa" }}
                 >
                     <ThemedText
@@ -374,18 +376,12 @@ const styles = StyleSheet.create({
     },
 
     submit__button: {
-        // position: 'absolute',
-        // bottom: -130,
-        // right: 0,
         borderRadius: 10,
-        // paddingVertical: 10,
-        // paddingHorizontal: 20,
+        paddingTop: 7,
         alignItems: "center",
-        // marginVertical: 10,
     },
 
     snackbar: {
-        // position: 'absolute',
         bottom: -160,
         left: 0,
         right: 0,

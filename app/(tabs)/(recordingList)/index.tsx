@@ -51,24 +51,27 @@ export default function RecordingList() {
     const data = useTiwiListContext();
     const color = useColor();
 
+    const normalizeString = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-    const normalizeString = (str: string) => 
-        str.toLowerCase().replace(/[^a-z0-9]/g, '');
-
-    const getSubmissionCount = useCallback((sentenceEnglish: string | undefined) => {
-        if (!sentenceEnglish) {
-            console.log("getSubmissionCount: sentenceEnglish is undefined");
-            return 0;
-        }
-        const normalizedSentence = normalizeString(sentenceEnglish);
-        const count = submissions.filter(sub => {
-            const normalizedSubmission = normalizeString(sub.sentenceEnglish);
-            return normalizedSubmission.includes(normalizedSentence) || 
-                   normalizedSentence.includes(normalizedSubmission);
-        }).length;
-        console.log(`getSubmissionCount for "${sentenceEnglish}":`, count);
-        return count;
-    }, [submissions]);
+    const getSubmissionCount = useCallback(
+        (sentenceEnglish: string | undefined) => {
+            if (!sentenceEnglish) {
+                console.log("getSubmissionCount: sentenceEnglish is undefined");
+                return 0;
+            }
+            const normalizedSentence = normalizeString(sentenceEnglish);
+            const count = submissions.filter((sub) => {
+                const normalizedSubmission = normalizeString(sub.sentenceEnglish);
+                return (
+                    normalizedSubmission.includes(normalizedSentence) ||
+                    normalizedSentence.includes(normalizedSubmission)
+                );
+            }).length;
+            console.log(`getSubmissionCount for "${sentenceEnglish}":`, count);
+            return count;
+        },
+        [submissions]
+    );
 
     const handleSearchResults = (searchList: string[] | Map<string, string[]>) => {
         setSearchResults(searchList);
@@ -152,7 +155,7 @@ export default function RecordingList() {
                     const id = Object.keys(item)[0];
                     const sentenceData = item[id];
                     console.log("Rendering item:", id, sentenceData);
-                    
+
                     if (id === "0") {
                         return sentenceData.completed ? (
                             <ThemedText>All sentences have been recorded</ThemedText>
@@ -162,17 +165,17 @@ export default function RecordingList() {
                             </ThemedText>
                         );
                     }
-                    
+
                     const submissionCount = getSubmissionCount(sentenceData.English);
                     console.log(`Submission count for "${sentenceData.English}":`, submissionCount);
-                    
+
                     return (
-                        <SentenceCard 
-                            sentence={item} 
-                            finished={false} 
+                        <SentenceCard
+                            sentence={item}
+                            finished={false}
                             submissionCount={submissionCount}
-                        /> 
-                    );               
+                        />
+                    );
                 }}
                 renderSectionHeader={({ section: { title } }) => (
                     <View style={styles.sectionlist__header}>
@@ -185,15 +188,17 @@ export default function RecordingList() {
                 )}
                 style={styles.sectionlist}
                 refreshing={isRefreshing}
-                onRefresh={handleRefresh}          
+                onRefresh={handleRefresh}
             />
         </View>
     );
 }
 
-const SentenceCard: React.FC<{ sentence: DataType; finished: boolean; submissionCount: number }> = ({
-    sentence, submissionCount
-}) => {
+const SentenceCard: React.FC<{
+    sentence: DataType;
+    finished: boolean;
+    submissionCount: number;
+}> = ({ sentence, submissionCount }) => {
     const id: string = Object.keys(sentence)[0];
     const sentenceData = sentence[id];
     console.log("SentenceCard rendering:", id, sentenceData, submissionCount);
@@ -202,7 +207,7 @@ const SentenceCard: React.FC<{ sentence: DataType; finished: boolean; submission
 
     const color = useColor();
     const hasSubmissions = sentence[id].submissions && sentence[id].submissions.length > 0;
-    
+
     const goToSentence = () => {
         console.log("Navigating to sentence with ID:", id);
         router.push({
@@ -297,6 +302,6 @@ const styles = StyleSheet.create({
     },
     loading_container: {
         flex: 1,
-        justifyContent: 'center',
-    }
+        justifyContent: "center",
+    },
 });

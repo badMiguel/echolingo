@@ -4,7 +4,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { CategoryProvider } from "@/contexts/CategoryContext";
 import { TiwiProvider } from "@/contexts/TiwiContext";
 import { useUserTypeContext } from "@/contexts/UserContext";
-import { SubmissionsProvider } from '@/contexts/SubmissionsContext';
+import { SubmissionsProvider } from "@/contexts/SubmissionsContext";
 
 export default function RootLayout() {
     const primary = useThemeColor({}, "primary");
