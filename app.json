@@ -1,62 +1,72 @@
 {
-    "expo": {
-        "name": "echolingo",
-        "slug": "echolingo",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/images/icon.png",
-        "scheme": "myapp",
-        "userInterfaceStyle": "automatic",
-        "splash": {
-            "image": "./assets/images/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
-        },
-        "ios": {
-            "supportsTablet": true,
-            "bundleIdentifier": "com.hit238.echolingo"
-        },
-        "android": {
-            "googleServicesFile": "google-services.json",
-            "package": "com.hit238.echolingo",
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/images/adaptive-icon.png",
-                "backgroundColor": "#ffffff"
-            }
-        },
-        "web": {
-            "bundler": "metro",
-            "output": "static",
-            "favicon": "./assets/images/favicon.png"
-        },
-        "plugins": [
-            "expo-router",
-            "expo-asset",
-            "@react-native-firebase/app",
-            [
-                "expo-font",
-                {
-                    "fonts": [
-                        "./assets/fonts/Poppins-ExtraBold.ttf",
-                        "./assets/fonts/Poppins-SemiBold.ttf",
-                        "./assets/fonts/Poppins-Regular.ttf",
-                        "./assets/fonts/Poppins-Medium.ttf",
-                        "./assets/fonts/Poppins-Black.ttf",
-                        "./assets/fonts/Poppins-Bold.ttf"
-                    ]
-                }
-            ],
-            [
-                "expo-camera",
-                {
-                    "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
-                    "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
-                    "recordAudioAndroid": true
-                }
-            ]
-        ],
-        "experiments": {
-            "typedRoutes": true
+  "expo": {
+    "name": "echolingo",
+    "slug": "echolingo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hit238.echolingo",
+      "googleServicesFile": "GoogleService-Info.plist"
+    },
+    "android": {
+      "googleServicesFile": "google-services.json",
+      "package": "com.hit238.echolingo",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-asset",
+      "@react-native-firebase/app",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Poppins-ExtraBold.ttf",
+            "./assets/fonts/Poppins-SemiBold.ttf",
+            "./assets/fonts/Poppins-Regular.ttf",
+            "./assets/fonts/Poppins-Medium.ttf",
+            "./assets/fonts/Poppins-Black.ttf",
+            "./assets/fonts/Poppins-Bold.ttf"
+          ]
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a815e51b-d207-465e-8366-245a9c6590ee"
+      }
     }
+  }
 }

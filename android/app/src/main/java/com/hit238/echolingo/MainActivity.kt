@@ -1,4 +1,4 @@
-package com.echolingo
+package com.hit238.echolingo
 
 import android.os.Build
 import android.os.Bundle

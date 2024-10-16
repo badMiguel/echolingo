@@ -14,6 +14,14 @@
 		96905EF65AED1B983A6B3ABC /* libPods-echolingo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-echolingo.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		843539F864334140B5238D30 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE41A735942249D4865C8CD2 /* GoogleService-Info.plist */; };
+		34E956F6BA344107B8FAFB8F /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4410F2F3FACD4E3D8F0A1AD2 /* noop-file.swift */; };
+		0186631139DB4526A5DC2392 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F610A6BA270143F2957EB1A1 /* Poppins-ExtraBold.ttf */; };
+		566AA0A5E3304EC7BD6DE041 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78CE85EE7B3D4BC6938A7DCB /* Poppins-SemiBold.ttf */; };
+		2616791D9184427A9ACF022C /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BC1AAAE053646A5B3A50A83 /* Poppins-Regular.ttf */; };
+		911088654DDC421BA3EC10EC /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF4E36D0F5224F0797B72FB5 /* Poppins-Medium.ttf */; };
+		BC0B5E1BF03B4297AB344A51 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 054FE1A8E3A942018B5E77FA /* Poppins-Black.ttf */; };
+		8DBDD0A4EC884600AD792BFD /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E42B61ADF37409085743EC7 /* Poppins-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +38,15 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-echolingo/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		AE41A735942249D4865C8CD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; name = "GoogleService-Info.plist"; path = "echolingo/GoogleService-Info.plist"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.xml; explicitFileType = undefined; includeInIndex = 0; };
+		4410F2F3FACD4E3D8F0A1AD2 /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "echolingo/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		14A52979EDA549B1AFC1C30F /* echolingo-Bridging-Header.h */ = {isa = PBXFileReference; name = "echolingo-Bridging-Header.h"; path = "echolingo/echolingo-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		F610A6BA270143F2957EB1A1 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Poppins-ExtraBold.ttf"; path = "../assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		78CE85EE7B3D4BC6938A7DCB /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3BC1AAAE053646A5B3A50A83 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FF4E36D0F5224F0797B72FB5 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; name = "Poppins-Medium.ttf"; path = "../assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		054FE1A8E3A942018B5E77FA /* Poppins-Black.ttf */ = {isa = PBXFileReference; name = "Poppins-Black.ttf"; path = "../assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1E42B61ADF37409085743EC7 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +71,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
+				AE41A735942249D4865C8CD2 /* GoogleService-Info.plist */,
+				4410F2F3FACD4E3D8F0A1AD2 /* noop-file.swift */,
+				14A52979EDA549B1AFC1C30F /* echolingo-Bridging-Header.h */,
 			);
 			name = echolingo;
 			sourceTree = "<group>";
@@ -83,6 +103,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+				3BD360AA5D7D4BF5B2738A95 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -130,6 +151,20 @@
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
+		};
+		3BD360AA5D7D4BF5B2738A95 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				F610A6BA270143F2957EB1A1 /* Poppins-ExtraBold.ttf */,
+				78CE85EE7B3D4BC6938A7DCB /* Poppins-SemiBold.ttf */,
+				3BC1AAAE053646A5B3A50A83 /* Poppins-Regular.ttf */,
+				FF4E36D0F5224F0797B72FB5 /* Poppins-Medium.ttf */,
+				054FE1A8E3A942018B5E77FA /* Poppins-Black.ttf */,
+				1E42B61ADF37409085743EC7 /* Poppins-Bold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -193,6 +228,14 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				843539F864334140B5238D30 /* GoogleService-Info.plist in Resources */,
+				9762D8C2B3684F2686201ECB /* echolingo-Bridging-Header.h in Resources */,
+				0186631139DB4526A5DC2392 /* Poppins-ExtraBold.ttf in Resources */,
+				566AA0A5E3304EC7BD6DE041 /* Poppins-SemiBold.ttf in Resources */,
+				2616791D9184427A9ACF022C /* Poppins-Regular.ttf in Resources */,
+				911088654DDC421BA3EC10EC /* Poppins-Medium.ttf in Resources */,
+				BC0B5E1BF03B4297AB344A51 /* Poppins-Black.ttf in Resources */,
+				8DBDD0A4EC884600AD792BFD /* Poppins-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +311,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
+				34E956F6BA344107B8FAFB8F /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,11 +339,14 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.echolingo;
-				PRODUCT_NAME = echolingo;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hit238.echolingo";
+				PRODUCT_NAME = "echolingo";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OBJC_BRIDGING_HEADER = echolingo/echolingo-Bridging-Header.h;
+				CODE_SIGN_ENTITLEMENTS = echolingo/echolingo.entitlements;
 			};
 			name = Debug;
 		};
@@ -319,10 +366,13 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.echolingo;
-				PRODUCT_NAME = echolingo;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hit238.echolingo";
+				PRODUCT_NAME = "echolingo";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OBJC_BRIDGING_HEADER = echolingo/echolingo-Bridging-Header.h;
+				CODE_SIGN_ENTITLEMENTS = echolingo/echolingo.entitlements;
 			};
 			name = Release;
 		};

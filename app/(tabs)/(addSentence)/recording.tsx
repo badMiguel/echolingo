@@ -259,8 +259,8 @@ export function Record({
                     {recording
                         ? "Stop Recording"
                         : haveRecording
-                            ? "Record Another"
-                            : "Start Recording"}
+                          ? "Record Another"
+                          : "Start Recording"}
                 </ThemedText>
             </Pressable>
 
