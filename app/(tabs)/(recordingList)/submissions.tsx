@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, Alert } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
-import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import AudioPlayback from "@/components/audio/playback";
-import { db, storage } from "@/firebase/firebaseConfig";
+import { storage } from "@/firebase/firebaseConfig";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Pressable } from "react-native";

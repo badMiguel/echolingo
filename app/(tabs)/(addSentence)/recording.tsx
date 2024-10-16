@@ -13,7 +13,6 @@ import { Button, Snackbar } from "react-native-paper";
 import * as DocumentPicker from "expo-document-picker";
 import { useTiwiContext } from "@/contexts/TiwiContext";
 import { Recording } from "expo-av/build/Audio";
-import { FirebaseError } from "firebase/app";
 
 export default function RecordView() {
     const bgColor = useThemeColor({}, "background");
@@ -74,7 +73,6 @@ export function Record({
     const { startRecording, stopRecording, recording, uri, haveRecording } = useRecording();
     const { saveRecording } = useCRUD();
 
-    const { id } = useLocalSearchParams();
     const { sentenceID } = useLocalSearchParams<{ sentenceID: string }>();
     const currentID = sentenceID || "default";
     const current = useTiwiContext();

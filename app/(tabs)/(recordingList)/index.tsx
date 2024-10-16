@@ -212,7 +212,6 @@ const SentenceCard: React.FC<{
     // console.log("Extracted ID:", id);
 
     const color = useColor();
-    const hasSubmissions = sentence[id].submissions && sentence[id].submissions.length > 0;
 
     const goToSentence = () => {
         // console.log("Navigating to sentence with ID:", id);
