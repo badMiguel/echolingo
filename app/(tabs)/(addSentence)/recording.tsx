@@ -197,6 +197,7 @@ export function Record({
 
             console.log("Submission added with ID: ", submissionDoc.id);
 
+            setSnackbarVisible(true);
             setIsLoading(false);
             setIsSuccess(true);
             setShow(true);

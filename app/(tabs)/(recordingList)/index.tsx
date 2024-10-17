@@ -56,7 +56,7 @@ export default function RecordingList() {
             // console.log("fixed")
             return "";
         }
-        return str.replace(/[^a-z0-9]/g, "").toLowerCase();
+        return str.replace(/[^a-z0-9]/gi, "_").toLowerCase();
     };
 
     const getSubmissionCount = useCallback(
