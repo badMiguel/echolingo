@@ -212,12 +212,11 @@ const SentenceCard: React.FC<{
     // console.log("Extracted ID:", id);
 
     const color = useColor();
-    const hasSubmissions = sentence[id].submissions && sentence[id].submissions.length > 0;
 
     const goToSentence = () => {
         // console.log("Navigating to sentence with ID:", id);
         router.push({
-            pathname: sentence[id].recording ? "/viewRecording" : "/(addSentence)/recording",
+            pathname: sentence[id].recording ? "/viewRecording" : "/(addSentence)",
             params: {
                 sentenceID: id,
             },
@@ -251,7 +250,7 @@ const SentenceCard: React.FC<{
                 onPress={() => goToSentence()}
             >
                 <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
-                    {sentence[id].recording ? "View" : "Add Recording"}
+                    {sentence[id].recording ? "View" : "Update"}
                 </ThemedText>
             </Pressable>
 

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { ref, listAll, getDownloadURL, getStorage } from "firebase/storage";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseConfig";
 

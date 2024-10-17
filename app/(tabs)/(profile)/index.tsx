@@ -1,5 +1,9 @@
 import { ThemedText } from "@/components/ThemedText";
-import { useProfilePicContext, useUserNameContext } from "@/contexts/UserContext";
+import {
+    useProfilePicContext,
+    useUserNameContext,
+    useUserTypeContext,
+} from "@/contexts/UserContext";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -11,6 +15,7 @@ export default function Profile() {
     const primary = useThemeColor({}, "primary");
 
     const userName = useUserNameContext();
+    const userType = useUserTypeContext();
     const defaultProfilePic = require("@/assets/images/default-profile-pic.png");
     const profilePicLink = useProfilePicContext();
 
@@ -44,11 +49,16 @@ export default function Profile() {
             <ThemedText type="subtitle" style={styles.userName}>
                 {userName}
             </ThemedText>
-            <Pressable style={[styles.sms__button, { backgroundColor: primary }]} onPress={sendSMS}>
-                <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>
-                    Notify Students via SMS
-                </ThemedText>
-            </Pressable>
+            {userType === "teacher" && (
+                <Pressable
+                    style={[styles.sms__button, { backgroundColor: primary }]}
+                    onPress={sendSMS}
+                >
+                    <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>
+                        Notify Students via SMS
+                    </ThemedText>
+                </Pressable>
+            )}
         </View>
     );
 }
