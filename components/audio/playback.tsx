@@ -18,6 +18,7 @@ type PlayButtonProps = {
     setPlaying: React.Dispatch<SetStateAction<boolean>>;
     onGoing: boolean;
     setOnGoing: React.Dispatch<SetStateAction<boolean>>;
+    fileName?: string;
 };
 
 type ForwardBackwardProp = {
@@ -47,7 +48,7 @@ const useColor = () => {
     };
 };
 
-export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean }) {
+export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean; fileName?: string }) {
     const { startSound, status, progress, duration, nextRecording, sound } = useAudio();
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);

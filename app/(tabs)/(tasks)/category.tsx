@@ -1,11 +1,15 @@
 import { router, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, SectionList, StyleSheet, Text, View } from "react-native";
 import { useCategoryContext } from "@/contexts/CategoryContext";
 import { useTiwiListContext, useSetTiwiContext, Entry, DataType } from "@/contexts/TiwiContext";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "@/components/ThemedText";
 import SearchBar from "@/components/search/search";
+import { useSubmissions } from "@/contexts/SubmissionsContext";
+import { useCallback } from "react";
+import { Switch } from "react-native-paper";
+
 
 const useColor = () => {
     return {
@@ -24,6 +28,44 @@ export default function Category() {
 
     const [searchedTerm, setSearchedTerm] = useState<string>();
     const [searchResults, setSearchResults] = useState<DataType>();
+
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+    const { submissions, isLoading, refreshSubmissions } = useSubmissions();
+
+    const normalizeString = (str: string) => {
+        if (!str) {
+            // console.log("fixed")
+            return "";
+        }
+        return str.toLowerCase().replace(/[^a-z0-9]/g, "");
+    };
+
+    const getSubmissionCount = useCallback(
+        (sentenceEnglish: string | undefined) => {
+            if (!sentenceEnglish) {
+                console.error("getSubmissionCount: sentenceEnglish is undefined");
+                return 0;
+            }
+            const normalizedSentence = normalizeString(sentenceEnglish);
+            const count = submissions.filter((sub) => {
+                const normalizedSubmission = normalizeString(sub.sentenceEnglish);
+                return (
+                    normalizedSubmission.includes(normalizedSentence) ||
+                    normalizedSentence.includes(normalizedSubmission)
+                );
+            }).length;
+            // console.log(`getSubmissionCount for "${sentenceEnglish}":`, count);
+            return count;
+        },
+        [submissions]
+    );
+
+    const handleRefresh = async () => {
+        setIsRefreshing(true);
+        await refreshSubmissions();
+        setIsRefreshing(false);
+    };
 
     // change header title dynamically
     useEffect(() => {
@@ -58,6 +100,22 @@ export default function Category() {
         }
     };
 
+    const getSectionData = (): [string, Entry][] => {
+        if (searchResults && Object.keys(searchResults).length > 0) {
+            return Object.entries(searchResults);
+        } else if (tiwiList) {
+            return Object.entries(tiwiList);
+        }
+        return [];
+    };
+
+    const section = [
+        {
+            title: "Sentences",
+            data: getSectionData()
+        }
+    ];
+
     return (
         <View style={[{ flex: 1, backgroundColor: color.bgColor }]}>
             <SearchBar searchResults={handleSearch} />
@@ -67,23 +125,29 @@ export default function Category() {
                 </ThemedText>
             )}
             {tiwiList ? (
-                <FlatList
-                    style={styles.flatlist}
-                    data={searchResults ? Object.entries(searchResults) : Object.entries(tiwiList)}
-                    renderItem={({ item }) => <SentenceCard tiwi={item[1]} />}
+                <SectionList
+                    // style={styles.flatlist}
+                    sections={section}
+                    renderItem={({ item }) => 
+                        <SentenceCard 
+                            tiwi={item[1]}
+                            submissionCount={getSubmissionCount(item[1].English)} />}
                     keyExtractor={(item) => item[0]}
+                    style={styles.sectionlist}
+                    refreshing={isRefreshing}
+                    onRefresh={handleRefresh}
                 />
             ) : (
-                <Text>No sentences made yet for this category</Text>
+                <ThemedText>No sentences available</ThemedText>
             )}
         </View>
     );
 }
 
-const SentenceCard: React.FC<{ tiwi: Entry }> = ({ tiwi }) => {
+const SentenceCard: React.FC<{ tiwi: Entry; submissionCount: number; }> = ({ tiwi, submissionCount }) => {
     const setCurrentID = useSetTiwiContext();
     const color = useColor();
-
+    const id: string = Object.keys(tiwi)[0];
     const goToSentence = () => {
         if (setCurrentID) {
             setCurrentID(tiwi);
@@ -91,6 +155,17 @@ const SentenceCard: React.FC<{ tiwi: Entry }> = ({ tiwi }) => {
 
         router.push({
             pathname: "/sentence",
+        });
+    };
+
+    const goToSubmissions = () => {
+        console.log("Navigating to submissions with sentenceID:", id);
+        router.push({
+            pathname: "/submissions",
+            params: {
+                sentenceID: id,
+                sentenceEnglish: tiwi.English,
+            },
         });
     };
 
@@ -108,6 +183,22 @@ const SentenceCard: React.FC<{ tiwi: Entry }> = ({ tiwi }) => {
             >
                 <ThemedText type="defaultSemiBold" style={{ color: color.bgColor }}>
                     Study
+                </ThemedText>
+            </Pressable>
+
+            <Pressable
+                style={[
+                    styles.button__container,
+                    { backgroundColor: submissionCount > 0 ? color.primary : "#ddd" },
+                ]}
+                onPress={goToSubmissions}
+                disabled={submissionCount === 0}
+            >
+                <ThemedText
+                    type="defaultSemiBold"
+                    style={{ color: submissionCount > 0 ? color.bgColor : "#aaa" }}
+                >
+                    Submissions ({submissionCount})
                 </ThemedText>
             </Pressable>
         </View>
@@ -139,5 +230,16 @@ const styles = StyleSheet.create({
         paddingRight: 30,
         borderRadius: 10,
         alignSelf: "center",
+    },
+    sectionlist: {
+        paddingLeft: 30,
+        paddingRight: 30,
+    },
+
+    sectionlist__header: {
+        alignItems: "center",
+        marginTop: 30,
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
 });

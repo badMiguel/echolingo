@@ -4,6 +4,7 @@ import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseConfig";
 
 interface Submission {
+    sentenceId: string;
     id: string;
     sentenceEnglish: string;
     recordingUrl: string;

@@ -33,6 +33,18 @@ const TasksLayout = () => {
                     title: "Category",
                 }}
             />
+            <Stack.Screen
+                name="submissions"
+                options={{
+                    title: "Submissions",
+                }}
+            />
+            <Stack.Screen
+                name="viewScores"
+                options={{
+                    title: "View Scores",
+                }}
+            />
         </Stack>
     );
 };

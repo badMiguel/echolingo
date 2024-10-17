@@ -21,6 +21,15 @@ interface Submission {
     fileName?: string;
 }
 
+const useColor = () => {
+    return {
+        bgColor: useThemeColor({}, "background"),
+        textColor: useThemeColor({}, "text"),
+        primary: useThemeColor({}, "primary"),
+        primary_tint: useThemeColor({}, "primary_tint"),
+    };
+};
+
 export default function Submissions() {
     const { sentenceID, sentenceEnglish } = useLocalSearchParams<{
         sentenceID: string;
@@ -28,12 +37,14 @@ export default function Submissions() {
     }>();
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [showMarked, setShowMarked] = useState(false);
+    const [showPending, setshowPending] = useState(false);
     
 
     const bgColor = useThemeColor({}, "background");
     const primary = useThemeColor({}, "primary");
     const primary_tint = useThemeColor({}, "primary_tint");
+
+    const color = useColor();
 
     useFocusEffect(
         useCallback(() => {
@@ -85,30 +96,35 @@ export default function Submissions() {
           <ThemedText type="defaultSemiBold">Status: {item.status}</ThemedText>
           <AudioPlayback uri={item.recordingUrl} fileName={item.fileName} />
           <Pressable
-            style={[styles.button, { backgroundColor: primary }]}
+            style={[styles.button, 
+                { backgroundColor: item.status == "pending"? "white" : color.primary, },
+                ]}
             onPress={() => router.push({
-              pathname: "/markSubmissions",
+              pathname: "/viewScores",
               params: { submissionId: item.id, recordingUrl: item.recordingUrl, fileName: item.fileName }
             })}
+            disabled={item.status === "pending"}
           >
-            <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>
-              {item.status === 'pending' ? 'Mark' : 'Edit Mark'}
-            </ThemedText>
+            {item.status === "pending" ? (
+              <ThemedText type="defaultSemiBold">Not graded</ThemedText>
+            ) : (
+              <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>View</ThemedText>
+            )}
           </Pressable>        
         </View>
     );
 
-    const filteredSubmissions = submissions.filter(sub => showMarked ? sub.status === 'marked' : sub.status === 'pending');
+    const filteredSubmissions = submissions.filter(sub => showPending ? sub.status === 'pending' : sub.status === 'marked');
 
     return (
         console.log(filteredSubmissions.length),
         <View style={[styles.container, { backgroundColor: bgColor }]}>
             <ThemedText type="subtitle">Submissions for: {sentenceEnglish}</ThemedText>
             <View style={styles.toggleContainer}>
-                <ThemedText type="subtitle">Show Marked</ThemedText>
+                <ThemedText type="subtitle">Show Pending</ThemedText>
                 <Switch
-                    value={showMarked}
-                    onValueChange={setShowMarked}
+                    value={showPending}
+                    onValueChange={setshowPending}
                     trackColor={{ false: primary_tint, true: primary }}
                 />
             </View>
@@ -122,7 +138,7 @@ export default function Submissions() {
                     contentContainerStyle={styles.listContent}
                 />
             ) : (
-                <ThemedText>No {showMarked ? 'marked' : 'pending'} submissions yet for this sentence.</ThemedText>
+                <ThemedText>No {showPending ? 'pending' : 'marked'} submissions yet for this sentence.</ThemedText>
             )}
         </View>    
     );
