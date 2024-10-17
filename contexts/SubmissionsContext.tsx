@@ -47,6 +47,7 @@ export const SubmissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
                         const url = await getDownloadURL(item);
                         return {
                             id: item.name,
+                            sentenceId: folderRef.name,
                             sentenceEnglish: folderRef.name.replace(/_/g, " "),
                             recordingUrl: url,
                             submittedAt: new Date(

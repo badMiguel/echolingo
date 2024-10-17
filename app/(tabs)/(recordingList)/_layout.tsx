@@ -37,6 +37,13 @@ function recordingListLayout() {
                     title: "Grade",
                 }}
             />
+            <Stack.Screen
+                name="submissions"
+                options={{
+                    headerShown: true,
+                    title: "",
+                }}
+            />
         </Stack>
     );
 }

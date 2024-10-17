@@ -154,7 +154,7 @@ const SentenceCard: React.FC<{ tiwi: Entry; submissionCount: number; }> = ({ tiw
         } // todo error handle ???
 
         router.push({
-            pathname: "/sentence",
+            pathname: "/(tabs)/sentence",
         });
     };
 
