@@ -90,7 +90,7 @@ export default function Submissions() {
             style={[styles.button, { backgroundColor: primary }]}
             onPress={() => router.push({
               pathname: "/markSubmissions",
-              params: { submissionId: item.id, recordingUrl: item.recordingUrl, fileName: item.fileName }
+              params: { submissionId: item.id, fileName: item.fileName }
             })}
           >
             <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>

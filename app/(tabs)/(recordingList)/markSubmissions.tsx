@@ -9,9 +9,8 @@ import { Pressable } from "react-native";
 
 
 export default function MarkSubmission() {
-    const { submissionId, recordingUrl, refreshKey } = useLocalSearchParams<{
+    const { submissionId, refreshKey } = useLocalSearchParams<{
         submissionId: string,
-        recordingUrl: string,
         refreshKey: string
     }>();
     const [score, setScore] = useState("");

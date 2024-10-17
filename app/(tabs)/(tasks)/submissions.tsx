@@ -103,7 +103,7 @@ export default function Submissions() {
                 ]}
             onPress={() => router.push({
               pathname: "/viewScores",
-              params: { submissionId: item.id, recordingUrl: item.recordingUrl, fileName: item.fileName }
+              params: { submissionId: item.id }
             })}
             disabled={item.status === "pending"}
           >

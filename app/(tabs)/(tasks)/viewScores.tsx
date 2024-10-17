@@ -17,10 +17,8 @@ const useColor = () => {
 };
 
 export default function MarkSubmission() {
-    const { submissionId, recordingUrl, fileName } = useLocalSearchParams<{
+    const { submissionId } = useLocalSearchParams<{
         submissionId: string,
-        recordingUrl: string,
-        fileName: string
     }>();
     const [score, setScore] = useState("");
     const [feedback, setFeedback] = useState("");
