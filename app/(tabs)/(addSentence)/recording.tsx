@@ -192,6 +192,9 @@ export function Record({
                 recordingUrl: downloadUrl,
                 submittedAt: new Date(),
                 fileName: filename, // link the fs doc to the storage file
+                status: "pending",
+                score: null,
+                feedback: ""
             });
 
             console.log("Submission added with ID: ", submissionDoc.id);

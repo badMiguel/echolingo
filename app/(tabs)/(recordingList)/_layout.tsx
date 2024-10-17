@@ -30,6 +30,13 @@ function recordingListLayout() {
                     title: "Recording Database",
                 }}
             />
+            <Stack.Screen
+                name="markSubmissions"
+                options={{
+                    headerShown: true,
+                    title: "Grade",
+                }}
+            />
         </Stack>
     );
 }

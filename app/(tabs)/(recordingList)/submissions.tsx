@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, StyleSheet, Alert } from "react-native";
+import { View, FlatList, StyleSheet, Alert, Switch } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
-import { collection, query, where, getDocs, Timestamp } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import AudioPlayback from "@/components/audio/playback";
 import { db, storage } from "@/firebase/firebaseConfig";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Pressable } from "react-native";
+import { useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface Submission {
     id: string;
-    recordingUrl: string;
+    recordingUrl: string | null; 
     submittedAt: string;
+    status: 'pending' | 'marked';
+    score?: number;
+    feedback?: string;
+    fileName?: string | null;
 }
 
 export default function Submissions() {
@@ -22,82 +28,103 @@ export default function Submissions() {
     }>();
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showMarked, setShowMarked] = useState(false);
+    
 
     const bgColor = useThemeColor({}, "background");
     const primary = useThemeColor({}, "primary");
     const primary_tint = useThemeColor({}, "primary_tint");
 
-    useEffect(() => {
-        const fetchSubmissions = async () => {
-            setIsLoading(true);
-            try {
-                if (!sentenceID || !sentenceEnglish) {
-                    throw new Error("Missing sentence information");
-                }
+    useFocusEffect(
+        useCallback(() => {
+          fetchSubmissions();
+        }, [sentenceID])
+    );
 
-                const folderName = sentenceEnglish.replace(/[^a-z0-9]/gi, "_").toLowerCase();
-                const storageRef = ref(storage, `submissions/${folderName}`);
-
-                const result = await listAll(storageRef);
-                const submissionPromises = result.items.map(async (item) => {
-                    const url = await getDownloadURL(item);
-                    return {
-                        id: item.name,
-                        recordingUrl: url,
-                        submittedAt: new Date(parseInt(item.name.split("_")[0])).toLocaleString(),
-                    };
-                });
-
-                const submissionList = await Promise.all(submissionPromises);
-                setSubmissions(submissionList);
-            } catch (error) {
-                console.error("Error fetching submissions:", error);
-                Alert.alert("Error", "Failed to load submissions. Please try again.");
-            } finally {
-                setIsLoading(false);
+    const fetchSubmissions = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            if (!sentenceID) {
+                throw new Error("Missing sentence information");
             }
-        };
-
-        if (sentenceID && sentenceEnglish) {
-            fetchSubmissions();
-        } else {
-            Alert.alert("Error", "Invalid sentence information");
-            router.back();
+    
+            const submissionsRef = collection(db, "submissions");
+            const q = query(submissionsRef, 
+                where("sentenceId", "in", [sentenceID, "default"])
+            );
+            const querySnapshot = await getDocs(q);
+    
+            const submissionList: Submission[] = [];
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                submissionList.push({
+                    id: doc.id,
+                    recordingUrl: data.recordingUrl,
+                    submittedAt: data.submittedAt.toDate().toLocaleString(),
+                    status: data.status || 'pending',
+                    score: data.score,
+                    feedback: data.feedback
+                });
+            });
+    
+            setSubmissions(submissionList);
+            console.log(`Fetched ${submissionList.length} submissions for sentence ID: ${sentenceID}`);
+            console.log("Submissions:", submissionList);
+        } catch (error) {
+            console.error("Error fetching submissions:", error);
+            Alert.alert("Error", "Failed to load submissions. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
-    }, [sentenceID, sentenceEnglish]);
+    }, [sentenceID]);
 
     const renderSubmission = ({ item, index }: { item: Submission; index: number }) => (
         <View style={[styles.submissionItem, { backgroundColor: primary_tint }]}>
-            <ThemedText type="defaultSemiBold">Submission {index + 1}</ThemedText>
-            <ThemedText>Submitted: {item.submittedAt}</ThemedText>
-            <AudioPlayback uri={item.recordingUrl} />
+          <ThemedText type="defaultSemiBold">Submission {index + 1}</ThemedText>
+          <ThemedText type="defaultSemiBold">Submitted: {item.submittedAt}</ThemedText>
+          <ThemedText type="defaultSemiBold">Status: {item.status}</ThemedText>
+          <AudioPlayback uri={item.recordingUrl} fileName={item.fileName} />
+          <Pressable
+            style={[styles.button, { backgroundColor: primary }]}
+            onPress={() => router.push({
+              pathname: "/markSubmissions",
+              params: { submissionId: item.id, recordingUrl: item.recordingUrl, fileName: item.fileName }
+            })}
+          >
+            <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>
+              {item.status === 'pending' ? 'Mark' : 'Edit Mark'}
+            </ThemedText>
+          </Pressable>        
         </View>
     );
 
+    const filteredSubmissions = submissions.filter(sub => showMarked ? sub.status === 'marked' : sub.status === 'pending');
+
     return (
+        console.log(filteredSubmissions.length),
         <View style={[styles.container, { backgroundColor: bgColor }]}>
             <ThemedText type="subtitle">Submissions for: {sentenceEnglish}</ThemedText>
+            <View style={styles.toggleContainer}>
+                <ThemedText>Show Marked</ThemedText>
+                <Switch
+                    value={showMarked}
+                    onValueChange={setShowMarked}
+                    trackColor={{ false: primary_tint, true: primary }}
+                />
+            </View>
             {isLoading ? (
                 <ThemedText>Loading submissions...</ThemedText>
-            ) : submissions.length > 0 ? (
+            ) : filteredSubmissions.length > 0 ? (
                 <FlatList
-                    data={submissions}
+                    data={filteredSubmissions}
                     keyExtractor={(item) => item.id}
                     renderItem={renderSubmission}
                     contentContainerStyle={styles.listContent}
                 />
             ) : (
-                <ThemedText>No submissions yet for this sentence.</ThemedText>
+                <ThemedText>No {showMarked ? 'marked' : 'pending'} submissions yet for this sentence.</ThemedText>
             )}
-            <Pressable
-                style={[styles.button, { backgroundColor: primary }]}
-                onPress={() => router.back()}
-            >
-                <ThemedText type="defaultSemiBold" style={{ color: bgColor }}>
-                    Back
-                </ThemedText>
-            </Pressable>
-        </View>
+        </View>    
     );
 }
 
@@ -115,10 +142,16 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     button: {
-        marginTop: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 10,
+        marginTop: 10,
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        borderRadius: 5,
         alignItems: "center",
+    },
+    toggleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginVertical: 10,
     },
 });
