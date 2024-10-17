@@ -12,6 +12,7 @@ import { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
 interface Submission {
+    sentenceEnglish: string;
     id: string;
     recordingUrl: string | null; 
     submittedAt: string;
@@ -61,7 +62,7 @@ export default function Submissions() {
     
             const submissionsRef = collection(db, "submissions");
             const q = query(submissionsRef, 
-                where("sentenceId", "in", [sentenceID, "default"])
+                where("sentenceEnglish", "in", [sentenceEnglish, sentenceEnglish])
             );
             const querySnapshot = await getDocs(q);
     
@@ -69,6 +70,7 @@ export default function Submissions() {
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
                 submissionList.push({
+                    sentenceEnglish: data.sentenceEnglish,
                     id: doc.id,
                     recordingUrl: data.recordingUrl,
                     submittedAt: data.submittedAt.toDate().toLocaleString(),
