@@ -38,7 +38,7 @@ export default function Category() {
             // console.log("fixed")
             return "";
         }
-        return str.toLowerCase().replace(/[^a-z0-9]/g, "");
+        return str.replace(/[^a-z0-9]/g, "").toLowerCase();
     };
 
     const getSubmissionCount = useCallback(
@@ -51,8 +51,7 @@ export default function Category() {
             const count = submissions.filter((sub) => {
                 const normalizedSubmission = normalizeString(sub.sentenceEnglish);
                 return (
-                    normalizedSubmission.includes(normalizedSentence) ||
-                    normalizedSentence.includes(normalizedSubmission)
+                    normalizedSubmission.includes(normalizedSentence) 
                 );
             }).length;
             // console.log(`getSubmissionCount for "${sentenceEnglish}":`, count);
