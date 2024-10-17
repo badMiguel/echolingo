@@ -3,7 +3,6 @@ import { View, StyleSheet, TextInput, Alert, ScrollView } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
-import AudioPlayback from "@/components/audio/playback";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Pressable } from "react-native";

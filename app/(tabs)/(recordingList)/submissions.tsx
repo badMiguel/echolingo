@@ -85,7 +85,7 @@ export default function Submissions() {
           <ThemedText type="defaultSemiBold">Submission {index + 1}</ThemedText>
           <ThemedText type="defaultSemiBold">Submitted: {item.submittedAt}</ThemedText>
           <ThemedText type="defaultSemiBold">Status: {item.status}</ThemedText>
-          <AudioPlayback uri={item.recordingUrl} fileName={item.fileName} />
+          <AudioPlayback uri={item.recordingUrl} />
           <Pressable
             style={[styles.button, { backgroundColor: primary }]}
             onPress={() => router.push({

@@ -83,15 +83,16 @@ export default function useCRUD() {
             const saveStatus = await updateSentenceData(
                 id,
                 {
-                    tiwi: tiwi,
-                    gTiwi: gTiwi,
-                    english: english,
-                    gEnglish: gEnglish,
-                    topic: topic,
-                    recordingURI: recordingURI,
+                    tiwi: tiwi ?? undefined,
+                    gTiwi: gTiwi ?? undefined,
+                    english: english ?? undefined,
+                    gEnglish: gEnglish ?? undefined,
+                    topic: topic ?? undefined,
+                    recordingURI: recordingURI ?? undefined,
                 },
                 data[id]
             );
+    
 
             if (!saveStatus) {
                 throw new Error("Failed to save sentence details");
@@ -150,29 +151,26 @@ async function updateSentenceData(
     try {
         const tiwiID = doc(db, "sentences", id);
 
-        const updateFields: { [key: string]: string | null | undefined } = {};
+        const updateFields: { [key: string]: string | null } = {};
 
-        if (updatedData.tiwi && updatedData.tiwi !== current.Tiwi) {
+        if (updatedData.tiwi !== undefined && updatedData.tiwi !== current.Tiwi) {
             updateFields["Tiwi"] = updatedData.tiwi;
         }
-
-        if (updatedData.gTiwi !== updatedData.gTiwi) {
+        if (updatedData.gTiwi !== undefined && updatedData.gTiwi !== current["Gloss (tiwi)"]) {
             updateFields["Gloss (tiwi)"] = updatedData.gTiwi;
         }
-
-        if (updatedData.english && updatedData.english !== current.English) {
+        if (updatedData.english !== undefined && updatedData.english !== current.English) {
             updateFields["English"] = updatedData.english;
         }
-        if (updatedData.gEnglish !== updatedData.gEnglish) {
+        if (updatedData.gEnglish !== undefined && updatedData.gEnglish !== current["Gloss (english)"]) {
             updateFields["Gloss (english)"] = updatedData.gEnglish;
         }
-        if (updatedData.topic && updatedData.topic !== current.Topic) {
+        if (updatedData.topic !== undefined && updatedData.topic !== current.Topic) {
             updateFields["Topic"] = updatedData.topic;
         }
-        if (updatedData.recordingURI !== current.recording) {
+        if (updatedData.recordingURI !== undefined && updatedData.recordingURI !== current.recording) {
             updateFields["recording"] = updatedData.recordingURI;
         }
-
         if (Object.keys(updateFields).length > 0) {
             await updateDoc(tiwiID, updateFields);
         }

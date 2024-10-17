@@ -48,7 +48,7 @@ const useColor = () => {
     };
 };
 
-export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean; fileName?: string }) {
+export default function AudioPlayback({ uri }: { uri: URI; disabled?: boolean; }) {
     const { startSound, status, progress, duration, nextRecording, sound } = useAudio();
     const [playing, setPlaying] = useState<boolean>(false);
     const [onGoing, setOnGoing] = useState<boolean>(false);
