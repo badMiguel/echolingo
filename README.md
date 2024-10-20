@@ -22,3 +22,6 @@ to update the database to be available for everyone.
 > [!NOTE]
 > Some features are not available when using Expo Go directly on mobile phones.
 > Use the Android Emulator by pressing 'a' after running npx expo start
+
+> [!WARNING]
+> All write access is disabled in firestore
