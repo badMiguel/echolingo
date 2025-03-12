@@ -25,3 +25,10 @@ to update the database to be available for everyone.
 
 > [!WARNING]
 > All write access is disabled in firestore
+
+## Screenshots
+
+![screenshot 1](screenshots/s0.png)
+![screenshot 2](screenshots/s1.png)
+![screenshot 3](screenshots/s2.png)
+![screenshot 4](screenshots/s3.png)
