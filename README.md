@@ -5,6 +5,13 @@ language skills. The app provides an easy-to-use interface to display a list of
 sentences provided by the teacher. The app also provides an interface for teachers
 to update the database to be available for everyone.
 
+Demo link [here](https://echolingo.badmiguel.com).
+
+> [!NOTE]
+> This demo is fully read-only — all CRUD functionalities have been removed. It
+> is intended solely for showcasing the interface and layout, with no ability to
+> modify or persist data.
+
 ## Get started
 
 1. Install dependencies
